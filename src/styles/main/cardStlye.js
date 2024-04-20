@@ -86,23 +86,17 @@ export const CardFlex = styled.div`
 
   .tagform {
     display: flex;
-    text-align: center;
+    align-items: center;
     justify-content: center;
     img {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       margin-right: 5px;
     }
   }
-  .review {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-  }
   p {
-    font-size: 20px;
-    /* margin-left: 10px; */
-    /* padding-right: 5px; */
+    font-size: 16px;
+    font-weight: bold;
   }
 `;
 

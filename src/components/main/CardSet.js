@@ -31,8 +31,6 @@ const CardSet = () => {
               <img src="./images/star.png" alt="star" />
               <p>{product.rating}</p>
             </div>
-
-            <div className="review"></div>
           </CardFlex>
           <p className="productNm" style={{ color: Common.color.p900 }}>
             {product.productNm}
