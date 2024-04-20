@@ -48,8 +48,6 @@ const Main = () => {
       /* margin-right: 20px; */
     }
     .search-word::placeholder {
-      /* padding-left: 20px; */
-      /* padding-left: 20px; */
     }
     .search-bt {
       /* position: absolute; */
