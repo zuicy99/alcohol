@@ -2,8 +2,13 @@ import styled from "@emotion/styled/macro";
 import React from "react";
 import { Common } from "../../styles/CommonCss";
 import CardSet from "../../components/main/CardSet";
+import MainTitle from "../../components/main/MainTitle";
 
 const Main = () => {
+  const mainText1 = "오늘의 추천술";
+  const mainText2 = "신제품 출시";
+  const mainText3 = "HOT 인기제품";
+
   const MainWrap = styled.div`
     position: relative;
 
@@ -62,6 +67,32 @@ const Main = () => {
       }
     }
   `;
+  const PickUpCard = styled.div`
+    position: relative;
+    /* margin: 0 auto; */
+    /* justify-content: space-between; */
+    justify-content: center;
+    gap: 80px;
+    display: flex;
+    padding: 80px;
+    a {
+      width: 516px;
+      height: 290px;
+      background-color: ${Common.color.p000};
+      border-radius: 20px;
+    }
+    .pickCard {
+      padding: 50px;
+      b {
+        font-size: 50px;
+      }
+      p {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+    }
+  `;
   return (
     <MainWrap>
       <div className="main-header">
@@ -87,9 +118,36 @@ const Main = () => {
         {/* <input type="button" className="search-bt" /> */}
       </div>
       <img src="./images/banner.svg"></img>
-      <p>배달 픽업 들어가야함</p>
-
-      <CardSet />
+      <PickUpCard>
+        <a href="/배달" style={{ background: Common.color.p200 }}>
+          <div className="pickCard">
+            <b>배달 & 배송</b>
+            <p>자택 배달 & 배송 서비스</p>
+          </div>
+        </a>
+        <a href="/픽업" style={{ background: Common.color.f900 }}>
+          <div className="pickCard">
+            <b>매장픽업</b>
+            <p>
+              주변 매장 & 편의점
+              <br />
+              예약 및 픽업
+            </p>
+          </div>
+        </a>
+      </PickUpCard>
+      <div style={{ padding: "30px 0" }}>
+        <MainTitle mainText={mainText1} />
+        <CardSet />
+      </div>
+      <div style={{ padding: "30px 0" }}>
+        <MainTitle mainText={mainText2} />
+        <CardSet />
+      </div>
+      <div style={{ padding: "30px 0" }}>
+        <MainTitle mainText={mainText3} />
+        <CardSet />
+      </div>
     </MainWrap>
   );
 };

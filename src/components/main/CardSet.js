@@ -1,33 +1,47 @@
 import styled from "@emotion/styled/macro";
 import React from "react";
 import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
+import { Common } from "../../styles/CommonCss";
+import mainProductData from "../../mock/mainProductData.json";
+import MainTitle from "./MainTitle";
 
 const CardSet = () => {
+  const mainText = "ORDER-LIST";
+  const CardsWrapper = styled.div`
+    display: flex;
+    justify-content: space-around;
+    /* gap: 20px; */
+    /* flex-wrap: wrap; */
+  `;
+
   return (
-    <CardContainer>
-      <img
-        className="card-img"
-        src=""
-        // src={`/pic/${product.iproduct}/${product.repPic}`}
-        // src={`${API_SERVER_HOST}/pic/${product.iproduct}/${product.repPic}`}
-        // src={`${API_SERVER_HOST}/pic/product/${product.iproduct}/${product.repPic}`}
-        // alt={product.repPic}
-        // onClick={onselet}
-        // onClick={() => iproductNavi(`/item/${product.iproduct}?page=1`)}
-      />
+    <CardsWrapper>
+      {mainProductData.slice(0, 3).map((product, index) => (
+        <CardContainer key={index}>
+          <a href={product.link}>
+            <img
+              className="card-img"
+              src={`${product.imageSrc}`}
+              alt={product.name}
+            />
+          </a>
 
-      <CardFlex>
-        <div className="tagform">
-          <img src="./images/heart.png"></img>
-        </div>
+          <CardFlex>
+            <div className="tagform">
+              <img src="./images/star.png" alt="star" />
+              <p>{product.rating}</p>
+            </div>
 
-        <div className="review">
-          <p>리뷰</p>
-        </div>
-      </CardFlex>
-      <p className="productNm">햄프씨드가 들어간 마마스팜 프리미엄...</p>
-      <h2 className="price">5000원</h2>
-    </CardContainer>
+            <div className="review"></div>
+          </CardFlex>
+          <p className="productNm" style={{ color: Common.color.p900 }}>
+            {product.productNm}
+          </p>
+          <p className="productNm">{product.subinfo}</p>
+          <h2 className="price">{product.price}원</h2>
+        </CardContainer>
+      ))}
+    </CardsWrapper>
   );
 };
 

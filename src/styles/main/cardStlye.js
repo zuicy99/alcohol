@@ -1,15 +1,20 @@
 import styled from "@emotion/styled";
+import { Common } from "../CommonCss";
 
 export const CardContainer = styled.div`
+  position: relative;
+
   padding: 16px;
   margin: 16px;
   overflow: hidden;
 
   .card-img {
-    width: 263px;
-    height: 263px;
+    width: 306px;
+    height: 306px;
     object-fit: cover;
     cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid ${Common.color.p300};
   }
 
   .productNm {
@@ -73,14 +78,21 @@ export const CardContainer2 = styled.div`
 export const CardFlex = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   width: 263px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-top: 10px;
   margin-bottom: 10px;
 
   .tagform {
     display: flex;
+    text-align: center;
+    justify-content: center;
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 5px;
+    }
   }
   .review {
     display: flex;
@@ -90,7 +102,7 @@ export const CardFlex = styled.div`
   p {
     font-size: 20px;
     /* margin-left: 10px; */
-    padding-right: 5px;
+    /* padding-right: 5px; */
   }
 `;
 

@@ -90,7 +90,10 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter1}
         onMouseLeave={handleMouseLeave1}
       >
-        <h1>WHISKEY</h1>
+        <a href="/WHISKEY">
+          <h1>WHISKEY</h1>
+        </a>
+
         <div className="dropdown-content">
           <Link to="/all">ALL</Link>
           <Link to="/2">중분류1</Link>
@@ -102,7 +105,9 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter2}
         onMouseLeave={handleMouseLeave2}
       >
-        <h1>WINE</h1>
+        <a href="/WINE">
+          <h1>WINE</h1>
+        </a>
         <div className="dropdown-content">
           <Link to="/product/clean">ALL</Link>
           <Link to="/product/clean">중분류1</Link>
@@ -114,7 +119,9 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter3}
         onMouseLeave={handleMouseLeave3}
       >
-        <h1>LIQUEUR</h1>
+        <a href="/LIQUEUR">
+          <h1>LIQUEUR</h1>
+        </a>
         <div className="dropdown-content">
           <Link to="/product/clean">ALL</Link>
           <Link to="/product/clean">중분류1</Link>
@@ -126,7 +133,9 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter4}
         onMouseLeave={handleMouseLeave4}
       >
-        <h1>COGNAC</h1>
+        <a href="/COGNAC">
+          <h1>COGNAC</h1>
+        </a>
         <div className="dropdown-content">
           <Link to="/product/clean">ALL</Link>
           <Link to="/product/clean">중분류1</Link>
@@ -138,7 +147,9 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter5}
         onMouseLeave={handleMouseLeave5}
       >
-        <h1>BRANDY</h1>
+        <a href="/BRANDY">
+          <h1>BRANDY</h1>
+        </a>
         <div className="dropdown-content">
           <Link to="/product/clean">ALL</Link>
           <Link to="/product/clean">중분류1</Link>

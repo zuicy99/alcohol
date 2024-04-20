@@ -49,7 +49,7 @@ const BasicHeader = () => {
     <HeaderWrap>
       <div className="topNav">
         <div className="left-logo">
-          <a href="">
+          <a href="/">
             <h1>ALCHOHOL</h1>
             <h1>HOLIC</h1>
           </a>
