@@ -1,6 +1,7 @@
 import styled from "@emotion/styled/macro";
 import React from "react";
 import { Common } from "../../styles/CommonCss";
+import CardSet from "../../components/main/CardSet";
 
 const Main = () => {
   const MainWrap = styled.div`
@@ -86,7 +87,9 @@ const Main = () => {
         {/* <input type="button" className="search-bt" /> */}
       </div>
       <img src="./images/banner.svg"></img>
-      <p>asdasdasd</p>
+      <p>배달 픽업 들어가야함</p>
+
+      <CardSet />
     </MainWrap>
   );
 };
