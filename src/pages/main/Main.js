@@ -5,10 +5,6 @@ import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
 
 const Main = () => {
-  const mainText1 = "오늘의 추천술";
-  const mainText2 = "신제품 출시";
-  const mainText3 = "HOT 인기제품";
-
   const MainWrap = styled.div`
     position: relative;
 
@@ -135,15 +131,15 @@ const Main = () => {
         </a>
       </PickUpCard>
       <div style={{ padding: "30px 0" }}>
-        <MainTitle mainText={mainText1} />
+        <MainTitle mainText="오늘의 추천술" />
         <CardSet />
       </div>
       <div style={{ padding: "30px 0" }}>
-        <MainTitle mainText={mainText2} />
+        <MainTitle mainText="신제품 출시" />
         <CardSet />
       </div>
       <div style={{ padding: "30px 0" }}>
-        <MainTitle mainText={mainText3} />
+        <MainTitle mainText="HOT 인기제품" />
         <CardSet />
       </div>
     </MainWrap>

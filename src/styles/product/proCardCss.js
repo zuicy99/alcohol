@@ -6,8 +6,8 @@ export const ProCardContainer = styled.div`
   overflow: hidden;
 
   .card-img {
-    width: 250px;
-    height: 250px;
+    min-width: 240px;
+    height: 240px;
     object-fit: cover;
     cursor: pointer;
     border-radius: 10px;

@@ -3,7 +3,6 @@ import React from "react";
 import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
 import { Common } from "../../styles/CommonCss";
 import mainProductData from "../../mock/mainProductData.json";
-import MainTitle from "./MainTitle";
 
 const CardSet = () => {
   const mainText = "ORDER-LIST";

@@ -90,7 +90,7 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter1}
         onMouseLeave={handleMouseLeave1}
       >
-        <a href="/WHISKEY">
+        <a href="/product">
           <h1>WHISKEY</h1>
         </a>
 

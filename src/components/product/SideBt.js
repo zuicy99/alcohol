@@ -10,6 +10,7 @@ const SideBt = ({ sidenNm, active, onClick }) => {
     font-weight: ${active ? "bold" : "normal"};
     text-decoration: ${active ? "underline" : "none"};
     margin-top: 20px;
+    cursor: pointer;
   `;
   return (
     <div>
