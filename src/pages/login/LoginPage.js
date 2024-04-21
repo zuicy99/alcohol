@@ -5,9 +5,11 @@ import React from "react";
 import { Common } from "../../styles/CommonCss";
 import { useNavigate } from "react-router-dom";
 import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const moveToMain = useCustomMove();
   const onFinish = values => {
     console.log("Received values of form: ", values);
   };
@@ -123,7 +125,7 @@ const LoginPage = () => {
           </div>
         </LoginTitle>
         <LoginBt
-          onClick={() => navigate(`/`)}
+          onClick={() => moveToMain()}
           style={{ background: `${Common.color.y900}`, border: "none" }}
         >
           <img src="./images/kakao.png" />

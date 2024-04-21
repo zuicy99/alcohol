@@ -1,7 +1,7 @@
 import styled from "@emotion/styled/macro";
 import React from "react";
 
-const SideTitle = ({ sideTitle }) => {
+const SideTitle = ({ sideTitle, onClick }) => {
   const SideTitleStyle = styled.div`
     margin: 0 0 10px 0;
     p {
@@ -10,7 +10,7 @@ const SideTitle = ({ sideTitle }) => {
     }
   `;
   return (
-    <SideTitleStyle>
+    <SideTitleStyle onClick={onClick}>
       <p>{sideTitle}</p>
     </SideTitleStyle>
   );

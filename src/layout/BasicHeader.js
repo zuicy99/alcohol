@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import DropNav from "../components/basic/DropNav";
 import UserDrop from "../components/basic/UserDrop";
 import useCustomMove from "../hooks/useCustomMove";
+import NavDropdown from "../components/basic/DropNavNew";
 
 const BasicHeader = () => {
   const { moveToLogin } = useCustomMove();
+
   const HeaderWrap = styled.div`
     position: relative;
     height: 233px;
@@ -73,21 +75,24 @@ const BasicHeader = () => {
           <div className="rigth-bottom-nav">
             <Link to="/">
               <img
-                src={process.env.PUBLIC_URL + "./images/map.png"}
+                src={process.env.PUBLIC_URL + "/images/map.png"} // 수정된 부분
                 style={{ width: "28px", height: "auto" }}
-              ></img>
+                alt="map"
+              />
             </Link>
             <Link to="/">
               <img
-                src={process.env.PUBLIC_URL + "./images/bag.png"}
+                src={process.env.PUBLIC_URL + "/images/bag.png"} // 수정된 부분
                 style={{ width: "26px", height: "auto" }}
-              ></img>
+                alt="bag"
+              />
             </Link>
             <Link to="/">
               <img
-                src={process.env.PUBLIC_URL + "./images/heart.png"}
+                src={process.env.PUBLIC_URL + "/images/heart.png"} // 수정된 부분
                 style={{ width: "26px", height: "auto" }}
-              ></img>
+                alt="heart"
+              />
             </Link>
 
             <UserDrop />
@@ -96,6 +101,7 @@ const BasicHeader = () => {
       </div>
 
       <DropNav />
+      <NavDropdown />
     </HeaderWrap>
   );
 };

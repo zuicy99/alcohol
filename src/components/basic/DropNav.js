@@ -1,7 +1,8 @@
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Common } from "../../styles/CommonCss";
+import { DropStyle, DropWrap } from "../../styles/basic/dropNavCss";
 
 const DropNav = () => {
   const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
@@ -9,6 +10,8 @@ const DropNav = () => {
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
   const [isDropdownOpen4, setIsDropdownOpen4] = useState(false);
   const [isDropdownOpen5, setIsDropdownOpen5] = useState(false);
+
+  const [activeSide, setActiveSide] = useState(0);
 
   const handleMouseEnter1 = () => {
     setIsDropdownOpen1(true);
@@ -45,44 +48,6 @@ const DropNav = () => {
     setIsDropdownOpen5(false);
   };
 
-  const DropWrap = styled.div`
-    display: flex;
-    justify-content: center;
-  `;
-  const DropStyle = styled.div`
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    h1 {
-      margin: 0 60px 0 60px;
-      color: ${Common.color.p000};
-    }
-    .dropdown-content {
-      display: ${props => (props.isOpen ? "block" : "none")};
-      position: absolute;
-      background-color: ${Common.color.b900};
-      min-width: 160px;
-      z-index: 1;
-      left: 50%;
-      transform: translate(-50%, 0%);
-      text-align: center;
-      font-size: 13px;
-      border-radius: 5px;
-    }
-
-    .dropdown-content a {
-      color: ${Common.color.p300};
-      padding: 18px 16px;
-      text-decoration: none;
-      display: block;
-    }
-
-    .dropdown-content a:hover {
-      color: ${Common.color.p000};
-      font-weight: 600;
-    }
-  `;
-
   return (
     <DropWrap>
       <DropStyle
@@ -95,9 +60,13 @@ const DropNav = () => {
         </a>
 
         <div className="dropdown-content">
-          <Link to="/all">ALL</Link>
-          <Link to="/2">중분류1</Link>
-          <Link to="/3">중분류2</Link>
+          <Link to="/product" id="all">
+            ALL
+          </Link>
+          <a href="#all">all</a>
+          <Link to="/product">중분류1</Link>
+          <Link to="/product">중분류2</Link>
+          <Link to="/product/3">테스트</Link>
         </div>
       </DropStyle>
       <DropStyle
