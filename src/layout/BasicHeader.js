@@ -4,8 +4,10 @@ import { Common } from "../styles/CommonCss";
 import { Link } from "react-router-dom";
 import DropNav from "../components/basic/DropNav";
 import UserDrop from "../components/basic/UserDrop";
+import useCustomMove from "../hooks/useCustomMove";
 
 const BasicHeader = () => {
+  const { moveToLogin } = useCustomMove();
   const HeaderWrap = styled.div`
     position: relative;
     height: 233px;
@@ -56,7 +58,7 @@ const BasicHeader = () => {
         </div>
         <div>
           <div className="right-top-nav">
-            <Link to="/">
+            <Link to="/login">
               <p>로그인</p>
             </Link>
             <p>|</p>

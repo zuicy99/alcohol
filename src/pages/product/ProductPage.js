@@ -11,23 +11,13 @@ import {
 } from "../../styles/product/proWrapCss";
 import styled from "@emotion/styled/macro";
 import { Common } from "../../styles/CommonCss";
-import ReactSelect from "react-select";
-
-import { Input, Select } from "antd";
-import { Option } from "antd/es/mentions";
 
 const ProductPage = () => {
-  const [activeSide, setActiveSide] = useState(0); // 초기값은 선택된 쪽 없음
-
-  const handleClick = (sidenNm, sidenId) => {
+  const [activeSide, setActiveSide] = useState(0);
+  const handleClick = sidenId => {
     setActiveSide(sidenId);
-    console.log("선택된 사이드바", sidenNm, sidenId);
+    console.log("선택된 사이드바", sidenId);
   };
-
-  const sideTitle = "WHISKEY";
-  const mainText1 = "ALL";
-  const mainText2 = "중분류1";
-  const mainText3 = "중분류2";
 
   const ProSearch = styled.div`
     .search-wrap {
@@ -56,9 +46,6 @@ const ProductPage = () => {
         background-position: right 8px center; /* 내림 버튼 아이콘을 오른쪽에 위치 */
         cursor: pointer;
         font-size: 16px;
-      }
-      option {
-        border: none;
       }
     }
     .search-info {
@@ -93,26 +80,26 @@ const ProductPage = () => {
   return (
     <ProductWrap>
       <SideBar>
-        <SideTitle sideTitle={sideTitle} />
+        <SideTitle sideTitle="WHISKEY" />
         <hr />
         <div className="side-nav">
           <SideBt
-            sidenNm={mainText1}
+            sidenNm="ALL"
             sidenId={0}
             active={activeSide === 0} // 고유 숫자와 비교
-            onClick={() => handleClick(mainText1, 0)} // 고유 숫자 전달
+            onClick={() => handleClick(0)} // 고유 숫자 전달
           />
           <SideBt
-            sidenNm={mainText2}
+            sidenNm="분류1"
             sidenId={1}
             active={activeSide === 1}
-            onClick={() => handleClick(mainText2, 1)}
+            onClick={() => handleClick(1)}
           />
           <SideBt
-            sidenNm={mainText3}
+            sidenNm="분류2"
             sidenId={2}
             active={activeSide === 2}
-            onClick={() => handleClick(mainText3, 2)}
+            onClick={() => handleClick(2)}
           />
         </div>
       </SideBar>
