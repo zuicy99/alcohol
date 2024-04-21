@@ -74,8 +74,8 @@ const UserDrop = () => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <a href="/">
-        <img src={process.env.PUBLIC_URL + "./images/user.png"} />
+      <a href="/mypage">
+        <img src={process.env.PUBLIC_URL + "/images/user.png"} />
       </a>
 
       <DropdownContent>
@@ -98,7 +98,7 @@ const UserDrop = () => {
         </div>
         <div className="line"></div>
         <ItemBack>
-          <DropdownItem href="#home">마이페이지</DropdownItem>
+          <DropdownItem href="/mypage">마이페이지</DropdownItem>
           <DropdownItem href="#about">주문/배송</DropdownItem>
           <DropdownItem href="#contact">리뷰작성</DropdownItem>
           <DropdownItem href="#logout">위시리스트</DropdownItem>

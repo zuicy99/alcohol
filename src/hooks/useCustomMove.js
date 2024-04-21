@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const useCustomMove = () => {
   const navigate = useNavigate();
@@ -9,7 +9,8 @@ export const useCustomMove = () => {
     navigate("/login");
   };
   const moveToMain = () => {
-    <a href="/Main"></a>;
+    <a href="/main"></a>;
+    // <Link to="/main"></Link>;
     navigate("/");
   };
   return moveToLogin, moveToMain;

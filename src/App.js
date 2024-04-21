@@ -6,6 +6,10 @@ import BasicLayout from "./layout/BasicLayout";
 import Main from "./pages/main/Main";
 import ProductPage from "./pages/product/ProductPage";
 import LoginPage from "./pages/login/LoginPage";
+import MyPage from "./pages/mypage/MyPage";
+import MyMainPage from "./pages/mypage/outlet/MyMainPage";
+import ReviewPage from "./pages/mypage/outlet/ReviewPage";
+import CreateReview from "./pages/mypage/outlet/CreateReview";
 
 const App = () => {
   return (
@@ -15,6 +19,13 @@ const App = () => {
           <Route path="/" element={<Main />}></Route>
           <Route path="/product" element={<ProductPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
+
+          {/* 마이페이지 */}
+          <Route path="/mypage/" element={<MyPage />}>
+            <Route path="mymain" element={<MyMainPage />}></Route>
+            <Route path="review" element={<ReviewPage />}></Route>
+            <Route path="createReview" element={<CreateReview />}></Route>
+          </Route>
 
           <Route path="/intro" element={<Intro />}></Route>
           <Route path="*" element={<h1>파일이없네요.</h1>}></Route>

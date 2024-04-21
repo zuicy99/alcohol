@@ -3,90 +3,11 @@ import React from "react";
 import { Common } from "../../styles/CommonCss";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
+import useCustomState from "../../hooks/useCustomState";
+import { MainWrap } from "../../styles/main/mainCss";
+import { PickUpCard } from "../../styles/main/pickupCardCss";
 
 const Main = () => {
-  const MainWrap = styled.div`
-    position: relative;
-
-    /* width: 100%; */
-
-    .main-header {
-      position: relative;
-      /* display: flex; */
-      min-height: 300px;
-      width: 100%;
-      text-align: center;
-      font-size: 50px;
-      font-weight: 600;
-      padding: 80px 20px;
-    }
-    .search-wrap {
-      position: relative;
-      display: flex;
-      width: 592px;
-      margin: 0 auto;
-      /* height: 52px; */
-      border: 1px solid ${Common.color.f900};
-      border-radius: 5px;
-      justify-content: center;
-      align-items: center;
-    }
-    .search-word {
-      position: relative;
-      width: 500px;
-      height: 52px;
-      right: 20px;
-      border: none;
-      /* border: 1px solid ${Common.color.f900}; */
-      border-radius: 5px;
-      /* font-size: 30px; */
-      font-size: 20px;
-      /* margin-right: 20px; */
-    }
-    .search-word::placeholder {
-    }
-    .search-bt {
-      /* position: absolute; */
-      position: relative;
-      top: -5px;
-      left: 15px;
-      background-repeat: no-repeat;
-      cursor: pointer;
-      border: none;
-      background-color: transparent;
-      background-position: center;
-      img {
-        width: 25px;
-        height: auto;
-      }
-    }
-  `;
-  const PickUpCard = styled.div`
-    position: relative;
-    /* margin: 0 auto; */
-    /* justify-content: space-between; */
-    justify-content: center;
-    gap: 80px;
-    display: flex;
-    padding: 80px;
-    a {
-      width: 516px;
-      height: 290px;
-      background-color: ${Common.color.p000};
-      border-radius: 20px;
-    }
-    .pickCard {
-      padding: 50px;
-      b {
-        font-size: 50px;
-      }
-      p {
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 15px;
-      }
-    }
-  `;
   return (
     <MainWrap>
       <div className="main-header">
@@ -103,8 +24,12 @@ const Main = () => {
               type="text"
               placeholder="검색어를 입력해주세요"
               className="search-word"
+              // onChange={handleSearchText}
             ></input>
-            <button className="search-bt">
+            <button
+              className="search-bt"
+              // onClick={handleClickSubmit}
+            >
               <img src="./images/search.png" />
             </button>
           </div>
