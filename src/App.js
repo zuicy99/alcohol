@@ -10,8 +10,13 @@ import MyPage from "./pages/mypage/MyPage";
 import MyMainPage from "./pages/mypage/outlet/MyMainPage";
 import ReviewPage from "./pages/mypage/outlet/ReviewPage";
 import CreateReview from "./pages/mypage/outlet/CreateReview";
+import DetailedItemPage from "./pages/item/DetailedItemPage";
+import { getSearchName, locinCheck } from "./jwt/jwtAxios";
 
 const App = () => {
+  // const listdata = await getSearchName();
+  // console.log(listdata);
+
   return (
     <Wrap maxw={1920}>
       <BasicLayout>
@@ -27,6 +32,7 @@ const App = () => {
             <Route path="createReview" element={<CreateReview />}></Route>
           </Route>
 
+          <Route path="/item" element={<DetailedItemPage />}></Route>
           <Route path="/intro" element={<Intro />}></Route>
           <Route path="*" element={<h1>파일이없네요.</h1>}></Route>
         </Routes>

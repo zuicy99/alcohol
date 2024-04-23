@@ -4,11 +4,13 @@ import styled from "@emotion/styled";
 import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
 import { Common } from "../../styles/CommonCss";
 import { ProCardContainer } from "../../styles/product/proCardCss";
+import { Navigate, useNavigate } from "react-router";
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   return (
     <ProCardContainer>
-      <a href={product.link}>
+      <a onClick={() => navigate(`/item`)}>
         <img
           className="card-img"
           src={product.imageSrc}

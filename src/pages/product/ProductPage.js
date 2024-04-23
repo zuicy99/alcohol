@@ -10,24 +10,35 @@ import {
   ProductWrap,
 } from "../../styles/product/proWrapCss";
 import ProSearch from "../../components/product/ProSearch";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductPage = () => {
-  const [activeSide, setActiveSide] = useState(0);
+  // side => Param의 숫자인거임
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const side = parseInt(queryParams.get("side"));
+
+  const navigate = useNavigate();
+
+  const [activeSide, setActiveSide] = useState(side);
   const [selecteOption, setSelecteOption] = useState(0);
   const [searchText, setSearchText] = useState("");
 
   const handleOption = e => {
     const newValue = parseInt(e.target.value);
     setSelecteOption(prevState => newValue);
+    console.log("글씨", newValue);
   };
   const handleSearchText = e => {
     setSearchText(e.target.value);
     // console.log("검색어 입력", searchText);
   };
 
-  const handleClick = sidenId => {
-    setActiveSide(sidenId);
-    console.log("선택된 사이드바", sidenId);
+  const handleClick = sideId => {
+    setActiveSide(sideId);
+    console.log("선택된 사이드바", sideId);
+    // query도 바껴야함 지금 안바뀜
+    navigate(`/product?side=${sideId}`);
   };
 
   // 검색 버튼 클릭시 처리
@@ -43,7 +54,8 @@ const ProductPage = () => {
 
   useEffect(() => {
     console.log("검색어,정렬", searchText, selecteOption);
-  }, [searchText, selecteOption]);
+    setActiveSide(side);
+  }, [searchText, selecteOption, side]);
 
   return (
     <ProductWrap>
@@ -51,21 +63,22 @@ const ProductPage = () => {
         <SideTitle sideTitle="WHISKEY" />
         <hr />
         <div className="side-nav">
+          {console.log(`activeSide ${activeSide}`)}
           <SideBt
             sidenNm="ALL"
-            sidenId={0}
+            sideId={0}
             active={activeSide === 0} // 고유 숫자와 비교
             onClick={() => handleClick(0)} // 고유 숫자 전달
           />
           <SideBt
             sidenNm="분류1"
-            sidenId={1}
+            sideId={1}
             active={activeSide === 1}
             onClick={() => handleClick(1)}
           />
           <SideBt
             sidenNm="분류2"
-            sidenId={2}
+            sideId={2}
             active={activeSide === 2}
             onClick={() => handleClick(2)}
           />

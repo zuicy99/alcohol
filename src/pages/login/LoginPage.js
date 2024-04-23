@@ -128,7 +128,10 @@ const LoginPage = () => {
           onClick={() => moveToMain()}
           style={{ background: `${Common.color.y900}`, border: "none" }}
         >
-          <img src="./images/kakao.png" />
+          <img
+            src={process.env.PUBLIC_URL + "/images/kakao.png"} // 수정된 부분
+            alt="heart"
+          />
           카카오 3초만에 시작하기
         </LoginBt>
         <LoginBt onClick={() => navigate(`/`)}>이메일로 가입하기</LoginBt>

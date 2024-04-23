@@ -1,8 +1,9 @@
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { reviewData } from "../../../mock/CrtRvwData";
 import { Common } from "../../../styles/CommonCss";
 import { TableCustom } from "../../../styles/common/tableCss";
+import RvModal from "../../../components/mypage/RvModal";
 const columns = [
   {
     title: "이미지",
@@ -59,7 +60,7 @@ const MyReview = () => {
         dataSource={reviewData}
         pagination={false}
       />
-      {/* {showModal && <TestMd onClose={handleCloseModal} iOrder={0} />} */}
+      {/* {showModal && <RvModal onClose={handleCloseModal} iOrder={0} />} */}
     </ConfigProvider>
   );
 };

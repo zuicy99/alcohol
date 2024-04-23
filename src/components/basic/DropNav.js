@@ -60,13 +60,11 @@ const DropNav = () => {
         </a>
 
         <div className="dropdown-content">
-          <Link to="/product" id="all">
+          <Link to="/product?side=0" id="all">
             ALL
           </Link>
-          <a href="#all">all</a>
-          <Link to="/product">중분류1</Link>
-          <Link to="/product">중분류2</Link>
-          <Link to="/product/3">테스트</Link>
+          <Link to="/product?side=1">중분류1</Link>
+          <Link to="/product?side=2">중분류2</Link>
         </div>
       </DropStyle>
       <DropStyle

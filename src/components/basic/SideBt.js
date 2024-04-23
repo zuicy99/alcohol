@@ -2,7 +2,8 @@ import styled from "@emotion/styled/macro";
 import React from "react";
 import { Common } from "../../styles/CommonCss";
 
-const SideBt = ({ sidenNm, active, onClick }) => {
+const SideBt = ({ sidenNm, sideId, active, onClick }) => {
+  console.log(`active ${active}`);
   const SideBtStyled = styled.button`
     border: none;
     background: none;
@@ -14,7 +15,9 @@ const SideBt = ({ sidenNm, active, onClick }) => {
   `;
   return (
     <div>
-      <SideBtStyled onClick={onClick}>{sidenNm}</SideBtStyled>
+      <SideBtStyled active={active} onClick={onClick}>
+        {sidenNm}
+      </SideBtStyled>
     </div>
   );
 };
