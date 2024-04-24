@@ -31,14 +31,21 @@ const MyPage = () => {
               sidenNm="마이페이지"
               sidenId={10}
               active={activeSide === 10}
-              onClick={() => handleClick(10)}
+              onClick={() => {
+                navigate("mymain");
+                handleClick(10);
+              }}
             />
             <SideSubTitle sideSubTitle="쇼핑정보" />
             <SideBt
               sidenNm="주문배송조회"
               sidenId={0}
               active={activeSide === 0}
-              onClick={() => handleClick(0)}
+              // onClick={() => handleClick(0)}
+              onClick={() => {
+                navigate("order");
+                handleClick(0);
+              }}
             />
             <SideBt
               sidenNm="상품리뷰"

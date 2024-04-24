@@ -116,8 +116,15 @@ export const RvForm = styled.div`
   gap: 20px;
   justify-content: space-between;
 `;
+export const MarginB10 = styled.div`
+  height: 10px; /* 세로 간격을 설정합니다. */
+`;
 export const MarginB20 = styled.div`
   height: 20px; /* 세로 간격을 설정합니다. */
+`;
+
+export const MarginB30 = styled.div`
+  height: 30px; /* 세로 간격을 설정합니다. */
 `;
 
 export const MarginB40 = styled.div`

@@ -6,6 +6,8 @@ import CreateReview from "./CreateReview";
 
 import { Common } from "../../../styles/CommonCss";
 import MyReview from "./MyReview";
+import { MarginB10, MarginB20 } from "../../../styles/common/reviewProductCss";
+import { PB20 } from "../../../styles/basic";
 
 const ReviewPage = () => {
   const navigate = useNavigate();
@@ -26,9 +28,12 @@ const ReviewPage = () => {
   `;
   return (
     <InfoWrap>
+      <MarginB10 />
+      <PB20>상품리뷰</PB20>
+      <MarginB20 />
       <div>
         <ReviewBt
-          btName="작성 가능한 리뷰()"
+          btName="작성 가능한 리뷰"
           reBtId={1}
           active={activeNavBt === 1}
           onClick={() => {
@@ -36,7 +41,7 @@ const ReviewPage = () => {
           }}
         />
         <ReviewBt
-          btName="내 리뷰()"
+          btName="내 리뷰"
           reBtId={2}
           active={activeNavBt === 2}
           onClick={() => handleBtClick(2)}

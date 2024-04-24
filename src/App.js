@@ -15,6 +15,8 @@ import { getSearchName, locinCheck } from "./jwt/jwtAxios";
 import SignupPage from "./pages/login/SignupPage";
 import { RecoilRoot } from "recoil";
 import CartPage from "./pages/cart/CartPage";
+import PaymentPage from "./pages/payment/PaymentPage";
+import OrderPage from "./pages/order/OrderPage";
 
 const App = () => {
   // const listdata = await getSearchName();
@@ -29,11 +31,13 @@ const App = () => {
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/singup" element={<SignupPage />}></Route>
           <Route path="/cart" element={<CartPage />}></Route>
+          <Route path="/pay" element={<PaymentPage />}></Route>
 
           {/* 마이페이지 */}
           <Route path="/mypage/" element={<MyPage />}>
             <Route path="mymain" element={<MyMainPage />}></Route>
             <Route path="review" element={<ReviewPage />}></Route>
+            <Route path="order" element={<OrderPage />}></Route>
             <Route path="createReview" element={<CreateReview />}></Route>
           </Route>
 

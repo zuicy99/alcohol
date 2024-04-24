@@ -177,6 +177,7 @@ const DetailedItemPage = () => {
             <GoCartModal />
 
             <BigButton
+              onClick={() => navigate(`/pay`)}
               style={{
                 background: `${Common.color.f900}`,
                 border: `1px solid ${Common.color.p000}`,

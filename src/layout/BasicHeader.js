@@ -80,7 +80,7 @@ const BasicHeader = () => {
                 alt="map"
               />
             </Link>
-            <Link to="/">
+            <Link to="/cart">
               <img
                 src={process.env.PUBLIC_URL + "/images/bag.png"} // 수정된 부분
                 style={{ width: "26px", height: "auto" }}

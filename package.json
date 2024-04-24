@@ -53,5 +53,5 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2"
   },
-  "procxy": "http://three.hellomh.site/search/name"
+  "procxy": "http://three.hellomh.site"
 }

@@ -147,9 +147,6 @@ const RvModal = ({ onClose }) => {
               <TextArea
                 // value={formData.contents}
                 style={{
-                  //   width: "1150px",
-                  //   height: "200px",
-                  //   padding: "40px",
                   fontSize: "16px",
                   boxShadow: "none",
                 }}
