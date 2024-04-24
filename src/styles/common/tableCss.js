@@ -29,13 +29,18 @@ export const TableCustom = styled(Table)`
   }
   &&& {
     .ant-table-cell {
+      /* display: flex; */
       color: ${Common.color.p900};
+      justify-content: center;
     }
     .ant-table-thead > tr > th {
+      /* display: flex; */
       text-align: center;
+      justify-content: center;
     }
     .ant-table-tbody > tr > td {
       text-align: center;
+      justify-content: center;
       color: ${Common.color.p500};
     }
   }

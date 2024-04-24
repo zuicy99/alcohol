@@ -64,7 +64,7 @@ const BasicHeader = () => {
               <p>로그인</p>
             </Link>
             <p>|</p>
-            <Link to="/">
+            <Link to="/singup">
               <p>회원가입</p>
             </Link>
             <p style={{ color: Common.color.f900 }}>|</p>
