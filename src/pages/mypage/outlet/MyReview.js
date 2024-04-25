@@ -1,45 +1,70 @@
 import { ConfigProvider, Table } from "antd";
 import React, { useState } from "react";
-import { reviewData } from "../../../mock/CrtRvwData";
+import { MyreviewData, reviewData } from "../../../mock/CrtRvwData";
 import { Common } from "../../../styles/CommonCss";
 import { TableCustom } from "../../../styles/common/tableCss";
 import RvModal from "../../../components/mypage/RvModal";
-const columns = [
-  {
-    title: "이미지",
-    dataIndex: "name",
-    render: () => (
-      <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
-    ),
-  },
-  {
-    title: "제품명 | 주문번호",
-    dataIndex: "test",
-    render: () => (
-      <div>
-        <p>하여튼 주문명</p>
-        <p>12121212-1212121</p>
-      </div>
-    ),
-  },
-  {
-    title: "주문일자",
-    dataIndex: "date",
-  },
-  {
-    title: "매장명",
-    dataIndex: "math",
-  },
-  {
-    title: "주문방식",
-    dataIndex: "order",
-  },
-];
+import { StarRev } from "../../../styles/common/StarCss";
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
 };
 const MyReview = () => {
+  const columns = [
+    {
+      title: "이미지",
+      dataIndex: "name",
+      render: (text, record) => (
+        <div>
+          <img
+            style={{ width: "80px", marginBottom: "10px" }}
+            src="/images/moon.jpg"
+            alt="리뷰 작성"
+          />
+          <StarRev>
+            {Array.from({ length: record.star }, (_, index) => (
+              <img
+                key={index}
+                src={process.env.PUBLIC_URL + "/images/star.png"}
+                alt="star"
+              />
+            ))}
+          </StarRev>
+        </div>
+      ),
+    },
+    {
+      title: "제품명",
+      dataIndex: "productNm",
+      render: (text, record) => (
+        <div>
+          <p>{record.productNm}</p>
+        </div>
+      ),
+    },
+    {
+      title: "주문일자",
+      dataIndex: "date",
+    },
+
+    {
+      title: "리뷰작성",
+      dataIndex: "content",
+      render: (text, record) => (
+        <div
+          style={{
+            width: "600px",
+            wordWrap: "break-word",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <p>{record.content}</p>
+        </div>
+      ),
+    },
+  ];
   return (
     <ConfigProvider
       theme={{
@@ -57,7 +82,7 @@ const MyReview = () => {
       <TableCustom
         // rowSelection={rowSelection}
         columns={columns}
-        dataSource={reviewData}
+        dataSource={MyreviewData}
         pagination={false}
       />
       {/* {showModal && <RvModal onClose={handleCloseModal} iOrder={0} />} */}

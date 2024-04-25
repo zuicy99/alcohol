@@ -12,11 +12,12 @@ import {
   PlaceWrap,
 } from "../../styles/detail/mapModalPlaceCss";
 
-const MapPlaceInfo = ({ place }) => {
+const MapPlaceInfo = ({ place, onClose }) => {
   const [selectedPlaceName, setSelectedPlaceName] = useRecoilState(placeState);
 
   const handleClick = () => {
     setSelectedPlaceName(place.name);
+    onClose();
   };
   return (
     <div>

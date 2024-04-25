@@ -37,7 +37,7 @@ const OrderPage = () => {
       <MarginB20 />
       <div>
         <ReviewBt
-          btName="픽업조회"
+          btName="픽업 주문 조회"
           reBtId={1}
           active={activeNavBt === 1}
           onClick={() => {
@@ -45,7 +45,7 @@ const OrderPage = () => {
           }}
         />
         <ReviewBt
-          btName="배송조회"
+          btName="배달 주문 조회"
           reBtId={2}
           active={activeNavBt === 2}
           onClick={() => handleBtClick(2)}

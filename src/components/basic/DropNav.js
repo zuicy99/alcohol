@@ -55,16 +55,15 @@ const DropNav = () => {
         onMouseEnter={handleMouseEnter1}
         onMouseLeave={handleMouseLeave1}
       >
-        <a href="/product">
+        <a href="/product?side=1">
           <h1>WHISKEY</h1>
         </a>
 
         <div className="dropdown-content">
-          <Link to="/product?side=0" id="all">
-            ALL
-          </Link>
-          <Link to="/product?side=1">중분류1</Link>
-          <Link to="/product?side=2">중분류2</Link>
+          <Link to="/product?side=1">ALL</Link>
+          <Link to="/product?side=2">싱글몰트</Link>
+          <Link to="/product?side=3">브랜디드</Link>
+          <Link to="/product?side=4">버번</Link>
         </div>
       </DropStyle>
       <DropStyle
@@ -76,9 +75,11 @@ const DropNav = () => {
           <h1>WINE</h1>
         </a>
         <div className="dropdown-content">
-          <Link to="/product/clean">ALL</Link>
-          <Link to="/product/clean">중분류1</Link>
-          <Link to="/product/clean">중분류2</Link>
+          <Link to="/product/side=1">ALL</Link>
+          <Link to="/product/side=2">레드 와인</Link>
+          <Link to="/product/side=3">화이트 와인</Link>
+          <Link to="/product/side=4">스파클링 와인</Link>
+          <Link to="/product/side=5">로제 와인</Link>
         </div>
       </DropStyle>
       <DropStyle
@@ -89,26 +90,8 @@ const DropNav = () => {
         <a href="/LIQUEUR">
           <h1>LIQUEUR</h1>
         </a>
-        <div className="dropdown-content">
-          <Link to="/product/clean">ALL</Link>
-          <Link to="/product/clean">중분류1</Link>
-          <Link to="/product/clean">중분류2</Link>
-        </div>
       </DropStyle>
-      <DropStyle
-        isOpen={isDropdownOpen4}
-        onMouseEnter={handleMouseEnter4}
-        onMouseLeave={handleMouseLeave4}
-      >
-        <a href="/COGNAC">
-          <h1>COGNAC</h1>
-        </a>
-        <div className="dropdown-content">
-          <Link to="/product/clean">ALL</Link>
-          <Link to="/product/clean">중분류1</Link>
-          <Link to="/product/clean">중분류2</Link>
-        </div>
-      </DropStyle>
+
       <DropStyle
         isOpen={isDropdownOpen5}
         onMouseEnter={handleMouseEnter5}
@@ -119,8 +102,9 @@ const DropNav = () => {
         </a>
         <div className="dropdown-content">
           <Link to="/product/clean">ALL</Link>
-          <Link to="/product/clean">중분류1</Link>
-          <Link to="/product/clean">중분류2</Link>
+          <Link to="/product/clean">꼬냑</Link>
+          <Link to="/product/clean">깔바도스</Link>
+          <Link to="/product/clean">아르마냑</Link>
         </div>
       </DropStyle>
     </DropWrap>

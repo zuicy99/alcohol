@@ -3,15 +3,14 @@ import { Common } from "../CommonCss";
 
 export const ItemWrap = styled.div`
   padding: 120px;
-  /* border-top: 1px solid; */
 `;
 export const ItemContent = styled.div`
   position: relative;
   width: 100%;
   display: flex;
   padding-bottom: 30px;
-
-  justify-content: space-between; /* 수정: .ItemContent에 적용 */
+  margin: 0 auto;
+  justify-content: space-between;
   img {
     width: 500px;
     height: 500px;
@@ -79,6 +78,15 @@ export const BigButton = styled.button`
   width: 240px;
   height: 49px;
   font-weight: bold;
+  cursor: pointer;
+`;
+export const SButton = styled.button`
+  width: 80px;
+  height: 30px;
+  font-size: 13px;
+  color: ${Common.color.p900};
+  background: transparent;
+  border: 1px solid ${Common.color.b900};
   cursor: pointer;
 `;
 

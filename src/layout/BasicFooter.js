@@ -58,7 +58,7 @@ const BasicFooter = () => {
         {/* </div> */}
         <ul className="company-nav">
           <li>
-            <a href="/">
+            <a href="/paycom">
               <p>매장안내</p>
             </a>
             <p className="l">|</p>

@@ -73,7 +73,7 @@ const BasicHeader = () => {
             </Link>
           </div>
           <div className="rigth-bottom-nav">
-            <Link to="/">
+            <Link to="/storeMap">
               <img
                 src={process.env.PUBLIC_URL + "/images/map.png"} // 수정된 부분
                 style={{ width: "28px", height: "auto" }}

@@ -11,16 +11,14 @@ import {
 } from "../../styles/product/proWrapCss";
 import ProSearch from "../../components/product/ProSearch";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeaderNav from "../../components/basic/HeaderNav";
+import { DropWrap } from "../../styles/basic/dropNavCss";
+import { HeaderNavWrap } from "../../styles/product/proNavCss";
+import { PB30 } from "../../styles/basic";
+import { MarginB20, MarginB40 } from "../../styles/common/reviewProductCss";
+import HeaderNavPull from "../../components/basic/HeaderNavPull";
 
-const ProductPage = () => {
-  // side => Param의 숫자인거임
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const side = parseInt(queryParams.get("side"));
-
-  const navigate = useNavigate();
-
-  const [activeSide, setActiveSide] = useState(side);
+const ProductPickPage = () => {
   const [selecteOption, setSelecteOption] = useState(0);
   const [searchText, setSearchText] = useState("");
 
@@ -32,13 +30,6 @@ const ProductPage = () => {
   const handleSearchText = e => {
     setSearchText(e.target.value);
     // console.log("검색어 입력", searchText);
-  };
-
-  const handleClick = sideId => {
-    setActiveSide(sideId);
-    console.log("선택된 사이드바", sideId);
-    // query도 바껴야함 지금 안바뀜
-    navigate(`/product?side=${sideId}`);
   };
 
   // 검색 버튼 클릭시 처리
@@ -53,44 +44,18 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
-    console.log("검색어,정렬", searchText, selecteOption);
-    setActiveSide(side);
-  }, [searchText, selecteOption, side]);
+    // console.log("검색어,정렬", searchText, selecteOption);
+  }, [searchText, selecteOption]);
 
   return (
     <ProductWrap>
-      <SideBar>
-        <SideTitle sideTitle="WHISKEY" />
-        <hr />
-        <div className="side-nav">
-          {console.log(`activeSide ${activeSide}`)}
-          <SideBt
-            sidenNm="ALL"
-            sideId={1}
-            active={activeSide === 1} // 고유 숫자와 비교
-            onClick={() => handleClick(1)} // 고유 숫자 전달
-          />
-          <SideBt
-            sidenNm="싱글몰트"
-            sideId={2}
-            active={activeSide === 2}
-            onClick={() => handleClick(2)}
-          />
-          <SideBt
-            sidenNm="블렌디드"
-            sideId={3}
-            active={activeSide === 3}
-            onClick={() => handleClick(3)}
-          />
-          <SideBt
-            sidenNm="버번"
-            sideId={4}
-            active={activeSide === 4}
-            onClick={() => handleClick(4)}
-          />
-        </div>
-      </SideBar>
       <ProListWrap>
+        <HeaderNavWrap>
+          <PB30>픽업배송</PB30>
+        </HeaderNavWrap>
+        <MarginB40 />
+        <HeaderNavPull />
+        <MarginB40 />
         {/* 검색어, 정렬 */}
         <ProSearch
           selecteOption={selecteOption}
@@ -109,4 +74,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductPickPage;

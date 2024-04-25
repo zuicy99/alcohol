@@ -23,6 +23,10 @@ export const PB20 = styled.p`
 export const P16 = styled.p`
   font-size: 16px;
 `;
+export const PB16 = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+`;
 export const P13 = styled.p`
   font-size: 13px;
 `;

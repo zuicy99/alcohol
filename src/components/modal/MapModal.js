@@ -80,6 +80,7 @@ export const MapModal = ({ onClose }) => {
               <MapPlaceInfo
                 key={index}
                 place={place}
+                onClose={onClose}
                 onClick={() => handlePlaceClick(index)} // 인덱스를 클릭 핸들러에 전달합니다.
                 isActive={selectedIndex === index} // 현재 인덱스가 선택된 인덱스와 일치하는지 확인하여 isActive props를 설정합니다.
               />

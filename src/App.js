@@ -17,6 +17,9 @@ import { RecoilRoot } from "recoil";
 import CartPage from "./pages/cart/CartPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import OrderPage from "./pages/order/OrderPage";
+import ProductPickPage from "./pages/product/ProductPickPage";
+import PayComplet from "./pages/payment/PayComplet";
+import StoreMapPage from "./pages/mypage/outlet/StoreMapPage";
 
 const App = () => {
   // const listdata = await getSearchName();
@@ -27,11 +30,17 @@ const App = () => {
       <BasicLayout>
         <Routes>
           <Route path="/" element={<Main />}></Route>
-          <Route path="/product" element={<ProductPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/singup" element={<SignupPage />}></Route>
+
+          <Route path="/product" element={<ProductPage />}></Route>
+          <Route path="/pick" element={<ProductPickPage />}></Route>
+          <Route path="/item" element={<DetailedItemPage />}></Route>
+
           <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/pay" element={<PaymentPage />}></Route>
+          <Route path="/paycom" element={<PayComplet />}></Route>
+          <Route path="/storeMap" element={<StoreMapPage />}></Route>
 
           {/* 마이페이지 */}
           <Route path="/mypage/" element={<MyPage />}>
@@ -41,7 +50,6 @@ const App = () => {
             <Route path="createReview" element={<CreateReview />}></Route>
           </Route>
 
-          <Route path="/item" element={<DetailedItemPage />}></Route>
           <Route path="/intro" element={<Intro />}></Route>
           <Route path="*" element={<h1>파일이없네요.</h1>}></Route>
         </Routes>
