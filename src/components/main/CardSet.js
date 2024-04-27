@@ -1,11 +1,27 @@
 import styled from "@emotion/styled/macro";
-import React from "react";
+import React, { useState } from "react";
 import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
 import { Common } from "../../styles/CommonCss";
 import mainProductData from "../../mock/mainProductData.json";
 
+const initState = [
+  {
+    id: 0,
+    name: "",
+    maincategory: "",
+    subcategory: "",
+    content: "",
+    aroma: "",
+    taste: "",
+    finish: "",
+    nation: "",
+    picture: "",
+  },
+];
 const CardSet = () => {
+  const [newData, setNewData] = useState(initState);
   const mainText = "ORDER-LIST";
+
   const CardsWrapper = styled.div`
     display: flex;
     justify-content: space-around;

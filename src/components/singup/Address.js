@@ -9,15 +9,15 @@ import { postCodeStyle, themeObj } from "../../styles/sign/signArea";
 const Address = ({ onAddressChange }) => {
   //   const [zonecode, setZonecode] = useState("");
   const [address, setAddress] = useState("");
+  const [last, setLast] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [detailedAddress, setDetailedAddress] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const completeHandler = data => {
-    const { address, zonecode } = data;
-    // setZonecode(zonecode);
+    const { address, zonecode, last } = data;
     setAddress(address);
-    onAddressChange({ zonecode, address }); // 부모 컴포넌트에 주소 정보 전달
+    setLast(last); // lastaddress로 수정
+    onAddressChange({ zonecode, address, last }); // lastaddress로 수정
     setIsOpen(false);
   };
 
@@ -34,16 +34,15 @@ const Address = ({ onAddressChange }) => {
     setIsModalOpen(true);
   };
 
-  const inputChangeHandler = event => {
-    setDetailedAddress(event.target.value);
-  };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+  const inputChangeHandler = event => {
+    setLast(event.target.value);
   };
 
   return (
