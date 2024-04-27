@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import React from "react";
+import React, { useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
@@ -7,7 +7,23 @@ import useCustomState from "../../hooks/useCustomState";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
 
+const initState = [
+  {
+    id: 0,
+    name: "",
+    maincategory: "",
+    subcategory: "",
+    content: "",
+    aroma: "",
+    taste: "",
+    finish: "",
+    nation: "",
+    picture: "",
+  },
+];
+
 const Main = () => {
+  const [newData, setNewData] = useState(initState);
   return (
     <MainWrap>
       <div className="main-header">

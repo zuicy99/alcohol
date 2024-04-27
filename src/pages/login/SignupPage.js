@@ -1,83 +1,96 @@
 import { Button, Checkbox, Form, Input, Select } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Common } from "../../styles/CommonCss";
 import styled from "@emotion/styled/macro";
-import Address from "../../components/singup/Address";
+
 import { areaStyle, buttonPrimaryStyle } from "../../styles/sign/signArea";
 import { P20, SignWrap } from "../../styles/basic";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import Address from "../../components/singup/Address";
+import { postSign } from "../../api/signUpApi";
 
 const initState = {
-  nicname: "",
-  birth: "",
-  phoneNumber: "",
-
   email: "",
+  nickname: "",
   password: "",
+  passwordch: "",
   address: "",
+  lastaddress: "",
+  gender: "",
+  birthdate: "",
+  phone: "",
 };
 const SignupPage = () => {
   const navigate = useNavigate();
-  const [address, setAddress] = useState("");
   const [memberInfo, setMemberInfo] = useState(initState);
+
+  const [address, setAddress] = useState("");
+  const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
-
-  const handleEmailChange = e => {
-    setEmail(e.target.value);
-  };
-
-  const handleCheckDuplicate = async Check => {
-    setEmail(Check);
-    console.log("중복검사할 이메일:", email);
-  };
-
-  const updateAddressInfo = ({ address }) => {
-    setAddress(address);
-  };
-
-  const onFinish = async values => {
-    try {
-      // Form에서 수집한 데이터
-      const formData = {
-        nicname: values.nicname,
-        birth: values.birth,
-        phoneNumber: values.phoneNumber,
-        email: values.email,
-        password: values.password,
-        address: address, // 주소 정보는 별도로 수집된 상태값을 사용
-      };
-      console.log("formData:", formData);
-      // 데이터 전송 예시: axios 라이브러리 등을 사용하여 백엔드 API로 데이터 전송
-      const response = await axios.post("/api/signup", formData);
-
-      // 회원가입이 성공하면 다음 페이지로 이동
-      navigate("/login");
-
-      // 반환된 데이터 사용
-      const responseData = response.data;
-      // responseData를 원하는 변수에 저장하고 사용할 수 있음
-    } catch (error) {
-      // 데이터 전송 중 오류 발생 시 처리
-      console.error("회원가입 오류:", error);
-    }
-  };
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleClickSearch = e => {
     e.preventDefault();
 
     // Form 데이터를 수집하여 확인
     const formData = {
-      nicname: memberInfo.nicname,
-      birth: memberInfo.birth,
-      phoneNumber: memberInfo.phoneNumber,
       email: memberInfo.email,
       password: memberInfo.password,
-      address: address,
+      passwordch: memberInfo.password,
+      birthdate: memberInfo.birthdate,
+      nicname: memberInfo.nicname,
+      phone: memberInfo.phone,
+      gender: memberInfo.gender,
+      address: memberInfo.address,
+      lastaddress: memberInfo.address,
     };
     console.log("현재 입력된 값:", formData);
+  };
+
+  const [lastaddress, setlastaddress] = useState("");
+
+  const updateAddressInfo = ({ address }) => {
+    setAddress(address);
+  };
+
+  const onFinish = values => {
+    console.log("현재 입력된 값:", values);
+    postSign({ address, values, successFn, failFn, errorFn });
+    // navigate("/login");
+  };
+
+  const handleGenderChange = value => {
+    setGender(value); // 성별 상태 업데이트
+  };
+
+  const fetchData = () => {
+    postSign({
+      successFn,
+      failFn,
+      errorFn,
+    });
+  };
+  const successFn = data => {
+    // console.log("successFn : ", data);
+    setMemberInfo(data);
+    fetchData();
+  };
+
+  const failFn = data => {
+    // console.log("failFn : ", data);
+    alert("failFn : 데이터 호출에 실패하였습니다.");
+  };
+
+  const errorFn = data => {
+    // console.log("errorFn : ", data);
+    alert("서버상태 불안정 그래서, 데모테스트했음.");
+    setMemberInfo(data);
   };
 
   return (
@@ -99,13 +112,15 @@ const SignupPage = () => {
             className="login-form"
             initialValues={{
               remember: true,
-              nicname: memberInfo.nicname,
-              birth: memberInfo.birth,
-              phoneNumber: memberInfo.phoneNumber,
-
               email: memberInfo.email,
               password: memberInfo.password,
+              passwordch: memberInfo.password,
+              birthdate: memberInfo.birthdate,
+              nickname: memberInfo.nickname,
+              phone: memberInfo.phone,
+              gender: memberInfo.gender,
               address: memberInfo.address,
+              lastaddress: memberInfo.lastaddress,
             }}
             onFinish={onFinish}
           >
@@ -114,7 +129,7 @@ const SignupPage = () => {
                 본인인증정보
               </P20>
               <Form.Item
-                name="nicname"
+                name="nickname"
                 rules={[
                   {
                     required: true,
@@ -130,11 +145,15 @@ const SignupPage = () => {
                   },
                 ]}
               >
-                <Input style={areaStyle} placeholder="닉네임" />
+                <Input
+                  style={areaStyle}
+                  placeholder="닉네임"
+                  onChange={e => setNickname(e.target.value)}
+                />
               </Form.Item>
               <div style={{ display: "flex" }}>
                 <Form.Item
-                  name="birth"
+                  name="birthdate"
                   rules={[
                     {
                       required: true,
@@ -192,7 +211,8 @@ const SignupPage = () => {
                 >
                   <Input
                     style={{ width: 520, height: 60, fontSize: "20px" }}
-                    placeholder="생년월일(6자리)"
+                    placeholder="생년월일(8자리)"
+                    onChange={e => setBirthdate(e.target.value)}
                   />
                 </Form.Item>
                 <Form.Item>
@@ -207,28 +227,16 @@ const SignupPage = () => {
                       borderRadius: "20px",
                     }}
                     placeholder="성별"
+                    onChange={handleGenderChange}
                   >
-                    <Select.Option value="w">여성</Select.Option>
-                    <Select.Option value="m">남성</Select.Option>
+                    <Select.Option value="FEMAIL">여성</Select.Option>
+                    <Select.Option value="MALE">남성</Select.Option>
                   </Select>
                 </Form.Item>
               </div>
               <div style={{ display: "flex" }}>
-                <Form.Item name="Number">
-                  <Input
-                    style={{
-                      width: "110px",
-                      height: "60px",
-                      marginRight: "8px",
-                      fontSize: "20px",
-                    }}
-                    placeholder="010"
-                    defaultValue="010"
-                    // defaultValue="010"
-                  />
-                </Form.Item>
                 <Form.Item
-                  name="phoneNumber"
+                  name="phone"
                   rules={[
                     {
                       required: true,
@@ -252,7 +260,7 @@ const SignupPage = () => {
                     // defaultValue="010"
                     style={{ width: 520, height: 60, fontSize: "20px" }}
                     placeholder="전화번호"
-                    // defaultValue="010"
+                    onChange={e => setPhone(e.target.value)}
                   />
                 </Form.Item>
               </div>
@@ -287,26 +295,9 @@ const SignupPage = () => {
               >
                 <Input
                   placeholder="이메일(대소문자를 확인해 주세요)"
-                  style={{ width: 520, height: 60, fontSize: "20px" }}
-                  onChange={handleEmailChange}
+                  style={areaStyle}
+                  onChange={e => setEmail(e.target.value)}
                 />
-                <Button
-                  // htmlType="submit"
-                  type="button"
-                  style={{
-                    width: "110px",
-                    height: "60px",
-                    backgroundColor: `${Common.color.p900}`,
-                    border: "none",
-                    marginLeft: "8px",
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  onClick={handleCheckDuplicate}
-                >
-                  중복검사
-                </Button>
               </Form.Item>
               <Form.Item
                 name="password"
@@ -321,9 +312,51 @@ const SignupPage = () => {
                   style={areaStyle}
                   type="password"
                   placeholder="비밀번호"
+                  onChange={e => setPassword(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="passwordch"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("비밀번호 다시 확인해주세요!"),
+                      );
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  style={areaStyle}
+                  onChange={e => setPassword(e.target.value)}
                 />
               </Form.Item>
               <Address onAddressChange={updateAddressInfo} />
+              <Form.Item
+                name="lastaddress"
+                rules={[
+                  {
+                    required: true,
+                    message: "상세주소를 입력하세요.",
+                  },
+                  {
+                    max: 10,
+                    message: "상세주소는 최대 10자까지 입력 가능합니다.",
+                  },
+                ]}
+              >
+                <Input
+                  style={{ height: 60, fontSize: "20px" }}
+                  onChange={e => setlastaddress(e.target.value)}
+                  placeholder="상세주소"
+                />
+              </Form.Item>
             </div>
             <Form.Item>
               <Button
