@@ -23,6 +23,16 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [memberInfo, setMemberInfo] = useState(initState);
+  const [email, setEmail] = useState("");
+
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
+  };
+
+  const handleCheckDuplicate = async Check => {
+    setEmail(Check);
+    console.log("중복검사할 이메일:", email);
+  };
 
   const updateAddressInfo = ({ address }) => {
     setAddress(address);
@@ -131,6 +141,10 @@ const SignupPage = () => {
                       message: "생년월일을 입력하세요.",
                     },
                     {
+                      pattern: /^[0-9]{6}$/,
+                      message: "숫자로 6자로 입력해주세요.",
+                    },
+                    {
                       pattern: /^[0-9]+$/,
                       message: "숫자만 입력하세요.",
                     },
@@ -138,11 +152,47 @@ const SignupPage = () => {
                       whitespace: true,
                       message: "공백만으로 만들 수 없습니다",
                     },
+                    {
+                      validator: (_, value) => {
+                        // 주민등록번호 문자열을 날짜로 변환
+                        const year = value.substr(0, 2);
+                        const month = value.substr(2, 2);
+                        const day = value.substr(4, 2);
+                        // 현재 날짜 구하기
+                        const currentDate = new Date();
+                        // 생년월일 계산
+                        const birthYear =
+                          parseInt(year) < 22
+                            ? 2000 + parseInt(year)
+                            : 1900 + parseInt(year);
+                        const birthDate = new Date(
+                          birthYear,
+                          parseInt(month) - 1,
+                          parseInt(day),
+                        );
+                        // 나이 계산
+                        const age =
+                          currentDate.getFullYear() - birthDate.getFullYear();
+                        // 생일이 지났는지 체크
+                        if (
+                          currentDate.getMonth() < birthDate.getMonth() ||
+                          (currentDate.getMonth() === birthDate.getMonth() &&
+                            currentDate.getDate() < birthDate.getDate())
+                        )
+                          if (age < 20) {
+                            // 20세 미만인 경우 에러 반환
+                            return Promise.reject(
+                              "20세 미만은 가입할 수 없습니다.",
+                            );
+                          }
+                        return Promise.resolve();
+                      },
+                    },
                   ]}
                 >
                   <Input
                     style={{ width: 520, height: 60, fontSize: "20px" }}
-                    placeholder="생년월일(8자리)"
+                    placeholder="생년월일(6자리)"
                   />
                 </Form.Item>
                 <Form.Item>
@@ -180,6 +230,10 @@ const SignupPage = () => {
                 <Form.Item
                   name="phoneNumber"
                   rules={[
+                    {
+                      required: true,
+                      message: "전화번호를 입력 해주세요",
+                    },
                     {
                       required: true,
                       message: "전화번호를 입력 해주세요",
@@ -233,12 +287,26 @@ const SignupPage = () => {
               >
                 <Input
                   placeholder="이메일(대소문자를 확인해 주세요)"
-                  style={areaStyle}
-                  onChange={e => {
-                    // setUsername(e.target.value);
-                    // emailCheck(e.target.value);
-                  }}
+                  style={{ width: 520, height: 60, fontSize: "20px" }}
+                  onChange={handleEmailChange}
                 />
+                <Button
+                  // htmlType="submit"
+                  type="button"
+                  style={{
+                    width: "110px",
+                    height: "60px",
+                    backgroundColor: `${Common.color.p900}`,
+                    border: "none",
+                    marginLeft: "8px",
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                  }}
+                  onClick={handleCheckDuplicate}
+                >
+                  중복검사
+                </Button>
               </Form.Item>
               <Form.Item
                 name="password"

@@ -46,7 +46,10 @@ const Main = () => {
         </a>
         <a
           href="/pick?main=메인카테1"
-          style={{ background: Common.color.f900 }}
+          style={{
+            background: Common.color.f900,
+            color: `${Common.color.p000}`,
+          }}
         >
           <div className="pickCard">
             <b>매장픽업</b>

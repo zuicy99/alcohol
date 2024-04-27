@@ -15,6 +15,7 @@ const Address = ({ onAddressChange }) => {
 
   const completeHandler = data => {
     const { address, zonecode } = data;
+
     // setZonecode(zonecode);
     setAddress(address);
     onAddressChange({ zonecode, address }); // 부모 컴포넌트에 주소 정보 전달
