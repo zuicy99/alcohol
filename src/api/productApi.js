@@ -31,11 +31,3 @@ export const postMainCate = async ({
     }
   }
 };
-
-// {
-//     "code": 7,
-//     "name": "서브미션 까베르네 소비뇽 750ml",
-//     "picture": "/resources/images/07.jpg",
-//     "price": 30000,
-//     "ratingaverage": 0.0
-// },

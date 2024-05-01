@@ -1,9 +1,8 @@
 import { ConfigProvider, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { MyreviewData, reviewData } from "../../../mock/CrtRvwData";
 import { Common } from "../../../styles/CommonCss";
 import { TableCustom } from "../../../styles/common/tableCss";
-import RvModal from "../../../components/mypage/RvModal";
+
 import { StarRev } from "../../../styles/common/StarCss";
 import { getReviewList } from "../../../api/reviewApi";
 
@@ -106,6 +105,7 @@ const MyReview = () => {
       }}
     >
       <TableCustom
+        // rowSelection={rowSelection}
         // rowSelection={rowSelection}
         columns={columns}
         dataSource={myReviewData}

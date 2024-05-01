@@ -148,18 +148,7 @@ const LoginPage = () => {
             </div>
           </Form.Item>
 
-          {/* <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Log in
-            </Button>
-            Or <a href="">register now!</a>
-          </Form.Item> */}
           <Form.Item>
-            {/* 버튼 style */}
             <Button
               type="primary"
               htmlType="submit"

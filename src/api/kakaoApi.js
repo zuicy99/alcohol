@@ -3,12 +3,11 @@ import { SERVER_URL } from "./config";
 
 SERVER_URL;
 
-const rest_api_key = "1fa3690e0a174b292ae2ddd530a03130";
 const redirect_uri = "http://localhost:3000/login";
 const auth_code_path = "https://kauth.kakao.com/oauth/authorize";
-
+const rest_api = process.env.rest_api_key;
 export const getKakaoLoginLink = () => {
-  const kakaoURL = `${auth_code_path}?client_id=${rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+  const kakaoURL = `${auth_code_path}?client_id=${rest_api}&redirect_uri=${redirect_uri}&response_type=code`;
   return kakaoURL;
 };
 
@@ -22,7 +21,7 @@ export const getAccessToken = async authCode => {
 
   const params = {
     grant_type: "authorization_code",
-    client_id: rest_api_key,
+    client_id: rest_api,
     redirect_uri: redirect_uri,
     code: authCode,
   };

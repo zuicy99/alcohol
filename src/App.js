@@ -21,10 +21,6 @@ import StoreMapPage from "./pages/mypage/outlet/StoreMapPage";
 import firebase from "firebase/compat/app";
 
 const App = () => {
-  // const listdata = await getSearchName();
-  // console.log(listdata);
-  console.log(firebase);
-
   return (
     <Wrap maxw={1920}>
       <BasicLayout>
