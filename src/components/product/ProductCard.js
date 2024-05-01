@@ -6,28 +6,24 @@ import { Common } from "../../styles/CommonCss";
 import { ProCardContainer } from "../../styles/product/proCardCss";
 import { Navigate, useNavigate } from "react-router";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   return (
     <ProCardContainer>
-      <a onClick={() => navigate(`/item`)}>
-        <img
-          className="card-img"
-          src={product.imageSrc}
-          alt={product.productNm}
-        />
+      <a onClick={() => navigate(`/item=${data.code}`)}>
+        <img className="card-img" src={data.picture} alt={data.productNm} />
       </a>
       <CardFlex>
         <div className="tagform">
           <img src="./images/star.png" alt="star" />
-          <p>{product.rating}</p>
+          <p>{data.ratingaverage}</p>
         </div>
       </CardFlex>
       <p className="productNm" style={{ color: Common.color.p900 }}>
-        {product.productNm}
+        {data.name}
       </p>
-      <p className="productNm">{product.subinfo}</p>
-      <h2 className="price">{product.price}원</h2>
+      <p className="productNm">{data.subinfo}</p>
+      <h2 className="price">{data.price}원</h2>
     </ProCardContainer>
   );
 };

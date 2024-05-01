@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../../api/config";
-import { getMostProduct } from "../../api/mainApi";
+import {
+  getMostProduct,
+  getNewProduct,
+  getRandProduct,
+} from "../../api/mainApi";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
 import { Common } from "../../styles/CommonCss";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
+import axios from "axios";
 
 const initState = [
   {
@@ -26,50 +31,51 @@ const initState = [
 const Main = () => {
   // const [mostData, setMostData] = useState(initState);
   const [mostData, setMostData] = useState([]);
-  const [data2, setData2] = useState([]);
-  const [data3, setData3] = useState([]);
-  const prefix = `${SERVER_URL}/alcohol`;
-  // useEffect를 사용하여 데이터를 가져옴
+  const [newdata, setNewData] = useState([]);
+  const [randdata, setRandData] = useState([]);
 
-  // 데이터를 가져오는 비동기 함수 정의
-  const fetchData1 = async () => {
-    // 데이터 가져오는 로직
-    const data = await fetch(`${prefix}/most`);
-    const jsonData = await data.json();
-    setMostData(jsonData);
-  };
-
-  const successFn = data => {
-    console.log("successFn : ", data);
-    setMostData(data);
-    // setServerData(Array(data.products.length).fill(false));
-  };
-  const failFn = data => {
-    console.log("failFn : ", data);
-    alert("failFn : 데이터 호출에 실패하였습니다.");
-  };
-
-  const errorFn = data => {
-    console.log("errorFn : ", data);
-    alert("서버상태 불안정 그래서, 데모테스트했음.");
-    setMostData(data);
-    // setServerData(Array(data.products.length).fill(false));
-  };
   useEffect(() => {
-    fetchData1();
-  }, []);
-  const fetchData = () => {
-    getMostProduct({
-      successFn,
-      failFn,
-      errorFn,
+    getRandProduct({
+      successFn: data => {
+        setRandData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
     });
-  };
-  useEffect(() => {
-    fetchData1();
-    // fetchData2();
-    // fetchData3();
   }, []);
+
+  useEffect(() => {
+    getMostProduct({
+      successFn: data => {
+        setMostData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    getNewProduct({
+      successFn: data => {
+        setNewData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
+    });
+  }, []);
+
   return (
     <MainWrap>
       <div className="main-header">
@@ -125,15 +131,15 @@ const Main = () => {
       </PickUpCard>
       <div style={{ padding: "30px 0" }}>
         <MainTitle mainText="오늘의 추천술" />
-        <CardSet data={mostData} />
+        <CardSet data={randdata} />
       </div>
       <div style={{ padding: "30px 0" }}>
         <MainTitle mainText="신제품 출시" />
-        <CardSet />
+        <CardSet data={newdata} />
       </div>
       <div style={{ padding: "30px 0" }}>
         <MainTitle mainText="HOT 인기제품" />
-        <CardSet />
+        <CardSet data={mostData} />
       </div>
     </MainWrap>
   );
