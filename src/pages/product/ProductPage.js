@@ -45,9 +45,6 @@ const ProductPage = () => {
   const handleClickSubmit = e => {
     e.preventDefault();
     setSearchText("");
-    // setSelecteOption(0);
-
-    // 사용자는 검색을 했다.
     // fetchData();
     console.log("나 돋보기 버튼", searchText, selecteOption);
   };
@@ -101,7 +98,7 @@ const ProductPage = () => {
         />
         <GridContainer>
           {mainProductData.map((product, index) => (
-            <ProductCard key={index} product={product} />
+            <ProductCard key={index} data={product} />
           ))}
         </GridContainer>
       </ProListWrap>
