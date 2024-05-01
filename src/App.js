@@ -20,10 +20,12 @@ import OrderPage from "./pages/order/OrderPage";
 import ProductPickPage from "./pages/product/ProductPickPage";
 import PayComplet from "./pages/payment/PayComplet";
 import StoreMapPage from "./pages/mypage/outlet/StoreMapPage";
+import firebase from "firebase/compat/app";
 
 const App = () => {
   // const listdata = await getSearchName();
   // console.log(listdata);
+  console.log(firebase);
 
   return (
     <Wrap maxw={1920}>
@@ -31,7 +33,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/singup" element={<SignupPage />}></Route>
+          <Route path="/signup" element={<SignupPage />}></Route>
 
           <Route path="/product" element={<ProductPage />}></Route>
           <Route path="/pick" element={<ProductPickPage />}></Route>

@@ -1,15 +1,17 @@
 import styled from "@emotion/styled/macro";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
 import useCustomState from "../../hooks/useCustomState";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
+import { getMostProduct } from "../../api/mainApi";
+import { SERVER_URL } from "../../api/config";
 
 const initState = [
   {
-    id: 0,
+    code: 0,
     name: "",
     maincategory: "",
     subcategory: "",
@@ -19,11 +21,57 @@ const initState = [
     finish: "",
     nation: "",
     picture: "",
+    price: 0,
   },
 ];
 
 const Main = () => {
-  const [newData, setNewData] = useState(initState);
+  // const [mostData, setMostData] = useState(initState);
+  const [mostData, setMostData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+  const prefix = `${SERVER_URL}/alcohol`;
+  // useEffect를 사용하여 데이터를 가져옴
+
+  // 데이터를 가져오는 비동기 함수 정의
+  const fetchData1 = async () => {
+    // 데이터 가져오는 로직
+    const data = await fetch(`${prefix}/most`);
+    const jsonData = await data.json();
+    setMostData(jsonData);
+  };
+
+  const successFn = data => {
+    console.log("successFn : ", data);
+    setMostData(data);
+    // setServerData(Array(data.products.length).fill(false));
+  };
+  const failFn = data => {
+    console.log("failFn : ", data);
+    alert("failFn : 데이터 호출에 실패하였습니다.");
+  };
+
+  const errorFn = data => {
+    console.log("errorFn : ", data);
+    alert("서버상태 불안정 그래서, 데모테스트했음.");
+    setMostData(data);
+    // setServerData(Array(data.products.length).fill(false));
+  };
+  useEffect(() => {
+    fetchData1();
+  }, []);
+  const fetchData = () => {
+    getMostProduct({
+      successFn,
+      failFn,
+      errorFn,
+    });
+  };
+  useEffect(() => {
+    fetchData1();
+    // fetchData2();
+    // fetchData3();
+  }, []);
   return (
     <MainWrap>
       <div className="main-header">
@@ -79,7 +127,7 @@ const Main = () => {
       </PickUpCard>
       <div style={{ padding: "30px 0" }}>
         <MainTitle mainText="오늘의 추천술" />
-        <CardSet />
+        <CardSet data={mostData} />
       </div>
       <div style={{ padding: "30px 0" }}>
         <MainTitle mainText="신제품 출시" />

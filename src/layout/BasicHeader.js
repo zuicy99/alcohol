@@ -1,14 +1,19 @@
 import styled from "@emotion/styled/macro";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Common } from "../styles/CommonCss";
 import { Link } from "react-router-dom";
 import DropNav from "../components/basic/DropNav";
 import UserDrop from "../components/basic/UserDrop";
 import useCustomMove from "../hooks/useCustomMove";
 import NavDropdown from "../components/basic/DropNavNew";
+import useCustomLogin from "../hooks/useCustomLogin";
+import { useRecoilState } from "recoil";
+import { atomSignState } from "../recoil/atom/loginState";
 
 const BasicHeader = () => {
   const { moveToLogin } = useCustomMove();
+
+  const { doLogout, loginState, isLogin } = useCustomLogin();
 
   const HeaderWrap = styled.div`
     position: relative;
@@ -60,13 +65,23 @@ const BasicHeader = () => {
         </div>
         <div>
           <div className="right-top-nav">
-            <Link to="/login">
-              <p>로그인</p>
-            </Link>
-            <p>|</p>
-            <Link to="/singup">
-              <p>회원가입</p>
-            </Link>
+            {/* {console.log("아", loginState, isLogin)} */}
+            {isLogin ? (
+              <Link onClick={doLogout}>
+                <p>로그아웃</p>
+              </Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <p>로그인</p>
+                </Link>
+                <p>|</p>
+                <Link to="/signup">
+                  <p>회원가입</p>
+                </Link>
+              </>
+            )}
+
             <p style={{ color: Common.color.f900 }}>|</p>
             <Link to="/">
               <p>고객센터</p>

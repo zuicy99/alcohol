@@ -4,23 +4,34 @@ import DaumPostcode from "react-daum-postcode";
 import styled from "@emotion/styled/macro";
 import { Common } from "../../styles/CommonCss";
 import { postCodeStyle, themeObj } from "../../styles/sign/signArea";
-// import { MyInput, postCodeStyle, themeObj } from "../../styles/signup/signup";
+import { useRecoilState } from "recoil";
+import { addressState } from "../../recoil/atom/addressState";
 
-const Address = ({ onAddressChange }) => {
-  //   const [zonecode, setZonecode] = useState("");
-  const [address, setAddress] = useState("");
+const Address = ({ onAddressChange, name }) => {
+  const [address, setAddress] = useRecoilState(addressState);
   const [last, setLast] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [values, setValues] = useState({}); // values 객체 추가
 
   const completeHandler = data => {
     const { address, zonecode } = data;
 
-    // setZonecode(zonecode);
     setAddress(address);
-    setLast(last); // lastaddress로 수정
-    onAddressChange({ zonecode, address, last }); // lastaddress로 수정
+    setLast(address); // lastaddress를 address와 동일하게 설정
+    onAddressChange({ zonecode, address, last: address }); // lastaddress를 address와 동일하게 설정
     setIsOpen(false);
+
+    // 주소 정보를 values 객체에 추가
+    setValues(prevValues => ({
+      ...prevValues,
+      address: address,
+    }));
+  };
+
+  // 주소 입력 변경 핸들러
+  const inputChangeHandler = event => {
+    setAddress({ ...address, last: event.target.value }); // Recoil 상태 업데이트
   };
 
   const closeHandler = state => {
@@ -43,9 +54,6 @@ const Address = ({ onAddressChange }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const inputChangeHandler = event => {
-    setLast(event.target.value);
-  };
 
   return (
     <>
@@ -53,9 +61,9 @@ const Address = ({ onAddressChange }) => {
         <Form.Item valuePropName="zipCode">
           <Input
             style={{ width: 520, height: 60, fontSize: "20px" }}
-            // value={zonecode}
             value={address}
             placeholder="주소"
+            name="address"
           />
         </Form.Item>
 

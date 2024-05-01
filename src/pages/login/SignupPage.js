@@ -11,6 +11,8 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import Address from "../../components/singup/Address";
 import { postSign } from "../../api/signUpApi";
+import { useRecoilState } from "recoil";
+import { addressState } from "../../recoil/atom/addressState";
 
 const initState = {
   email: "",
@@ -18,7 +20,7 @@ const initState = {
   password: "",
   passwordch: "",
   address: "",
-  lastaddress: "",
+  address2: "",
   gender: "",
   birthdate: "",
   phone: "",
@@ -27,71 +29,65 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const [memberInfo, setMemberInfo] = useState(initState);
 
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [phone, setPhone] = useState("");
-
-  const handleClickSearch = e => {
-    e.preventDefault();
-
-    // Form 데이터를 수집하여 확인
-    const formData = {
-      email: memberInfo.email,
-      password: memberInfo.password,
-      passwordch: memberInfo.password,
-      birthdate: memberInfo.birthdate,
-      nicname: memberInfo.nicname,
-      phone: memberInfo.phone,
-      gender: memberInfo.gender,
-      address: memberInfo.address,
-      lastaddress: memberInfo.address,
-    };
-    console.log("현재 입력된 값:", formData);
-  };
-
+  const [address, setAddress] = useRecoilState(addressState);
+  const [values, setValues] = useState({});
   const [lastaddress, setlastaddress] = useState("");
 
-  const updateAddressInfo = ({ address }) => {
+  const updateAddressInfo = ({ zonecode, address }) => {
+    // 주소 정보 업데이트
+    // setZonecode(zonecode);
     setAddress(address);
-  };
-
-  const onFinish = values => {
-    console.log("현재 입력된 값:", values);
-    postSign({ address, values, successFn, failFn, errorFn });
-    // navigate("/login");
   };
 
   const handleGenderChange = value => {
     setGender(value); // 성별 상태 업데이트
+    setValues(prevValues => ({
+      ...prevValues,
+      gender: value,
+    }));
   };
-
-  const fetchData = () => {
+  const onFinish = values => {
     postSign({
+      values,
+      address,
+      withdrawStatus: "Y",
       successFn,
       failFn,
       errorFn,
     });
   };
+
   const successFn = data => {
     // console.log("successFn : ", data);
     setMemberInfo(data);
-    fetchData();
+    navigate(`/login`);
   };
 
   const failFn = data => {
     // console.log("failFn : ", data);
-    alert("failFn : 데이터 호출에 실패하였습니다.");
+    alert("회원가입 실패");
   };
 
   const errorFn = data => {
     // console.log("errorFn : ", data);
-    alert("서버상태 불안정 그래서, 데모테스트했음.");
+    alert("서버상태 불안정 다음에 회원가입 시도");
     setMemberInfo(data);
   };
+
+  useEffect(() => {
+    // address 상태가 변경될 때마다 initialValues 업데이트
+    setMemberInfo(prevState => ({
+      ...prevState,
+      address: address,
+    }));
+  }, [address]);
 
   return (
     <div>
@@ -119,7 +115,7 @@ const SignupPage = () => {
               nickname: memberInfo.nickname,
               phone: memberInfo.phone,
               gender: memberInfo.gender,
-              address: memberInfo.address,
+              address: address,
               lastaddress: memberInfo.lastaddress,
             }}
             onFinish={onFinish}
@@ -160,8 +156,8 @@ const SignupPage = () => {
                       message: "생년월일을 입력하세요.",
                     },
                     {
-                      pattern: /^[0-9]{6}$/,
-                      message: "숫자로 6자로 입력해주세요.",
+                      pattern: /^[0-9]{8}$/,
+                      message: "숫자로 8자로 입력해주세요.",
                     },
                     {
                       pattern: /^[0-9]+$/,
@@ -215,7 +211,7 @@ const SignupPage = () => {
                     onChange={e => setBirthdate(e.target.value)}
                   />
                 </Form.Item>
-                <Form.Item>
+                <Form.Item name="gender">
                   <Select
                     style={{
                       width: "110px",
@@ -227,7 +223,7 @@ const SignupPage = () => {
                       borderRadius: "20px",
                     }}
                     placeholder="성별"
-                    onChange={handleGenderChange}
+                    onClick={handleGenderChange}
                   >
                     <Select.Option value="FEMAIL">여성</Select.Option>
                     <Select.Option value="MALE">남성</Select.Option>
@@ -306,6 +302,12 @@ const SignupPage = () => {
                     required: true,
                     message: "비밀번호를 입력해 주세요!",
                   },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
+                    message:
+                      "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해야 합니다.",
+                  },
                 ]}
               >
                 <Input.Password
@@ -320,26 +322,28 @@ const SignupPage = () => {
                 dependencies={["password"]}
                 hasFeedback
                 rules={[
+                  {
+                    required: true,
+                    message: "비밀번호 확인을 입력해 주세요!",
+                  },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(
-                        new Error("비밀번호 다시 확인해주세요!"),
+                        new Error("비밀번호가 일치하지 않습니다."),
                       );
                     },
                   }),
                 ]}
               >
-                <Input.Password
-                  style={areaStyle}
-                  onChange={e => setPassword(e.target.value)}
-                />
+                <Input.Password style={areaStyle} placeholder="비밀번호 확인" />
               </Form.Item>
+
               <Address onAddressChange={updateAddressInfo} />
               <Form.Item
-                name="lastaddress"
+                name="address2"
                 rules={[
                   {
                     required: true,
@@ -363,6 +367,7 @@ const SignupPage = () => {
                 type="primary"
                 htmlType="submit"
                 style={buttonPrimaryStyle}
+                // onClick={handleClickSearch}
               >
                 회원가입
               </Button>

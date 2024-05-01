@@ -1,21 +1,68 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled/macro";
 import { Button, Checkbox, Flex, Form, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import { useNavigate } from "react-router-dom";
 import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
-import useCustomMove from "../../hooks/useCustomMove";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import { postLogin } from "../../api/signUpApi";
 
+const initState = {
+  email: "",
+  password: "",
+};
 const LoginPage = () => {
   const navigate = useNavigate();
-  const moveToMain = useCustomMove();
-  const onFinish = values => {
-    console.log("Received values of form: ", values);
+  const [loginParam, setLoginParam] = useState(initState);
+  const handleChange = e => {
+    // e.target.name
+    // e.target.value
+    loginParam[e.target.name] = e.target.value;
+    setLoginParam({ ...loginParam });
+  };
+
+  // 커스터훅 사용하기
+  const { doLogin, moveToPath } = useCustomLogin();
+  // 커스텀 훅 사용하기
+
+  const onFinish = async values => {
+    try {
+      // 로그인 요청
+      const result = await postLogin({
+        loginParam,
+        successFn,
+        failFn,
+        errorFn: errorFn,
+      });
+
+      // 로그인 성공 시 처리
+      successFn(result);
+
+      // 로그인 후 작업 수행
+      doLogin({ loginParam });
+    } catch (error) {
+      // 로그인 실패 시 처리
+      failFn(error);
+    }
+  };
+  const successFn = result => {
+    console.log("성공", result);
+    moveToPath("/");
+  };
+
+  const failFn = result => {
+    console.log("실패", result);
+    alert("이메일 및 비밀번호 확인하세요.");
+  };
+
+  const errorFn = result => {
+    console.log("서버 에러", result);
   };
 
   return (
     <div>
+      {console.log("로그인인포", loginParam)}
       <LoginWrap>
         <LoginTitle>
           <p className="logo">ALCHOHOL HOLIC</p>
@@ -30,11 +77,13 @@ const LoginPage = () => {
           className="login-form"
           initialValues={{
             remember: true,
+            email: loginParam.email,
+            password: loginParam.password,
           }}
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -45,6 +94,8 @@ const LoginPage = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="이메일"
+              name="email"
+              onChange={handleChange}
               style={{
                 width: "100%",
                 height: "60px",
@@ -70,6 +121,8 @@ const LoginPage = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="비밀번호"
+              name="password"
+              onChange={handleChange}
             />
           </Form.Item>
 
@@ -124,17 +177,14 @@ const LoginPage = () => {
             <div className="line"></div>
           </div>
         </LoginTitle>
-        <LoginBt
-          onClick={() => moveToMain()}
-          style={{ background: `${Common.color.y900}`, border: "none" }}
-        >
+        <LoginBt style={{ background: `${Common.color.y900}`, border: "none" }}>
           <img
             src={process.env.PUBLIC_URL + "/images/kakao.png"} // 수정된 부분
             alt="heart"
           />
           카카오 3초만에 시작하기
         </LoginBt>
-        <LoginBt onClick={() => navigate(`/`)}>이메일로 가입하기</LoginBt>
+        <LoginBt>이메일로 가입하기</LoginBt>
       </LoginWrap>
     </div>
   );
