@@ -1,13 +1,11 @@
-import styled from "@emotion/styled/macro";
 import React, { useEffect, useState } from "react";
-import { Common } from "../../styles/CommonCss";
+import { SERVER_URL } from "../../api/config";
+import { getMostProduct } from "../../api/mainApi";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
-import useCustomState from "../../hooks/useCustomState";
+import { Common } from "../../styles/CommonCss";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
-import { getMostProduct } from "../../api/mainApi";
-import { SERVER_URL } from "../../api/config";
 
 const initState = [
   {
