@@ -53,7 +53,7 @@ const BasicFooter = () => {
         {/* <div className="left-logo"> */}
         <a href="">
           <h1>ALCHOHOL</h1>
-          <h1>HOLIC</h1>
+          <h1>FREE</h1>
         </a>
         {/* </div> */}
         <ul className="company-nav">

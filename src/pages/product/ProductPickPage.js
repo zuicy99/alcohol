@@ -10,12 +10,10 @@ import {
   ProductWrap,
 } from "../../styles/product/proWrapCss";
 import ProSearch from "../../components/product/ProSearch";
-import { useLocation, useNavigate } from "react-router-dom";
-import HeaderNav from "../../components/basic/HeaderNav";
-import { DropWrap } from "../../styles/basic/dropNavCss";
+
 import { HeaderNavWrap } from "../../styles/product/proNavCss";
 import { PB30 } from "../../styles/basic";
-import { MarginB20, MarginB40 } from "../../styles/common/reviewProductCss";
+import { MarginB40 } from "../../styles/common/reviewProductCss";
 import HeaderNavPull from "../../components/basic/HeaderNavPull";
 
 const ProductPickPage = () => {
@@ -66,7 +64,7 @@ const ProductPickPage = () => {
         />
         <GridContainer>
           {mainProductData.map((product, index) => (
-            <ProductCard key={index} product={product} />
+            <ProductCard key={index} data={product} />
           ))}
         </GridContainer>
       </ProListWrap>

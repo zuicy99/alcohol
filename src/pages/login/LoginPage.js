@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { postLogin } from "../../api/signUpApi";
+import { getKakaoLoginLink } from "../../api/kakaoApi";
 
 const initState = {
   email: "",
@@ -15,17 +16,20 @@ const initState = {
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loginParam, setLoginParam] = useState(initState);
+  const kakaoLogin = getKakaoLoginLink();
+
   const handleChange = e => {
     // e.target.name
     // e.target.value
     loginParam[e.target.name] = e.target.value;
     setLoginParam({ ...loginParam });
   };
-
   // 커스터훅 사용하기
   const { doLogin, moveToPath } = useCustomLogin();
-  // 커스텀 훅 사용하기
-
+  const handleClick = () => {
+    const kakaoURL = getKakaoLoginLink();
+    window.location.href = kakaoURL;
+  };
   const onFinish = async values => {
     try {
       // 로그인 요청
@@ -177,7 +181,10 @@ const LoginPage = () => {
             <div className="line"></div>
           </div>
         </LoginTitle>
-        <LoginBt style={{ background: `${Common.color.y900}`, border: "none" }}>
+        <LoginBt
+          onClick={handleClick}
+          style={{ background: `${Common.color.y900}`, border: "none" }}
+        >
           <img
             src={process.env.PUBLIC_URL + "/images/kakao.png"} // 수정된 부분
             alt="heart"
