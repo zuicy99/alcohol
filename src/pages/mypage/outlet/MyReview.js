@@ -1,15 +1,41 @@
 import { ConfigProvider, Table } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MyreviewData, reviewData } from "../../../mock/CrtRvwData";
 import { Common } from "../../../styles/CommonCss";
 import { TableCustom } from "../../../styles/common/tableCss";
 import RvModal from "../../../components/mypage/RvModal";
 import { StarRev } from "../../../styles/common/StarCss";
+import { getReviewList } from "../../../api/reviewApi";
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
 };
+
+const initState = [
+  {
+    name: "더 페이머스 그라우스 700ml",
+    writing: "져라ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
+    grade: 4,
+    picture: "",
+  },
+];
 const MyReview = () => {
+  const [myReviewData, setmyReviewData] = useState(initState);
+
+  useEffect(() => {
+    getReviewList({
+      successFn: data => {
+        setmyReviewData(data);
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 시도");
+      },
+    });
+  }, []);
+
   const columns = [
     {
       title: "이미지",
@@ -22,7 +48,7 @@ const MyReview = () => {
             alt="리뷰 작성"
           />
           <StarRev>
-            {Array.from({ length: record.star }, (_, index) => (
+            {Array.from({ length: record.grade }, (_, index) => (
               <img
                 key={index}
                 src={process.env.PUBLIC_URL + "/images/star.png"}
@@ -38,7 +64,7 @@ const MyReview = () => {
       dataIndex: "productNm",
       render: (text, record) => (
         <div>
-          <p>{record.productNm}</p>
+          <p>{record.name}</p>
         </div>
       ),
     },
@@ -60,7 +86,7 @@ const MyReview = () => {
             justifyContent: "center",
           }}
         >
-          <p>{record.content}</p>
+          <p>{record.writing}</p>
         </div>
       ),
     },
@@ -82,7 +108,7 @@ const MyReview = () => {
       <TableCustom
         // rowSelection={rowSelection}
         columns={columns}
-        dataSource={MyreviewData}
+        dataSource={myReviewData}
         pagination={false}
       />
       {/* {showModal && <RvModal onClose={handleCloseModal} iOrder={0} />} */}

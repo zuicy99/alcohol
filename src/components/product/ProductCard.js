@@ -10,7 +10,7 @@ const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   return (
     <ProCardContainer>
-      <a onClick={() => navigate(`/item=${data.code}`)}>
+      <a onClick={() => navigate(`/item`)}>
         <img className="card-img" src={data.picture} alt={data.productNm} />
       </a>
       <CardFlex>

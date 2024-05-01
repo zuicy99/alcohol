@@ -11,6 +11,7 @@ import { Common } from "../../styles/CommonCss";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router";
 
 const initState = [
   {
@@ -29,6 +30,7 @@ const initState = [
 ];
 
 const Main = () => {
+  const navigate = useNavigate();
   // const [mostData, setMostData] = useState(initState);
   const [mostData, setMostData] = useState([]);
   const [newdata, setNewData] = useState([]);
@@ -113,7 +115,7 @@ const Main = () => {
           </div>
         </a>
         <a
-          href="/pick?main=메인카테1"
+          onClick={() => navigate(`/pick`)}
           style={{
             background: Common.color.f900,
             color: `${Common.color.p000}`,
