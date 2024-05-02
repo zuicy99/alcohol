@@ -1,10 +1,9 @@
-import { Navigate, useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { atomSignState } from "../recoil/atom/loginState";
 
-import { removeCookie, setCookie } from "../util/cookieUtil";
 import { postLogin } from "../api/signUpApi";
-import { useState } from "react";
+import { removeCookie, setCookie } from "../util/cookieUtil";
+import { atomSignState } from "../atom/loginState";
 
 const useCustomLogin = () => {
   // 패스 이동하기

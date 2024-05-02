@@ -1,11 +1,10 @@
+import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
-import { Form, Input, Button, Modal } from "antd";
 import DaumPostcode from "react-daum-postcode";
-import styled from "@emotion/styled/macro";
+import { useRecoilState } from "recoil";
 import { Common } from "../../styles/CommonCss";
 import { postCodeStyle, themeObj } from "../../styles/sign/signArea";
-import { useRecoilState } from "recoil";
-import { addressState } from "../../recoil/atom/addressState";
+import { addressState } from "../../atom/addressState";
 
 const Address = ({ onAddressChange, name }) => {
   const [address, setAddress] = useRecoilState(addressState);

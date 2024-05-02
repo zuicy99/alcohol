@@ -1,19 +1,16 @@
 import { ConfigProvider } from "antd";
 import React, { useState } from "react";
-import { TableCustom } from "../../styles/common/tableCss";
-import { PCartData, picPriceData } from "../../mock/CartData";
-import { Common } from "../../styles/CommonCss";
-import { BasicBtR } from "../../styles/basic/basicBt";
-import Count from "../../components/basic/Count";
-import { columnsH } from "../../mock/test/pickupColumnsData";
-import CountKey from "../../components/basic/CountKey";
+import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
-import { cartCountState } from "../../recoil/atom/CountState";
-import { DetailBigKeyword } from "../../styles/payment/payComCss";
-import { P16, PB20 } from "../../styles/basic";
+import CountKey from "../../components/basic/CountKey";
+import { PCartData } from "../../mock/CartData";
+
+import { Common } from "../../styles/CommonCss";
+import { PB20 } from "../../styles/basic";
 import { TotalPayWrap, TotalTh } from "../../styles/cart/CartTableCss";
 import { BigButton, SButton } from "../../styles/common/reviewProductCss";
-import { useNavigate } from "react-router";
+import { TableCustom } from "../../styles/common/tableCss";
+import { cartCountState } from "../../atom/CountState";
 
 const PickUpCart = () => {
   const navigate = useNavigate();

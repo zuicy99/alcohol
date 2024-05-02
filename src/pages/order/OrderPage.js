@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { InfoWrap, MyWrap } from "../../styles/basic/sideWrap";
-import ReviewBt from "../../components/mypage/ReviewBt";
 import styled from "@emotion/styled/macro";
+import React, { useState } from "react";
+import ReviewBt from "../../components/mypage/ReviewBt";
 import { Common } from "../../styles/CommonCss";
 
-import { PB20, PB30 } from "../../styles/basic";
-import {
-  MarginB10,
-  MarginB20,
-  MarginB30,
-  MarginB40,
-} from "../../styles/common/reviewProductCss";
-import OrderPickPage from "./OrderPickPage";
-import OrderShipPage from "./OrderShipPage";
+import OrderPickPage from "../../components/order/OrderPickPage";
+import OrderShipPage from "../../components/order/OrderShipPage";
+import { PB20 } from "../../styles/basic";
+import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
 
 const OrderPage = () => {
   const [activeNavBt, setActiveNavBt] = useState(1);

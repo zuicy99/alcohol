@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SERVER_URL } from "../../api/config";
+import { useNavigate } from "react-router";
 import {
   getMostProduct,
   getNewProduct,
@@ -10,8 +10,6 @@ import MainTitle from "../../components/main/MainTitle";
 import { Common } from "../../styles/CommonCss";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
-import axios from "axios";
-import { Navigate, useNavigate } from "react-router";
 
 const initState = [
   {

@@ -1,10 +1,10 @@
 import { ConfigProvider, Table } from "antd";
 import React, { useState } from "react";
-import { reviewData } from "../../../mock/CrtRvwData";
-import { Common } from "../../../styles/CommonCss";
-import { TableCustom } from "../../../styles/common/tableCss";
-import RvModal from "../../../components/mypage/RvModal";
-import { BasicBtR } from "../../../styles/basic/basicBt";
+import { reviewData } from "../../mock/CrtRvwData";
+import { Common } from "../../styles/CommonCss";
+import { TableCustom } from "../../styles/common/tableCss";
+import RvModal from "../../components/mypage/RvModal";
+import { BasicBtR } from "../../styles/basic/basicBt";
 
 // const onChange = (pagination, filters, sorter, extra) => {
 //   console.log("params", pagination, filters, sorter, extra);

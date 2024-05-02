@@ -1,16 +1,14 @@
 import React from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import StoreMapInfo from "../../components/storeMap/StoreMapInfo";
+import { dummyData } from "../../mock/PlaceData";
+import { PB16 } from "../../styles/basic";
 import {
   ItemContent,
   ItemWrap,
   MarginB20,
-} from "../../../styles/common/reviewProductCss";
-import { MapWrap, Place } from "../../../styles/detail/mapModalWrapCss";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { PB16, PB20 } from "../../../styles/basic";
-import { dummyData } from "../../../mock/PlaceData";
-import MapPlaceInfo from "../../../components/modal/MapPlaceInfo";
-import { MyLocation, StoreInfo, StoreWrap } from "../../../styles/StoreMapCss";
-import StoreMapInfo from "../../../components/storeMap/StoreMapInfo";
+} from "../../styles/common/reviewProductCss";
+import { MyLocation, StoreWrap } from "../../styles/StoreMapCss";
 
 const StoreMapPage = () => {
   return (

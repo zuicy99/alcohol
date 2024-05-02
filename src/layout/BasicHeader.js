@@ -1,14 +1,12 @@
 import styled from "@emotion/styled/macro";
-import React, { useEffect, useState } from "react";
-import { Common } from "../styles/CommonCss";
+import React from "react";
 import { Link } from "react-router-dom";
 import DropNav from "../components/basic/DropNav";
-import UserDrop from "../components/basic/UserDrop";
-import useCustomMove from "../hooks/useCustomMove";
 import NavDropdown from "../components/basic/DropNavNew";
+import UserDrop from "../components/basic/UserDrop";
 import useCustomLogin from "../hooks/useCustomLogin";
-import { useRecoilState } from "recoil";
-import { atomSignState } from "../recoil/atom/loginState";
+import useCustomMove from "../hooks/useCustomMove";
+import { Common } from "../styles/CommonCss";
 
 const BasicHeader = () => {
   const { moveToLogin } = useCustomMove();

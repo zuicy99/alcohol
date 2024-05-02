@@ -1,37 +1,28 @@
-import React, { useState } from "react";
-import { MainWrap } from "../../styles/main/mainCss";
 import styled from "@emotion/styled/macro";
-import { Common } from "../../styles/CommonCss";
+import React, { useState } from "react";
 import Count from "../../components/basic/Count";
 import { P16, P20, P30, PB20, PB30 } from "../../styles/basic";
+import { Common } from "../../styles/CommonCss";
 
-import { Flex, Form, Select } from "antd";
-import DetailInfo, { UlStyle } from "../../components/detail/DetailInfo";
+import { useNavigate } from "react-router";
+import { useRecoilValue } from "recoil";
+import { UlStyle } from "../../components/detail/DetailInfo";
+import { GoCartModal, GoMapModal } from "../../components/detail/GoCart";
 import ListLi from "../../components/detail/ListLi";
 import ReviewProduct from "../../components/detail/ReviewProduct";
+import { ProductItemData } from "../../mock/ProductitemData";
+
 import {
   BigButton,
   HeartButton,
   ItemContent,
   ItemLine,
   ItemWrap,
-  MarginB20,
   MarginB40,
-  PlaceBt,
   TotalAmount,
 } from "../../styles/common/reviewProductCss";
-import MapModal from "../../components/modal/MapModal";
-import { useRecoilValue } from "recoil";
-import { placeState } from "../../recoil/atom/placeState";
-import { ProductItemData } from "../../mock/ProductitemData";
 import { StarRev } from "../../styles/common/StarCss";
-import { useNavigate } from "react-router";
-import CartModal from "../../components/modal/CartModal";
-import {
-  GoCartModal,
-  GoMapModal,
-  GoPlaceModal,
-} from "../../components/detail/GoCart";
+import { placeState } from "../../atom/placeState";
 
 export const items1 = ["1", "2", "3"];
 export const items2 = ["a", "b", "c"];

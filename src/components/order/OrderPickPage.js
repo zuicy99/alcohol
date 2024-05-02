@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
 import { BasicBtR } from "../../styles/basic/basicBt";
-import RvModal from "../../components/mypage/RvModal";
+import RvModal from "../mypage/RvModal";
 import { OrderPTableData } from "../../mock/OrderTableData";
 
 const OrderPickPage = () => {
