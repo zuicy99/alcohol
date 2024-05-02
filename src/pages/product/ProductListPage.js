@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getMainCate, getSubCate } from "../../api/productApi";
 import SideBt from "../../components/basic/SideBt";
 import SideTitle from "../../components/basic/SideTitle";
-import mainProductData from "../../mock/mainProductData.json";
 import ProductCard from "../../components/product/ProductCard";
-import { SideBar } from "../../styles/product/sideBarCss";
+import ProSearch from "../../components/product/ProSearch";
+import { useCustomQuery } from "../../hooks/useCustomQuery";
+import mainProductData from "../../mock/mainProductData.json";
 import {
   GridContainer,
   ProListWrap,
   ProductWrap,
 } from "../../styles/product/proWrapCss";
-import ProSearch from "../../components/product/ProSearch";
-import { useLocation, useNavigate } from "react-router-dom";
+import { SideBar } from "../../styles/product/sideBarCss";
 
 const ProductPage = () => {
   // side => Param의 숫자인거임
@@ -53,6 +56,63 @@ const ProductPage = () => {
     console.log("검색어,정렬", searchText, selecteOption);
     setActiveSide(side);
   }, [searchText, selecteOption, side]);
+
+  // @AREA  이 부분은 테스트용
+  const initState = [
+    {
+      code: 0,
+      name: "",
+      price: 0,
+      ratingaverage: 0,
+      picture: "",
+    },
+  ];
+  const { type, sub, MoveToType } = useCustomQuery();
+  const params = { type, sub };
+  const mainCategory = {
+    maincategory: `${params.type}`,
+  };
+  const subCategory = {
+    subcategory: `${params.sub}`,
+  };
+
+  const typeFunction = () => {
+    const { data } = useQuery({
+      queryKey: ["product/list", params],
+      queryFn: () => getMainCate({ mainCategory }),
+    });
+
+    return data;
+  };
+
+  const subtypeFunction = () => {
+    const { data } = useQuery({
+      queryKey: ["product/list", params],
+      queryFn: () => getSubCate({ subCategory }),
+    });
+
+    return data;
+  };
+// @COMMENT 카테고리까진 일딴 완료
+  let serverData;
+
+  if (sub !== "") {
+    console.log("있음");
+    serverData = subtypeFunction();
+  } else {
+    console.log("없음");
+    serverData = typeFunction();
+  }
+
+  // @COMMENT type=와인 이면 와인 mainCategory는 완료
+  // const serverData = data || initState;
+
+  // @COMMENT TEST CONSOLE
+  console.log("param : ", type);
+  console.log("mainCategory : ", mainCategory);
+  console.log("Response data : ", serverData);
+
+  // @AREA 여기까지
 
   return (
     <ProductWrap>
