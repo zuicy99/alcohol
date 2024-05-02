@@ -12,7 +12,7 @@ const SignPage = lazy(() => import("../pages/main/Main"));
 // Product-Page
 const ProductPage = lazy(() => import("../pages/product/ProductPage"));
 // Pick-Page
-const PickPage = lazy(() => import("../pages/pick/PickPage"));
+const PickPage = lazy(() => import("../pages/pick/PickListPage"));
 // Cart-Page
 const CartPage = lazy(() => import("../pages/cart/CartPage"));
 // Payment-Page

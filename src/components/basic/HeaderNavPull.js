@@ -9,8 +9,8 @@ import {
   MarginB40,
 } from "../../styles/common/reviewProductCss";
 import { useRecoilState } from "recoil";
-import { queryParamsState } from "../../recoil/atom/queryParamsState";
 import { categoryData } from "../../mock/categoryData";
+import { queryParamsState } from "../../atom/queryParamsState";
 
 const HeaderNavPull = () => {
   const navigate = useNavigate();

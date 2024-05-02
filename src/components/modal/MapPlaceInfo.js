@@ -6,6 +6,7 @@ import {
   PlaceUl,
   PlaceWrap,
 } from "../../styles/detail/mapModalPlaceCss";
+import { placeState } from "../../atom/placeState";
 
 const MapPlaceInfo = ({ place, onClose }) => {
   const [selectedPlaceName, setSelectedPlaceName] = useRecoilState(placeState);

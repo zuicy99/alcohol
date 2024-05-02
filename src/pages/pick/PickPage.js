@@ -1,11 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import BasicLayout from "../../layout/BasicLayout";
 
 const PickPage = () => {
   return (
-    <div>
+    <BasicLayout>
       <Outlet />
-    </div>
+    </BasicLayout>
   );
 };
 

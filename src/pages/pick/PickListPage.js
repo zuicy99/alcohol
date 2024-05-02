@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import SideBt from "../../components/basic/SideBt";
-import SideTitle from "../../components/basic/SideTitle";
-import mainProductData from "../../mock/mainProductData.json";
+import ProSearch from "../../components/product/ProSearch";
 import ProductCard from "../../components/product/ProductCard";
-import { SideBar } from "../../styles/product/sideBarCss";
+import mainProductData from "../../mock/mainProductData.json";
 import {
   GridContainer,
   ProListWrap,
   ProductWrap,
 } from "../../styles/product/proWrapCss";
-import ProSearch from "../../components/product/ProSearch";
 
-import { HeaderNavWrap } from "../../styles/product/proNavCss";
+import HeaderNavPull from "../../components/basic/HeaderNavPull";
 import { PB30 } from "../../styles/basic";
 import { MarginB40 } from "../../styles/common/reviewProductCss";
-import HeaderNavPull from "../../components/basic/HeaderNavPull";
+import { HeaderNavWrap } from "../../styles/product/proNavCss";
 
 const ProductPickPage = () => {
   const [selecteOption, setSelecteOption] = useState(0);
