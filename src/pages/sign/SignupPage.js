@@ -1,18 +1,14 @@
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Common } from "../../styles/CommonCss";
-import styled from "@emotion/styled/macro";
-
-import { areaStyle, buttonPrimaryStyle } from "../../styles/sign/signArea";
-import { P20, SignWrap } from "../../styles/basic";
+import { LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 import { useNavigate } from "react-router";
-import axios from "axios";
-import Address from "../../components/singup/Address";
-import { postSign } from "../../api/signUpApi";
 import { useRecoilState } from "recoil";
-import { addressState } from "../../recoil/atom/addressState";
+import { postSign } from "../../api/signUpApi";
+import Address from "../../components/singup/Address";
+import { P20, SignWrap } from "../../styles/basic";
+import { areaStyle, buttonPrimaryStyle } from "../../styles/sign/signArea";
+import { addressState } from "../../atom/addressState";
 
 const initState = {
   email: "",

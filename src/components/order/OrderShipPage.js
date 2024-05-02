@@ -4,7 +4,7 @@ import { ConfigProvider } from "antd";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
 import { reviewData } from "../../mock/CrtRvwData";
-import RvModal from "../../components/mypage/RvModal";
+import RvModal from "../mypage/RvModal";
 import { OrderSTableData } from "../../mock/OrderTableData";
 
 const OrderShipPage = () => {

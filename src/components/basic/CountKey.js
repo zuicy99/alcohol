@@ -6,7 +6,7 @@ import {
   CounterWrapper,
 } from "../../styles/basic/CountCss";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cartCountState } from "../../recoil/atom/CountState";
+import { cartCountState } from "../../atom/CountState";
 
 const CountKey = ({ id, count }) => {
   // Recoil 상태와 상태 업데이트 함수를 가져오기

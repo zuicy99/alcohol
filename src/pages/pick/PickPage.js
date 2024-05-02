@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const PaymentPage = () => {
+const PickPage = () => {
   return (
     <div>
       <Outlet />
@@ -9,4 +9,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default PickPage;

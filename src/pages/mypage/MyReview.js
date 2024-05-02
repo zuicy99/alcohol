@@ -1,11 +1,11 @@
 import { ConfigProvider, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { MyreviewData, reviewData } from "../../../mock/CrtRvwData";
-import { Common } from "../../../styles/CommonCss";
-import { TableCustom } from "../../../styles/common/tableCss";
-import RvModal from "../../../components/mypage/RvModal";
-import { StarRev } from "../../../styles/common/StarCss";
-import { getReviewList } from "../../../api/reviewApi";
+import { MyreviewData, reviewData } from "../../mock/CrtRvwData";
+import { Common } from "../../styles/CommonCss";
+import { TableCustom } from "../../styles/common/tableCss";
+import RvModal from "../../components/mypage/RvModal";
+import { StarRev } from "../../styles/common/StarCss";
+import { getReviewList } from "../../api/reviewApi";
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);

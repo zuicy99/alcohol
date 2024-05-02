@@ -1,13 +1,13 @@
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
-import ReviewBt from "../../../components/mypage/ReviewBt";
+import ReviewBt from "../../components/mypage/ReviewBt";
 import { useNavigate } from "react-router-dom";
 import CreateReview from "./CreateReview";
 
-import { Common } from "../../../styles/CommonCss";
+import { Common } from "../../styles/CommonCss";
 import MyReview from "./MyReview";
-import { MarginB10, MarginB20 } from "../../../styles/common/reviewProductCss";
-import { PB20 } from "../../../styles/basic";
+import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
+import { PB20 } from "../../styles/basic";
 
 const ReviewPage = () => {
   const navigate = useNavigate();

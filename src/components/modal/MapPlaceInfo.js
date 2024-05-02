@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { P16 } from "../../styles/basic";
-import { UlStyle } from "../detail/DetailInfo";
-import ListLi from "../detail/ListLi";
-import styled from "@emotion/styled/macro";
-import { Common } from "../../styles/CommonCss";
+import React from "react";
 import { useRecoilState } from "recoil";
-import { placeState } from "../../recoil/atom/placeState";
+import { P16 } from "../../styles/basic";
 import {
   PlaceLi,
   PlaceUl,
@@ -14,7 +9,6 @@ import {
 
 const MapPlaceInfo = ({ place, onClose }) => {
   const [selectedPlaceName, setSelectedPlaceName] = useRecoilState(placeState);
-
   const handleClick = () => {
     setSelectedPlaceName(place.name);
     onClose();
