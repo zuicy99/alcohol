@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL } from "./config";
+import { API_SEVER_URL, SERVER_URL } from "./config";
 
 const prefix = `${SERVER_URL}/main`;
 
@@ -39,3 +39,40 @@ export const postMainCate = async ({
 //     "price": 30000,
 //     "ratingaverage": 0.0
 // },
+
+// @AREA Test
+
+export const getMainCate = async ({ mainCategory }) => {
+  console.log("main-axios  :", mainCategory);
+  try {
+    const response = await axios.post(
+      `${SERVER_URL}/search/maincategory`,
+      mainCategory,
+    );
+    if (response.status === 200) {
+      console.log("data :", response.data);
+      return response.data;
+    } else {
+      console.log("no");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getSubCate = async ({ subCategory }) => {
+  console.log("sub-axios  :", subCategory);
+  try {
+    const response = await axios.post(
+      `${SERVER_URL}/search/subcategory`,
+      subCategory,
+    );
+    if (response.status === 200) {
+      console.log("data :", response.data);
+      return response.data;
+    } else {
+      console.log("no");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

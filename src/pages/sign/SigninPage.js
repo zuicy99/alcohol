@@ -1,13 +1,12 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import styled from "@emotion/styled/macro";
-import { Button, Checkbox, Flex, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import React, { useState } from "react";
-import { Common } from "../../styles/CommonCss";
 import { useNavigate } from "react-router-dom";
-import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
-import useCustomLogin from "../../hooks/useCustomLogin";
-import { postLogin } from "../../api/signUpApi";
 import { getKakaoLoginLink } from "../../api/kakaoApi";
+import { postLogin } from "../../api/signUpApi";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import { Common } from "../../styles/CommonCss";
+import { LoginBt, LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 
 const initState = {
   email: "",

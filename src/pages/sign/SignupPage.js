@@ -1,14 +1,14 @@
 import { Button, Form, Input, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { Common } from "../../styles/CommonCss";
-import { LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
 import { postSign } from "../../api/signUpApi";
+import { addressState } from "../../atom/addressState";
 import Address from "../../components/singup/Address";
 import { P20, SignWrap } from "../../styles/basic";
+import { Common } from "../../styles/CommonCss";
+import { LoginTitle, LoginWrap } from "../../styles/login/loginCss";
 import { areaStyle, buttonPrimaryStyle } from "../../styles/sign/signArea";
-import { addressState } from "../../atom/addressState";
 
 const initState = {
   email: "",

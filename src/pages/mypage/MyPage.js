@@ -5,6 +5,7 @@ import SideTitle from "../../components/basic/SideTitle";
 import SideBt from "../../components/basic/SideBt";
 import { Outlet, useNavigate } from "react-router-dom";
 import SideSubTitle from "../../components/basic/SideSubTitle";
+import BasicLayout from "../../layout/BasicLayout";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const MyPage = () => {
   };
 
   return (
-    <div>
+    <BasicLayout>
       <MyWrap>
         <SideBar>
           <div style={{ cursor: "pointer" }}>
@@ -94,7 +95,7 @@ const MyPage = () => {
         </SideBar>
         <Outlet />
       </MyWrap>
-    </div>
+    </BasicLayout>
   );
 };
 

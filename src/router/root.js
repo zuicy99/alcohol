@@ -4,11 +4,12 @@ import mypageRouter from "./mypageRouter";
 import paymentRouter from "./paymentRouter";
 import signRouter from "./signRouter";
 import productRouter from "./productRouter";
+import testRouter from "./testRouter";
 
 // Main-Page
 const MainPage = lazy(() => import("../pages/main/Main"));
 // Sign-Page
-const SignPage = lazy(() => import("../pages/main/Main"));
+const SignPage = lazy(() => import("../pages/sign/SignPage"));
 // Product-Page
 const ProductPage = lazy(() => import("../pages/product/ProductPage"));
 // Pick-Page
@@ -21,6 +22,11 @@ const PaymentPage = lazy(() => import("../pages/payment/PaymentPage"));
 const MyPage = lazy(() => import("../pages/mypage/MyPage"));
 // Map-Page
 const StoreMapPage = lazy(() => import("../pages/storemap/StoreMapPage"));
+// NotFound-Page
+const NotFoundPage = lazy(() => import("../pages/storemap/StoreMapPage"));
+
+// Product-test
+const TestPage = lazy(() => import("../pages/product_test/ProductTest"));
 
 const router = createBrowserRouter([
   {
@@ -88,6 +94,24 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<div>Loading</div>}>
         <StoreMapPage />
+      </Suspense>
+    ),
+  },
+  // Product-test-router
+  {
+    path: "/test/",
+    element: (
+      <Suspense fallback={<div>Loading</div>}>
+        <TestPage />
+      </Suspense>
+    ),
+    children: testRouter(),
+  },
+  {
+    path: "*",
+    element: (
+      <Suspense fallback={<div>Loading</div>}>
+        <NotFoundPage />
       </Suspense>
     ),
   },
