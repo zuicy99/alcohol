@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_SEVER_URL, SERVER_URL } from "./config";
+import { SERVER_URL } from "./config";
 
 const prefix = `${SERVER_URL}/main`;
 

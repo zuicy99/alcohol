@@ -1,12 +1,25 @@
 import { ConfigProvider } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getPickUp } from "../../api/orderApi";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
-import { BasicBtR } from "../../styles/basic/basicBt";
 import RvModal from "../mypage/RvModal";
-import { OrderPTableData } from "../../mock/OrderTableData";
+
+const initState = [
+  {
+    alcoholname: "",
+    marketname: "",
+    amount: 0,
+    price: 0,
+    delivery: "",
+    division: "",
+    address: "",
+    purchaseday: "",
+  },
+];
 
 const OrderPickPage = () => {
+  const [orderData, setOrderData] = useState(initState);
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => {
     setShowModal(false);
@@ -14,6 +27,20 @@ const OrderPickPage = () => {
   const handleShowModal = () => {
     setShowModal(true);
   };
+
+  useEffect(() => {
+    getPickUp({
+      successFn: data => {
+        setOrderData(data);
+      },
+      failFn: data => {
+        alert("픽업목록 불러오기 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 시도");
+      },
+    });
+  }, []);
 
   const columns = [
     {
@@ -25,15 +52,15 @@ const OrderPickPage = () => {
     },
     {
       title: "제품명",
-      dataIndex: "productNm",
+      dataIndex: "alcoholname",
     },
     {
       title: "주문일자",
-      dataIndex: "date",
+      dataIndex: "purchaseday",
     },
     {
       title: "매장명",
-      dataIndex: "storeNm",
+      dataIndex: "marketname",
     },
     {
       title: "주문번호",
@@ -41,7 +68,15 @@ const OrderPickPage = () => {
     },
     {
       title: "주문방식",
-      dataIndex: "order",
+      dataIndex: "delivery",
+    },
+    {
+      title: "주소",
+      dataIndex: "address",
+    },
+    {
+      title: "수량",
+      dataIndex: "amount",
     },
     {
       title: "결제금액",
@@ -66,7 +101,7 @@ const OrderPickPage = () => {
         <TableCustom
           // rowSelection={rowSelection}
           columns={columns}
-          dataSource={OrderPTableData}
+          dataSource={orderData}
           pagination={false}
         />
         {showModal && <RvModal onClose={handleCloseModal} />}

@@ -1,6 +1,5 @@
-import axios from "axios";
-import { SERVER_URL } from "./config";
 import jwtAxios from "../util/jwtUtil";
+import { SERVER_URL } from "./config";
 
 const prefix = `${SERVER_URL}/review`;
 
