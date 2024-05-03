@@ -22,12 +22,16 @@ const initState = [
 const CreateReview = () => {
   const [showModal, setShowModal] = useState(false);
   const [reviewListData, setReviewListData] = useState(initState);
+  const [modalKey, setModalKey] = useState();
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  const handleShowModal = () => {
+  const handleShowModal = code => {
     setShowModal(true);
+    setModalKey(code);
+    console.log("모달로 전달되는 코드 값:", code);
   };
+
   const handleReturnOrder = (_iDetails, _returncontents) => {
     // console.log("반품신청", _iDetails);
     const sendData = {
@@ -43,6 +47,7 @@ const CreateReview = () => {
       // errorFn: errorFn_Return,
     });
   };
+
   useEffect(() => {
     getReviewcheck({
       successFn: data => {
@@ -90,7 +95,11 @@ const CreateReview = () => {
     {
       title: "리뷰작성",
       button: <button>ddldldd</button>,
-      render: () => <BasicBtR onClick={handleShowModal}>리뷰 작성</BasicBtR>,
+      render: (text, record) => (
+        <BasicBtR onClick={() => handleShowModal(record.code)}>
+          리뷰 작성
+        </BasicBtR>
+      ),
     },
   ];
   return (
@@ -113,7 +122,9 @@ const CreateReview = () => {
         dataSource={reviewListData}
         pagination={false}
       />
-      {showModal && <RvModal onClose={handleCloseModal} code={0} />}
+      {showModal && (
+        <RvModal onClose={handleCloseModal} code={reviewListData[0]} />
+      )}
     </ConfigProvider>
   );
 };
