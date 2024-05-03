@@ -63,7 +63,7 @@ const BasicHeader = () => {
         <div className="topNav">
           <div className="left-logo">
             <Link to="/">
-              <div style={{ textAlign: "center" }}>
+              <div>
                 <h1>ALCOHOL</h1>
                 <h1>FREE</h1>
               </div>

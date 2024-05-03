@@ -14,6 +14,8 @@ import {
   ProductWrap,
 } from "../../styles/product/proWrapCss";
 import { SideBar } from "../../styles/product/sideBarCss";
+import SidebarTest from "./SidebarTest";
+import ProductSidebar from "../../components/product/ProductSidebar";
 
 const ProductPage = () => {
   // side => Param의 숫자인거임
@@ -81,7 +83,6 @@ const ProductPage = () => {
       queryKey: ["product/list", params],
       queryFn: () => getMainCate({ mainCategory }),
     });
-
     return data;
   };
 
@@ -93,7 +94,7 @@ const ProductPage = () => {
 
     return data;
   };
-// @COMMENT 카테고리까진 일딴 완료
+  // @COMMENT 카테고리까진 일딴 완료
   let serverData;
 
   if (sub !== "") {
@@ -114,9 +115,26 @@ const ProductPage = () => {
 
   // @AREA 여기까지
 
+  // @AREA @COMMENT Side-bar
+
+  /*
+  1. type 을 검색한다.
+  2. type = "위스키" 라면?
+  3. sidebar에 함수를 전달한다. 특정인자를 위스키
+  */
+  const sideParam = params.type;
+  console.log("sidebar -parameter", sideParam);
+
+  // @AREA 여기까지
+
   return (
     <ProductWrap>
-      <SideBar>
+      {/* test */}
+      {/* <SidebarTest type={sideParam} /> */}
+
+      <ProductSidebar type={sideParam} />
+
+      {/* <SideBar>
         <SideTitle sideTitle="WHISKEY" />
         <hr />
         <div className="side-nav">
@@ -146,7 +164,7 @@ const ProductPage = () => {
             onClick={() => handleClick(4)}
           />
         </div>
-      </SideBar>
+      </SideBar> */}
       <ProListWrap>
         {/* 검색어, 정렬 */}
         <ProSearch
