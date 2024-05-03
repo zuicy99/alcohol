@@ -42,7 +42,6 @@ const MyPage = () => {
               sidenNm="주문배송조회"
               sidenId={0}
               active={activeSide === 0}
-              // onClick={() => handleClick(0)}
               onClick={() => {
                 navigate("order");
                 handleClick(0);
