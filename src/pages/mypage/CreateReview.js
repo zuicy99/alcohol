@@ -1,11 +1,10 @@
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider } from "antd";
 import React, { useEffect, useState } from "react";
-import { reviewData } from "../../mock/CrtRvwData";
-import { Common } from "../../styles/CommonCss";
-import { TableCustom } from "../../styles/common/tableCss";
+import { getReviewcheck } from "../../api/reviewApi";
 import RvModal from "../../components/mypage/RvModal";
+import { Common } from "../../styles/CommonCss";
 import { BasicBtR } from "../../styles/basic/basicBt";
-import { getReviewcheck, postReviewcheck } from "../../api/reviewApi";
+import { TableCustom } from "../../styles/common/tableCss";
 
 // const onChange = (pagination, filters, sorter, extra) => {
 //   console.log("params", pagination, filters, sorter, extra);
@@ -30,22 +29,6 @@ const CreateReview = () => {
     setShowModal(true);
     setModalKey(code);
     console.log("모달로 전달되는 코드 값:", code);
-  };
-
-  const handleReturnOrder = (_iDetails, _returncontents) => {
-    // console.log("반품신청", _iDetails);
-    const sendData = {
-      contents: _returncontents,
-      refundCnt: _iDetails.productCnt,
-      refundPrice: _iDetails.price,
-    };
-    // console.log(sendData);
-    postReviewcheck(_iDetails.idetails, {
-      idetailData: sendData,
-      // successFn: successFn_Return,
-      // failFn: failFn_Return,
-      // errorFn: errorFn_Return,
-    });
   };
 
   useEffect(() => {
