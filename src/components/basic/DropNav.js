@@ -62,7 +62,7 @@ const DropNav = () => {
         <div className="dropdown-content">
           <Link to="/product/list?type=위스키">ALL</Link>
           <Link to="/product/list?type=위스키&subtype=싱글몰트">싱글몰트</Link>
-          <Link to="/product/list?type=위스키&subtype=브랜디드">브랜디드</Link>
+          <Link to="/product/list?type=위스키&subtype=블렌디드">블렌디드</Link>
           <Link to="/product/list?type=위스키&subtype=버번">버번</Link>
         </div>
       </DropStyle>

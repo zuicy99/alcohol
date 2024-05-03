@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getMainCate, getSubCate } from "../../api/productApi";
-import SideBt from "../../components/basic/SideBt";
-import SideTitle from "../../components/basic/SideTitle";
+import { getAlcholType } from "../../api/productApi";
 import ProductCard from "../../components/product/ProductCard";
+import ProductSidebar from "../../components/product/ProductSidebar";
 import ProSearch from "../../components/product/ProSearch";
 import { useCustomQuery } from "../../hooks/useCustomQuery";
 import mainProductData from "../../mock/mainProductData.json";
@@ -13,9 +12,6 @@ import {
   ProListWrap,
   ProductWrap,
 } from "../../styles/product/proWrapCss";
-import { SideBar } from "../../styles/product/sideBarCss";
-import SidebarTest from "./SidebarTest";
-import ProductSidebar from "../../components/product/ProductSidebar";
 
 const ProductPage = () => {
   // side => Param의 숫자인거임
@@ -71,47 +67,22 @@ const ProductPage = () => {
   ];
   const { type, sub, MoveToType } = useCustomQuery();
   const params = { type, sub };
-  const mainCategory = {
-    maincategory: `${params.type}`,
-  };
-  const subCategory = {
-    subcategory: `${params.sub}`,
-  };
 
-  const typeFunction = () => {
-    const { data } = useQuery({
-      queryKey: ["product/list", params],
-      queryFn: () => getMainCate({ mainCategory }),
-    });
-    return data;
-  };
+  const mainCategory = `${params.type}`;
+  const subCategory = `${params.sub}`;
 
-  const subtypeFunction = () => {
-    const { data } = useQuery({
-      queryKey: ["product/list", params],
-      queryFn: () => getSubCate({ subCategory }),
-    });
+  const { data } = useQuery({
+    queryKey: ["product/list", params],
+    queryFn: () => getAlcholType(mainCategory, subCategory),
+  });
 
-    return data;
-  };
-  // @COMMENT 카테고리까진 일딴 완료
-  let serverData;
-
-  if (sub !== "") {
-    console.log("있음");
-    serverData = subtypeFunction();
-  } else {
-    console.log("없음");
-    serverData = typeFunction();
-  }
-
-  // @COMMENT type=와인 이면 와인 mainCategory는 완료
-  // const serverData = data || initState;
+  const productData = data || initState;
+  console.log("R data :", productData);
 
   // @COMMENT TEST CONSOLE
   console.log("param : ", type);
   console.log("mainCategory : ", mainCategory);
-  console.log("Response data : ", serverData);
+  // console.log("Response data : ", serverData);
 
   // @AREA 여기까지
 
@@ -129,9 +100,6 @@ const ProductPage = () => {
 
   return (
     <ProductWrap>
-      {/* test */}
-      {/* <SidebarTest type={sideParam} /> */}
-
       <ProductSidebar type={sideParam} />
 
       {/* <SideBar>
@@ -175,8 +143,12 @@ const ProductPage = () => {
           onSubmit={handleClickSubmit}
         />
         <GridContainer>
-          {mainProductData.map((product, index) => (
+          {/* {mainProductData.map((product, index) => (
             <ProductCard key={index} data={product} />
+          ))} */}
+          {/* API 호출 */}
+          {productData?.map(product => (
+            <ProductCard key={product.code} data={product} />
           ))}
         </GridContainer>
       </ProListWrap>
