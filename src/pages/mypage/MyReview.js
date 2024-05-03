@@ -68,10 +68,10 @@ const MyReview = () => {
         </div>
       ),
     },
-    {
-      title: "주문일자",
-      dataIndex: "date",
-    },
+    // {
+    //   title: "주문일자",
+    //   dataIndex: "date",
+    // },
 
     {
       title: "리뷰작성",
