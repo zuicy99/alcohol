@@ -18,7 +18,7 @@ export const useCustomQuery = () => {
   // Product-Custom-hook
   // 술 종류에 따른 QueryString
   const type = urlSearchParams.get("type") || "";
-  const sub = urlSearchParams.get("sub") || "";
+  const sub = urlSearchParams.get("subtype") || "";
 
   const defaultQueryString = createSearchParams({
     type,

@@ -37,7 +37,7 @@ const ProductSidebar = type => {
   const handleClickSelectTwo = typeProps => {
     console.log("typeProps : ", typeProps);
     if (typeProps === "위스키") {
-      naviage("/product/list?type=위스키&subtype=브랜디드");
+      naviage("/product/list?type=위스키&subtype=블렌디드");
     } else if (typeProps === "와인") {
       naviage("/product/list?type=와인&subtype=화이트와인");
     } else if (typeProps === "리큐르") {
@@ -87,13 +87,13 @@ const ProductSidebar = type => {
 
   const whiskeyColumn = ["WHISKEY", "싱글몰트", "블렌디드", "버번"];
   const wineColumn = [
-    "Wine",
+    "WINE",
     "레드와인",
     "화이트와인",
     "스파클링 와인",
     "로제 와인",
   ];
-  const liqueurColumn = ["Liqueur"];
+  const liqueurColumn = ["LIQUEUR"];
   const brandyColumn = ["BRANDY", "꼬냑", "깔바도스", "아르마냑"];
 
   return (

@@ -42,29 +42,54 @@ export const postMainCate = async ({
 
 // @AREA Test
 
-export const getMainCate = async ({ mainCategory }) => {
-  console.log("main-axios  :", mainCategory);
-  try {
-    const response = await axios.post(
-      `${SERVER_URL}/search/maincategory`,
-      mainCategory,
-    );
-    if (response.status === 200) {
-      console.log("data :", response.data);
-      return response.data;
-    } else {
-      console.log("no");
-    }
-  } catch (error) {
-    console.log(error);
+// export const getMainCate = async ({ mainCategory }) => {
+//   console.log("main-axios  :", mainCategory);
+//   try {
+//     const response = await axios.post(
+//       `${SERVER_URL}/search/maincategory`,
+//       mainCategory,
+//     );
+//     if (response.status === 200) {
+//       console.log("data :", response.data);
+//       return response.data;
+//     } else {
+//       console.log("no");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+// export const getSubCate = async ({ subCategory }) => {
+//   console.log("sub-axios  :", subCategory);
+//   try {
+//     const response = await axios.post(
+//       `${SERVER_URL}/search/subcategory`,
+//       subCategory,
+//     );
+//     if (response.status === 200) {
+//       console.log("data :", response.data);
+//       return response.data;
+//     } else {
+//       console.log("no");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+// Final
+export const getAlcholType = async (mainCategory, subCategory) => {
+  console.log("m-axios  :", mainCategory);
+  console.log("s-axios  :", subCategory);
+  let category;
+  if (subCategory !== "") {
+    category = subCategory;
+  } else {
+    category = mainCategory;
   }
-};
-export const getSubCate = async ({ subCategory }) => {
-  console.log("sub-axios  :", subCategory);
+
   try {
-    const response = await axios.post(
-      `${SERVER_URL}/search/subcategory`,
-      subCategory,
+    const response = await axios.get(
+      `${SERVER_URL}/search/category?category=${category}`,
     );
     if (response.status === 200) {
       console.log("data :", response.data);
