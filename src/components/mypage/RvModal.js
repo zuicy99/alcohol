@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import React from "react";
+import React, { useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import { Button, Flex, Form, Input, Rate } from "antd";
 import { BasicBtR } from "../../styles/basic/basicBt";
@@ -9,15 +9,57 @@ import {
   ModalWrap,
   RvModalStyle,
 } from "../../styles/common/revModalCss";
+import { postReviewcreate } from "../../api/reviewApi";
 const { TextArea } = Input;
 
+const initState = {
+  alcohol: 0,
+  writing: "",
+  grade: 0,
+  picture: "",
+};
+
 const RvModal = ({ onClose, code }) => {
-  const onChange = e => {
-    console.log("Change:", e.target.value);
+  const [postData, setPostData] = useState(initState);
+  const [writingData, setWritingData] = useState("");
+  const [gradeData, setGradeData] = useState();
+
+  const handleGradeChange = value => {
+    setGradeData(value);
+    console.log("평점:", value);
   };
 
-  // postReviewcheck
+  const handleWritingChange = e => {
+    setWritingData(e.target.value);
+    console.log("리뷰작성:", e.target.value);
+  };
 
+  const fetchData = () => {
+    postReviewcreate({
+      reivewParam: {
+        alcohol: 0,
+        writing: writingData,
+        grade: gradeData,
+        picture: "",
+      },
+      successFn,
+      failFn,
+      errorFn,
+    });
+  };
+
+  const successFn = data => {
+    setPostData(data);
+    onClose();
+  };
+  const failFn = data => {
+    setPostData(false);
+    alert("failFn : 데이터 호출에 실패하였습니다.");
+  };
+
+  const errorFn = data => {
+    alert("서버상태 불안정 그래서, 데모테스트했음.");
+  };
   return (
     <RvModalStyle>
       <ModalWrap>
@@ -40,9 +82,9 @@ const RvModal = ({ onClose, code }) => {
               <li>주문방식</li>
             </ul>
             <ul className="br">
-              <li>나는술파는 고라니</li>
-              <li>고라니 술집</li>
-              <li>픽업</li>
+              <li>{code.name}</li>
+              <li>{code.marketname}</li>
+              <li> {code.delivery}</li>
             </ul>
           </div>
           <div className="grade">
@@ -50,11 +92,11 @@ const RvModal = ({ onClose, code }) => {
 
             <Rate
               style={{
-                //   width: "200px",
                 fontSize: "40px",
               }}
+              value={gradeData}
+              onChange={handleGradeChange}
             />
-            <HeartOutlined />
           </div>
 
           <div className="input">
@@ -74,12 +116,14 @@ const RvModal = ({ onClose, code }) => {
                   maxRows: 4,
                 }}
                 spellCheck={false}
+                value={writingData}
+                onChange={handleWritingChange}
                 // onChange={e => handleContentsChange("contents", e.target.value)}
               />
             </Form.Item>
           </div>
           <div className="submit">
-            <BasicBtR onClick={onClose}>등록하기</BasicBtR>
+            <BasicBtR onClick={fetchData}>등록하기</BasicBtR>
           </div>
         </ModalContent>
       </ModalWrap>
