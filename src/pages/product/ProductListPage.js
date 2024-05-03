@@ -147,8 +147,8 @@ const ProductPage = () => {
             <ProductCard key={index} data={product} />
           ))} */}
           {/* API 호출 */}
-          {productData?.map(product => (
-            <ProductCard key={product.code} data={product} />
+          {productData?.map((product, index) => (
+            <ProductCard key={index} data={product} />
           ))}
         </GridContainer>
       </ProListWrap>

@@ -5,28 +5,25 @@ import { Common } from "../../styles/CommonCss";
 import { CardFlex } from "../../styles/main/cardStlye";
 import { ProCardContainer } from "../../styles/product/proCardCss";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ data }) => {
+  console.log("받은 데이터", data);
   const navigate = useNavigate();
   return (
     <ProCardContainer>
       <a onClick={() => navigate(`/item`)}>
-        <img
-          className="card-img"
-          src={product.picture}
-          alt={product.productNm}
-        />
+        <img className="card-img" src={data?.picture} alt={data?.productNm} />
       </a>
       <CardFlex>
         <div className="tagform">
-          <img src="./images/star.png" alt="star" />
-          <p>{product.ratingaverage}</p>
+          <img src={process.env.PUBLIC_URL + `/images/star.png`} alt="star" />
+          <p>{data?.ratingaverage}</p>
         </div>
       </CardFlex>
       <p className="productNm" style={{ color: Common.color.p900 }}>
-        {product.name}
+        {data?.name}
       </p>
-      <p className="productNm">{product.subinfo}</p>
-      <h2 className="price">{product.price}원</h2>
+      {/* <p className="productNm">{product?.subinfo}</p> */}
+      <h2 className="price">{data?.price}원</h2>
     </ProCardContainer>
   );
 };

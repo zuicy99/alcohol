@@ -86,7 +86,6 @@ export const getAlcholType = async (mainCategory, subCategory) => {
   } else {
     category = mainCategory;
   }
-
   try {
     const response = await axios.get(
       `${SERVER_URL}/search/category?category=${category}`,
