@@ -2,11 +2,19 @@ import React from "react";
 import { ProSearchForm } from "../../styles/common/searchCss";
 
 const ProSearch = ({
-  selecteOption,
-  onChangeOption,
-  searchText,
-  onSearchText,
-  onSubmit,
+  // selecteOption,
+  // onChangeOption,
+  // searchText,
+  // onSearchText,
+  // onSubmit,
+  // handleClickSearch,
+  onSearchChange,
+  searchValue,
+  searchName,
+  // placeholder,
+  onSearchClick,
+  onSelectChange,
+  searchPlaceholder,
 }) => {
   return (
     <div>
@@ -15,17 +23,26 @@ const ProSearch = ({
           <div className="search-info">
             <input
               type="text"
-              placeholder="검색어를 입력해주세요"
               className="search-word"
-              value={searchText}
-              onChange={onSearchText}
-            ></input>
-            <button className="search-bt" onClick={onSubmit}>
-              <img src="./images/search.png" />
+              placeholder={searchPlaceholder}
+              name={searchName}
+              value={searchValue}
+              onChange={onSearchChange}
+            />
+            <button className="search-bt" onClick={onSearchClick}>
+              <img src={process.env.PUBLIC_URL + `/images/search.png`} />
             </button>
           </div>
+
           <div className="line"></div>
-          <select value={selecteOption} onChange={onChangeOption}>
+          <select
+            // value={selecteOption}
+            // onChange={onChangeOption}
+            // style={{
+            //   margin: "0 auto",
+            // }}
+            onChange={onSelectChange}
+          >
             <option value={0}>인기순</option>
             <option value={1}>높은 가격순</option>
             <option value={2}>낮은 가격순</option>
