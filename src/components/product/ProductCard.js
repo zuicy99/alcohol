@@ -23,7 +23,7 @@ const ProductCard = ({ data }) => {
   const navigate = useNavigate();
 
   return (
-    <ProCardContainer onClick={() => moveToDetail(data.code)}>
+    <ProCardContainer onClick={() => moveToDetail(data?.code)}>
       <OptiPlaceholder
         alt=""
         width={240}
@@ -33,7 +33,7 @@ const ProductCard = ({ data }) => {
             <OptiWireframe width={240} height={240} />
           </div>
         }
-        src={data.picture}
+        src={data?.picture}
       />
       {/* <img className="card-img" src={data?.picture} alt={data?.productNm} /> */}
       {/* <a onClick={() => navigate(`/item`)}>
@@ -41,14 +41,14 @@ const ProductCard = ({ data }) => {
       <CardFlex>
         <div className="tagform">
           <img src={process.env.PUBLIC_URL + `/images/star.png`} alt="star" />
-          <p>{data.ratingaverage}</p>
+          <p>{data?.ratingaverage}</p>
         </div>
       </CardFlex>
       <p className="productNm" style={{ color: Common.color.p900 }}>
-        {data.name}
+        {data?.name}
       </p>
       {/* <p className="productNm">{product?.subinfo}</p> */}
-      <h2 className="price">{data.price}원</h2>
+      <h2 className="price">{data?.price}원</h2>
     </ProCardContainer>
   );
 };

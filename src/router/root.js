@@ -64,7 +64,7 @@ const router = createBrowserRouter([
     children: productRouter(),
   },
   {
-    path: "/pick",
+    path: "/pick/",
     element: (
       <Suspense fallback={<div>Loading</div>}>
         <PickPage />
