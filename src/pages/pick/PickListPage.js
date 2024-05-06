@@ -21,7 +21,7 @@ const initState = [
     ratingaverage: 0,
   },
 ];
-const ProductPickPage = () => {
+const ProductPickPage = ({ titleTest, apiFunction }) => {
   const [selecteOption, setSelecteOption] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [pickData, setPickData] = useState([initState]);
@@ -52,15 +52,15 @@ const ProductPickPage = () => {
   // }, [searchText, selecteOption]);
 
   useEffect(() => {
-    getPickProduct({
+    apiFunction({
       successFn: data => {
         setPickData(data); // 성공 시 데이터 설정
       },
       failFn: data => {
-        alert("most 실패");
+        alert("상품불러오기 실패");
       },
       errorFn: data => {
-        alert("서버상태 불안정 다음에 most 시도");
+        alert("서버상태 불안정 다음에 상품불러오기 시도");
       },
     });
   }, []);
@@ -68,7 +68,7 @@ const ProductPickPage = () => {
     <ProductWrap>
       <ProListWrap>
         <HeaderNavWrap>
-          <PB30>픽업배송</PB30>
+          <PB30>{titleTest}</PB30>
         </HeaderNavWrap>
         <MarginB40 />
         <HeaderNavPull />

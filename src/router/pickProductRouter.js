@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
+import { DeliveryPage, PickUpPage } from "../pages/pick/DeliveryCatePage";
 
 const PickListPage = lazy(() => import("../pages/pick/PickListPage"));
 const MyReviewPage = lazy(() => import("../pages/mypage/MyReview"));
@@ -8,12 +9,21 @@ const OrderPage = lazy(() => import("../pages/order/OrderPage"));
 
 const pickProductRouter = () => {
   return [
-    { path: "", element: <Navigate to="pick2" /> },
+    { path: "", element: <Navigate to="" /> },
+
     {
-      path: "pick2",
+      path: "pick",
       element: (
         <Suspense fallback={<div>Load..</div>}>
-          <PickListPage />
+          <PickUpPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "delivery",
+      element: (
+        <Suspense fallback={<div>Load..</div>}>
+          <DeliveryPage />
         </Suspense>
       ),
     },

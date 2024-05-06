@@ -108,14 +108,17 @@ const Main = () => {
         </div>
         <img src="./images/banner.svg"></img>
         <PickUpCard>
-          <a href="/배달" style={{ background: Common.color.p200 }}>
+          <a
+            onClick={() => navigate(`pick/delivery`)}
+            style={{ background: Common.color.p200 }}
+          >
             <div className="pickCard">
               <b>배달 & 배송</b>
               <p>자택 배달 & 배송 서비스</p>
             </div>
           </a>
           <a
-            onClick={() => navigate(`/pick`)}
+            onClick={() => navigate(`/pick/pick`)}
             style={{
               background: Common.color.f900,
               color: `${Common.color.p000}`,
