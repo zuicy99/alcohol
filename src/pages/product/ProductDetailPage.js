@@ -4,7 +4,7 @@ import Count from "../../components/basic/Count";
 import { P16, P20, P30, PB20, PB30 } from "../../styles/basic";
 import { Common } from "../../styles/CommonCss";
 
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { UlStyle } from "../../components/detail/DetailInfo";
 import { GoCartModal, GoMapModal } from "../../components/detail/GoCart";
@@ -12,6 +12,9 @@ import ListLi from "../../components/detail/ListLi";
 import ReviewProduct from "../../components/detail/ReviewProduct";
 import { ProductItemData } from "../../mock/ProductitemData";
 
+import { useQuery } from "react-query";
+import { getDetail } from "../../api/productApi";
+import { placeState } from "../../atom/placeState";
 import {
   BigButton,
   HeartButton,
@@ -22,7 +25,6 @@ import {
   TotalAmount,
 } from "../../styles/common/reviewProductCss";
 import { StarRev } from "../../styles/common/StarCss";
-import { placeState } from "../../atom/placeState";
 
 export const items1 = ["1", "2", "3"];
 export const items2 = ["a", "b", "c"];
@@ -71,13 +73,6 @@ const DetailedItemPage = () => {
     console.log("하트클리이이이잉익", newValue);
   };
 
-  const starImages = Array.from({ length: productItem.stars }, (_, index) => (
-    <img
-      key={index}
-      src={process.env.PUBLIC_URL + "/images/star.png"}
-      alt="star"
-    />
-  ));
   const AA = styled.div`
     display: flex;
     position: relative;
@@ -87,13 +82,69 @@ const DetailedItemPage = () => {
     /* justify-content: space-between; */
   `;
 
+  // @AREA
+
+  const { code } = useParams();
+  // console.log("params ", code);
+
+  const detailParam = {
+    code: Number(code),
+  };
+  console.log(detailParam);
+
+  const initState = [
+    {
+      code: 0,
+      name: "",
+      ratingaverage: 0,
+      price: 0,
+      maincategory: "",
+      subcategory: "",
+      content: "",
+      aroma: "",
+      taste: "",
+      finish: "",
+      nation: "",
+      picture: "",
+      reviewcacount: 0,
+    },
+  ];
+
+  const { data } = useQuery({
+    queryKey: [],
+    queryFn: () => getDetail({ code }),
+  });
+
+  const serverData = data || initState;
+  // console.log("response", serverData[0].name);
+
+  const starImages = Array.from(
+    { length: serverData[0].ratingaverage },
+    (_, index) => (
+      <img
+        key={index}
+        src={process.env.PUBLIC_URL + "/images/star.png"}
+        alt="star"
+      />
+    ),
+  );
+
+  const taste = serverData[0].taste;
+  // console.log("fff : ", taste);
+  const tasteArray = taste.split(", ");
+  console.log("array : ", tasteArray);
+  const categoryArray = [
+    `${serverData[0].maincategory}`,
+    `${serverData[0].subcategory}`,
+  ];
+
   return (
     <ItemWrap>
       <ItemContent>
-        <img src={process.env.PUBLIC_URL + "/images/moon.jpg"} />
+        <img src={serverData[0].picture} />
         <div className="information">
           <AA>
-            <h1>{productItem.name}</h1>
+            <h1>{serverData[0]?.name}</h1>
             <HeartButton
               checked={isHeartChecked}
               onClick={handleHeartButtonClick}
@@ -118,7 +169,7 @@ const DetailedItemPage = () => {
             <StarRev>{starImages}</StarRev>
             <a href="#리뷰">?리뷰더보기</a>
           </div>
-          <h1>{productItem.price}원</h1>
+          <h1>{serverData[0].price}원</h1>
           <div className="line" />
           {/* 맵모달 판매처 선택 버튼 */}
           <GoMapModal />
@@ -128,8 +179,8 @@ const DetailedItemPage = () => {
               <li>배송정보</li>
             </ul>
             <ul>
-              {selectedPlace ? (
-                <li>{selectedPlace}</li>
+              {serverData ? (
+                <li>{serverData[0].price}</li>
               ) : (
                 <li>판매처를 선택해주세요</li>
               )}
@@ -153,9 +204,9 @@ const DetailedItemPage = () => {
           </div>
           {/* <Count /> */}
           <div className="count">
-            <p className="product-name">[픽업]{productItem.name}</p>
+            <p className="product-name">[픽업]{serverData[0].name}</p>
             <Count name="productCnt" setCount={setCount} count={count} />
-            <p>{productItem.price}원</p>
+            <p>{serverData[0].price}원</p>
           </div>
           <div className="line" />
           <TotalAmount>
@@ -186,8 +237,8 @@ const DetailedItemPage = () => {
       <div>
         <PB20>Tasting Note</PB20>
         <UlStyle>
-          <ListLi items={items1} />
-          <ListLi items={items2} />
+          <ListLi items={tasteArray} />
+          {/* <ListLi items={items2} /> */}
         </UlStyle>
       </div>
       <ItemLine />
@@ -203,8 +254,8 @@ const DetailedItemPage = () => {
       <div>
         <PB20>Category</PB20>
         <UlStyle>
-          <ListLi items={items1} />
-          <ListLi items={items2} />
+          <ListLi items={categoryArray} />
+          {/* <ListLi items={serverData[0].subcategory} /> */}
         </UlStyle>
       </div>
       <PB30>여기에 상세페이지 </PB30>

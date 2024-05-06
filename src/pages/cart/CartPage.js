@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { InfoWrap, MyWrap } from "../../styles/basic/sideWrap";
-import ReviewBt from "../../components/mypage/ReviewBt";
-import { useNavigate } from "react-router";
 import styled from "@emotion/styled/macro";
+import React, { useState } from "react";
+import ReviewBt from "../../components/mypage/ReviewBt";
+import { PB20 } from "../../styles/basic";
+import { MyWrap } from "../../styles/basic/sideWrap";
+import { MarginB20 } from "../../styles/common/reviewProductCss";
 import { Common } from "../../styles/CommonCss";
-import CreateReview from "../mypage/CreateReview";
-import MyReview from "../mypage/MyReview";
 import PickUpCart from "./PickUpCart";
 import ShippingCart from "./ShippingCart";
-import { PB20, PB30 } from "../../styles/basic";
-import { MarginB20, MarginB40 } from "../../styles/common/reviewProductCss";
+import { useQuery } from "react-query";
+import { getCart } from "../../api/cartApi";
 
 const CartPage = () => {
   const [activeNavBt, setActiveNavBt] = useState(1);
@@ -27,6 +26,15 @@ const CartPage = () => {
       /* margin-bottom: 20px; */
     }
   `;
+  // Get API
+
+  const { data } = useQuery({
+    queryKey: [],
+    queryFn: () => getCart(),
+  });
+  const serverData = data;
+  console.log("cart-data", serverData);
+
   return (
     <div>
       <MyWrap>

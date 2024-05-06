@@ -19,7 +19,7 @@ const productRouter = () => {
       ),
     },
     {
-      path: "detail",
+      path: "detail/:code",
       element: (
         <Suspense fallback={<div>Load..</div>}>
           <DetailPage />

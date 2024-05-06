@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SERVER_URL } from "./config";
+import jwtAxios from "../util/jwtUtil";
 
 const prefix = `${SERVER_URL}/main`;
 
@@ -76,3 +77,22 @@ export const nonSignAlcholSearch = async ({ search }) => {
   }
 };
 export const SignAlcholSearch = async () => {};
+
+export const getDetail = async ({ code }) => {
+  console.log("axios", code);
+  const codeParam = {
+    code: Number(code),
+  };
+  console.log("params  ", codeParam);
+  try {
+    const response = await jwtAxios.post(`${SERVER_URL}/detail`, codeParam);
+    if (response.status === 200) {
+      console.log("R : ", response.data);
+      return response.data;
+    } else {
+      console.log("no");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
