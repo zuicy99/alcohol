@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SideBar } from "../../styles/product/sideBarCss";
-import SideTitle from "../basic/SideTitle";
 import SideBt from "../basic/SideBt";
-import { useNavigate } from "react-router";
+import SideTitle from "../basic/SideTitle";
 
 const ProductSidebar = type => {
-  // const [activeSide, setActiveSide] = useState(side);
-
+  // search
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchQuery = queryParams.get("search");
+  // Type,sub-type
   const typeProps = type.type;
+
+  console.log("side-search 입니다. --------- ", searchQuery);
 
   const naviage = useNavigate();
   const [status, setStatus] = useState([]);
 
   const handleClickAll = typeProps => {
     if (typeProps === "위스키") {
-      console.log("typeProps : ", typeProps);
+      // console.log("typeProps : ", typeProps);
       naviage("/product/list?type=위스키");
     } else if (typeProps === "와인") {
       naviage("/product/list?type=와인");
@@ -67,17 +72,19 @@ const ProductSidebar = type => {
   useEffect(() => {
     let resultColumn;
     if (typeProps === "위스키") {
-      console.log("위스키입니다.");
+      // console.log("위스키입니다.");
       resultColumn = whiskeyColumn;
     } else if (typeProps === "와인") {
-      console.log("와인입니다.");
+      // console.log("와인입니다.");
       resultColumn = wineColumn;
     } else if (typeProps === "브랜디") {
-      console.log("브랜디");
+      // console.log("브랜디");
       resultColumn = brandyColumn;
     } else if (typeProps === "리큐르") {
-      console.log("리큐르");
+      // console.log("리큐르");
       resultColumn = liqueurColumn;
+    } else if (searchQuery !== null) {
+      resultColumn = searchColumn;
     } else {
       console.log("No match");
     }
@@ -85,16 +92,18 @@ const ProductSidebar = type => {
     setStatus(resultColumn);
   }, [typeProps]);
 
-  const whiskeyColumn = ["WHISKEY", "싱글몰트", "블렌디드", "버번"];
+  const whiskeyColumn = ["WHISKEY", "ALL", "싱글몰트", "블렌디드", "버번"];
   const wineColumn = [
     "WINE",
+    "ALL",
     "레드와인",
     "화이트와인",
     "스파클링 와인",
     "로제 와인",
   ];
-  const liqueurColumn = ["LIQUEUR"];
-  const brandyColumn = ["BRANDY", "꼬냑", "깔바도스", "아르마냑"];
+  const liqueurColumn = ["LIQUEUR", "ALL"];
+  const brandyColumn = ["BRANDY", "ALL", "꼬냑", "깔바도스", "아르마냑"];
+  const searchColumn = ["검색결과", ""];
 
   return (
     <SideBar>
@@ -103,14 +112,14 @@ const ProductSidebar = type => {
       <div className="side-nav">
         {/* {console.log(`activeSide ${activeSide}`)} */}
         <SideBt
-          sidenNm="ALL"
+          sidenNm={`${status?.[1]}`}
           sideId={1}
           // active={activeSide === 1} // 고유 숫자와 비교
           onClick={() => handleClickAll(typeProps)} // 고유 숫자 전달
         />
         {status?.[1] ? (
           <SideBt
-            sidenNm={`${status?.[1]}`}
+            sidenNm={`${status?.[2]}`}
             sideId={2}
             // active={activeSide === 2}
             onClick={() => handleClickSelectOne(typeProps)}
@@ -120,7 +129,7 @@ const ProductSidebar = type => {
         )}
         {status?.[2] ? (
           <SideBt
-            sidenNm={`${status?.[2]}`}
+            sidenNm={`${status?.[3]}`}
             sideId={3}
             // active={activeSide === 3}
             onClick={() => handleClickSelectTwo(typeProps)}
@@ -130,7 +139,7 @@ const ProductSidebar = type => {
         )}
         {status?.[3] ? (
           <SideBt
-            sidenNm={`${status?.[3]}`}
+            sidenNm={`${status?.[4]}`}
             sideId={4}
             // active={activeSide === 4}
             onClick={() => handleClickSelectThree(typeProps)}
@@ -140,7 +149,7 @@ const ProductSidebar = type => {
         )}
         {status?.[4] ? (
           <SideBt
-            sidenNm={`${status?.[4]}`}
+            sidenNm={`${status?.[5]}`}
             sideId={4}
             // active={activeSide === 4}
             onClick={() => handleClickSelectFour(typeProps)}

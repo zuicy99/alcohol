@@ -6,7 +6,7 @@ import { CardFlex } from "../../styles/main/cardStlye";
 import { ProCardContainer } from "../../styles/product/proCardCss";
 
 const ProductCard = ({ data }) => {
-  console.log("받은 데이터", data);
+  // console.log("받은 데이터", data);
   const navigate = useNavigate();
   return (
     <ProCardContainer>

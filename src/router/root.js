@@ -5,6 +5,7 @@ import paymentRouter from "./paymentRouter";
 import signRouter from "./signRouter";
 import productRouter from "./productRouter";
 import testRouter from "./testRouter";
+import Loading from "../components/common/Loading";
 
 // Main-Page
 const MainPage = lazy(() => import("../pages/main/Main"));
@@ -49,7 +50,13 @@ const router = createBrowserRouter([
   {
     path: "/product/",
     element: (
-      <Suspense fallback={<div>Loading</div>}>
+      <Suspense
+        fallback={
+          <div>
+            <Loading />
+          </div>
+        }
+      >
         <ProductPage />
       </Suspense>
     ),

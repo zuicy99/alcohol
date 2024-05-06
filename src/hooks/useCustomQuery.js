@@ -19,13 +19,16 @@ export const useCustomQuery = () => {
   // 술 종류에 따른 QueryString
   const type = urlSearchParams.get("type") || "";
   const sub = urlSearchParams.get("subtype") || "";
+  const search = urlSearchParams.get("search") || "";
 
   const defaultQueryString = createSearchParams({
     type,
+    // search,
   }).toString();
 
   //   술에 따른 이동
   const MoveToType = TypeParam => {
+    console.log("type-parameter", TypeParam);
     let queryStr = "";
     if (TypeParam) {
       const TypeString = getType(TypeParam.type, type);
@@ -37,6 +40,19 @@ export const useCustomQuery = () => {
     }
     navigate({ pathname: "../list", search: queryStr });
   };
+  const MoveToSearch = Searchparam => {
+    let queryStr = "";
+    console.log("parameter : ", Searchparam);
+    if (Searchparam) {
+      const SearchString = getType(Searchparam, search);
+      queryStr = createSearchParams({
+        search: SearchString,
+      }).toString();
+    } else {
+      queryStr = defaultQueryString;
+    }
+    navigate({ pathname: "../list", search: queryStr });
+  };
 
-  return { type, sub, MoveToType };
+  return { type, sub, MoveToType, MoveToSearch, search };
 };

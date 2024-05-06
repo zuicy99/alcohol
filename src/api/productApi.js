@@ -32,54 +32,10 @@ export const postMainCate = async ({
   }
 };
 
-// {
-//     "code": 7,
-//     "name": "서브미션 까베르네 소비뇽 750ml",
-//     "picture": "/resources/images/07.jpg",
-//     "price": 30000,
-//     "ratingaverage": 0.0
-// },
-
-// @AREA Test
-
-// export const getMainCate = async ({ mainCategory }) => {
-//   console.log("main-axios  :", mainCategory);
-//   try {
-//     const response = await axios.post(
-//       `${SERVER_URL}/search/maincategory`,
-//       mainCategory,
-//     );
-//     if (response.status === 200) {
-//       console.log("data :", response.data);
-//       return response.data;
-//     } else {
-//       console.log("no");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-// export const getSubCate = async ({ subCategory }) => {
-//   console.log("sub-axios  :", subCategory);
-//   try {
-//     const response = await axios.post(
-//       `${SERVER_URL}/search/subcategory`,
-//       subCategory,
-//     );
-//     if (response.status === 200) {
-//       console.log("data :", response.data);
-//       return response.data;
-//     } else {
-//       console.log("no");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 // Final
 export const getAlcholType = async (mainCategory, subCategory) => {
-  console.log("m-axios  :", mainCategory);
-  console.log("s-axios  :", subCategory);
+  // console.log("m-axios  :", mainCategory);
+  // console.log("s-axios  :", subCategory);
   let category;
   if (subCategory !== "") {
     category = subCategory;
@@ -91,7 +47,7 @@ export const getAlcholType = async (mainCategory, subCategory) => {
       `${SERVER_URL}/search/category?category=${category}`,
     );
     if (response.status === 200) {
-      console.log("data :", response.data);
+      // console.log("data :", response.data);
       return response.data;
     } else {
       console.log("no");
@@ -100,3 +56,23 @@ export const getAlcholType = async (mainCategory, subCategory) => {
     console.log(error);
   }
 };
+
+export const nonSignAlcholSearch = async ({ search }) => {
+  console.log("axios-data", search);
+  try {
+    const response = await axios.post(
+      `${SERVER_URL}/main/anony/contents`,
+      search,
+    );
+    if (response.status === 200) {
+      // console.log("result", response.data);
+      const result = response.data;
+      return result;
+    } else {
+      console.log("no");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const SignAlcholSearch = async () => {};
