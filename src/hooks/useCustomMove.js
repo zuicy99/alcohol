@@ -13,7 +13,11 @@ export const useCustomMove = () => {
     // <Link to="/main"></Link>;
     navigate("/");
   };
-  return moveToLogin, moveToMain;
+
+  const moveToDetail = code => {
+    navigate({ pathname: `../detail/${code}` });
+  };
+  return { moveToLogin, moveToMain, moveToDetail };
 };
 
 export default useCustomMove;
