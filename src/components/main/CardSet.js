@@ -2,9 +2,7 @@ import styled from "@emotion/styled/macro";
 import React, { useEffect, useState } from "react";
 import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
 import { Common } from "../../styles/CommonCss";
-import mainProductData from "../../mock/mainProductData.json";
-import { getMostProduct } from "../../api/mainApi";
-import { SERVER_URL } from "../../api/config";
+
 import { useNavigate } from "react-router";
 
 const initState = [

@@ -5,6 +5,7 @@ import paymentRouter from "./paymentRouter";
 import signRouter from "./signRouter";
 import productRouter from "./productRouter";
 import testRouter from "./testRouter";
+import pickProductRouter from "./pickProductRouter";
 import Loading from "../components/common/Loading";
 
 // Main-Page
@@ -14,7 +15,7 @@ const SignPage = lazy(() => import("../pages/sign/SignPage"));
 // Product-Page
 const ProductPage = lazy(() => import("../pages/product/ProductPage"));
 // Pick-Page
-const PickPage = lazy(() => import("../pages/pick/PickListPage"));
+const PickPage = lazy(() => import("../pages/pick/PickPage"));
 // Cart-Page
 const CartPage = lazy(() => import("../pages/cart/CartPage"));
 // Payment-Page
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
         <PickPage />
       </Suspense>
     ),
+    children: pickProductRouter(),
   },
   {
     path: "/cart",

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProSearch from "../../components/product/ProSearch";
 import ProductCard from "../../components/product/ProductCard";
-import mainProductData from "../../mock/mainProductData.json";
 import {
   GridContainer,
   ProListWrap,
@@ -12,10 +11,20 @@ import HeaderNavPull from "../../components/basic/HeaderNavPull";
 import { PB30 } from "../../styles/basic";
 import { MarginB40 } from "../../styles/common/reviewProductCss";
 import { HeaderNavWrap } from "../../styles/product/proNavCss";
-
+import { getPickProduct } from "../../api/pickProductApi";
+const initState = [
+  {
+    code: 3,
+    name: "",
+    picture: "",
+    price: 45000,
+    ratingaverage: 0,
+  },
+];
 const ProductPickPage = () => {
   const [selecteOption, setSelecteOption] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [pickData, setPickData] = useState([initState]);
 
   const handleOption = e => {
     const newValue = parseInt(e.target.value);
@@ -38,10 +47,23 @@ const ProductPickPage = () => {
     console.log("나 돋보기 버튼", searchText, selecteOption);
   };
 
-  useEffect(() => {
-    // console.log("검색어,정렬", searchText, selecteOption);
-  }, [searchText, selecteOption]);
+  // useEffect(() => {
+  //   // console.log("검색어,정렬", searchText, selecteOption);
+  // }, [searchText, selecteOption]);
 
+  useEffect(() => {
+    getPickProduct({
+      successFn: data => {
+        setPickData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
+    });
+  }, []);
   return (
     <ProductWrap>
       <ProListWrap>
@@ -60,8 +82,8 @@ const ProductPickPage = () => {
           onSubmit={handleClickSubmit}
         />
         <GridContainer>
-          {mainProductData.map((product, index) => (
-            <ProductCard key={index} data={product} />
+          {pickData.map(product => (
+            <ProductCard key={product.code} data={product} />
           ))}
         </GridContainer>
       </ProListWrap>
