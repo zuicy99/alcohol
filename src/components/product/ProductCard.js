@@ -17,7 +17,7 @@ const initState = [
     ratingaverage: 0,
   },
 ];
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, showGrade }) => {
   // console.log("받은 데이터", data);
   const { moveToDetail } = useCustomMove();
   const navigate = useNavigate();
@@ -38,17 +38,25 @@ const ProductCard = ({ data }) => {
       {/* <img className="card-img" src={data?.picture} alt={data?.productNm} /> */}
       {/* <a onClick={() => navigate(`/item`)}>
       </a> */}
-      <CardFlex>
+      {!showGrade && (
+        <CardFlex>
+          <div className="tagform">
+            <img src={process.env.PUBLIC_URL + `/images/star.png`} alt="star" />
+            <p>{data?.ratingaverage}</p>
+          </div>
+        </CardFlex>
+      )}
+      {/* <CardFlex>
         <div className="tagform">
           <img src={process.env.PUBLIC_URL + `/images/star.png`} alt="star" />
           <p>{data?.ratingaverage}</p>
         </div>
-      </CardFlex>
+      </CardFlex> */}
       <p className="productNm" style={{ color: Common.color.p900 }}>
         {data?.name}
       </p>
       {/* <p className="productNm">{product?.subinfo}</p> */}
-      <h2 className="price">{data?.price}원</h2>
+      {data?.price && <h2 className="price">{data?.price}원</h2>}
     </ProCardContainer>
   );
 };

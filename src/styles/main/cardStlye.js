@@ -98,6 +98,15 @@ export const CardFlex = styled.div`
     font-size: 16px;
     font-weight: bold;
   }
+  .wish-bt {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
 `;
 
 export const HeartButton = styled.button`

@@ -64,7 +64,10 @@ const MyPage = () => {
               sidenNm="위시리스트"
               sidenId={2}
               active={activeSide === 2}
-              onClick={() => handleClick(2)}
+              onClick={() => {
+                navigate("wish");
+                handleClick(2);
+              }}
             />
 
             {/* --------------------------------------------------------------------- */}
