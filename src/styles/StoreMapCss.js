@@ -36,11 +36,9 @@ export const LocationBox = styled.div`
   position: relative;
 
   min-width: 400px;
-  /* height: 50px; */
-
   align-items: center;
   padding: 20px 10px;
-  /* border-top: 2px solid ${Common.color.p500}; */
+
   border-bottom: 2px solid ${Common.color.p200};
   .branch {
     position: relative;
@@ -48,4 +46,10 @@ export const LocationBox = styled.div`
     gap: 5px;
     /* margin-bottom: 20px; */
   }
+`;
+
+export const MarketWrap = styled.div`
+  /* background-color: red; */
+  height: 500px;
+  overflow: scroll;
 `;

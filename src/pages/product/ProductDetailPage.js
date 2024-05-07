@@ -25,6 +25,7 @@ import {
   TotalAmount,
 } from "../../styles/common/reviewProductCss";
 import { StarRev } from "../../styles/common/StarCss";
+import { postWish } from "../../api/wishListApi";
 
 export const items1 = ["1", "2", "3"];
 export const items2 = ["a", "b", "c"];
@@ -137,6 +138,27 @@ const DetailedItemPage = () => {
     `${serverData[0].maincategory}`,
     `${serverData[0].subcategory}`,
   ];
+  // -------------------찜목록 추가 기능 start ---------------------------
+  const fetchData = () => {
+    // console.log("상품 코드 제발 찜추가:", detailParam.code);
+    postWish({
+      code: {
+        code: detailParam.code,
+      },
+      successFn,
+      failFn,
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 상품불러오기 시도");
+      },
+    });
+  };
+  const successFn = data => {
+    // getWishList(data);
+  };
+  const failFn = data => {
+    alert("failFn : 데이터 호출에 실패하였습니다.");
+  };
+  // -------------------찜목록 추가 기능 end ---------------------------
 
   return (
     <ItemWrap>
@@ -145,10 +167,7 @@ const DetailedItemPage = () => {
         <div className="information">
           <AA>
             <h1>{serverData[0]?.name}</h1>
-            <HeartButton
-              checked={isHeartChecked}
-              onClick={handleHeartButtonClick}
-            >
+            <HeartButton checked={isHeartChecked} onClick={fetchData}>
               <img
                 src={
                   isHeartChecked

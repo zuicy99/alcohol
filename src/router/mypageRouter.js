@@ -5,6 +5,7 @@ const ReviewPage = lazy(() => import("../pages/mypage/ReviewPage"));
 const MyMainPage = lazy(() => import("../pages/mypage/MyMainPage"));
 const MyReviewPage = lazy(() => import("../pages/mypage/MyReview"));
 const OrderPage = lazy(() => import("../pages/order/OrderPage"));
+const WishListPage = lazy(() => import("../pages/mypage/WishListPage"));
 // const mymain = lazy(() => import("../pages/mypage/outlet/MyReview"));
 
 const mypageRouter = () => {
@@ -39,6 +40,14 @@ const mypageRouter = () => {
       element: (
         <Suspense fallback={<div>Load..</div>}>
           <OrderPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "wish",
+      element: (
+        <Suspense fallback={<div>Load..</div>}>
+          <WishListPage />
         </Suspense>
       ),
     },
