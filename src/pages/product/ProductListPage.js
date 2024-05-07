@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import { getAlcholType, nonSignAlcholSearch } from "../../api/productApi";
+import {
+  SignAlcholSearch,
+  getAlcholType,
+  nonSignAlcholSearch,
+} from "../../api/productApi";
 import ProductCard from "../../components/product/ProductCard";
 import ProductSidebar from "../../components/product/ProductSidebar";
 import ProSearch from "../../components/product/ProSearch";
@@ -10,8 +14,10 @@ import {
   ProListWrap,
   ProductWrap,
 } from "../../styles/product/proWrapCss";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const ProductPage = () => {
+  const { isLogin } = useCustomLogin();
   // @AREA  이 부분은 테스트용
   const initState = [
     {
@@ -60,6 +66,17 @@ const ProductPage = () => {
     onError: () => {},
   });
 
+  // 회원용 서치
+  const UserSearchMutation = useMutation({
+    mutationFn: search => SignAlcholSearch({ search }),
+    onSuccess: result => {
+      console.log("jwtAxios result :", result);
+      MoveToSearch(alcoholSearch.searchcontents);
+      setSearchData(result);
+    },
+    onError: () => {},
+  });
+
   const [alcoholSearch, setAlcoholSearch] = useState(searchInitState);
   const handleChangeSearch = e => {
     setAlcoholSearch(prevValue => ({
@@ -67,8 +84,17 @@ const ProductPage = () => {
       searchcontents: e.target.value,
     }));
   };
+  // const handleClickSearch = () => {
+  //   SearchMutation.mutate(alcoholSearch);
+  // };
+
+  // 토큰있냐 없냐..에 따라 실행..?
   const handleClickSearch = () => {
-    SearchMutation.mutate(alcoholSearch);
+    if (isLogin) {
+      UserSearchMutation.mutate(alcoholSearch);
+    } else {
+      SearchMutation.mutate(alcoholSearch);
+    }
   };
 
   // @AREA  Select(Sort) 관련
