@@ -41,7 +41,7 @@ const useCustomLogin = () => {
 
     setCookie("member", JSON.stringify(result), 1);
   };
-  console.log("쿠키에 저장된 정보:", loginState, isLogin);
+  // console.log("쿠키에 저장된 정보:", loginState, isLogin);
 
   // 로그아웃 기능
   const doLogout = () => {
