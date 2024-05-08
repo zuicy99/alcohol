@@ -135,3 +135,37 @@ export const getUserRecent = async () => {
     console.log(error);
   }
 };
+
+export const getMarketPath = async ({ code }) => {
+  console.log("ax:", code);
+  const postcode = {
+    code: code,
+  };
+  try {
+    const response = await jwtAxios.post(
+      `${SERVER_URL}/detail/market`,
+      postcode,
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postAddCart = async ({ postcard }) => {
+  console.log("ax :", postcard);
+  try {
+    const response = await jwtAxios.post(
+      `${SERVER_URL}/shoppingbasket`,
+      postcard,
+    );
+    if (response.status === 200) {
+      console.log("result :", response.data);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

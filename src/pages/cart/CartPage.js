@@ -9,6 +9,7 @@ import PickUpCart from "./PickUpCart";
 import ShippingCart from "./ShippingCart";
 import { useQuery } from "react-query";
 import { getCart } from "../../api/cartApi";
+import BasicLayout from "../../layout/BasicLayout";
 
 const CartPage = () => {
   const [activeNavBt, setActiveNavBt] = useState(1);
@@ -28,15 +29,15 @@ const CartPage = () => {
   `;
   // Get API
 
-  const { data } = useQuery({
+  const { data: pickupData } = useQuery({
     queryKey: [],
     queryFn: () => getCart(),
   });
-  const serverData = data;
-  console.log("cart-data", serverData);
+  // const serverData = data;
+  console.log("cart-data : ", pickupData);
 
   return (
-    <div>
+    <BasicLayout>
       <MyWrap>
         <InfoWrap>
           <PB20>장바구니</PB20>
@@ -59,11 +60,15 @@ const CartPage = () => {
           </div>
           <hr />
           <div className="page-content">
-            {activeNavBt === 1 ? <PickUpCart /> : <ShippingCart />}
+            {activeNavBt === 1 ? (
+              <PickUpCart pickupData={pickupData} />
+            ) : (
+              <ShippingCart />
+            )}
           </div>
         </InfoWrap>
       </MyWrap>
-    </div>
+    </BasicLayout>
   );
 };
 

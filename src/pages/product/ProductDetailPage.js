@@ -1,7 +1,7 @@
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import Count from "../../components/basic/Count";
-import { P16, P20, P30, PB20, PB30 } from "../../styles/basic";
+import { P16, P20, P30, PB20 } from "../../styles/basic";
 import { Common } from "../../styles/CommonCss";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ import { ProductItemData } from "../../mock/ProductitemData";
 
 import { useQuery } from "react-query";
 import { getDetail } from "../../api/productApi";
+import { postWish } from "../../api/wishListApi";
 import { placeState } from "../../atom/placeState";
 import {
   BigButton,
@@ -25,7 +26,7 @@ import {
   TotalAmount,
 } from "../../styles/common/reviewProductCss";
 import { StarRev } from "../../styles/common/StarCss";
-import { postWish } from "../../api/wishListApi";
+import { stockState } from "../../atom/stockState";
 
 export const items1 = ["1", "2", "3"];
 export const items2 = ["a", "b", "c"];
@@ -33,6 +34,7 @@ const DetailedItemPage = () => {
   const navigate = useNavigate();
   const productItem = ProductItemData[0];
   const selectedPlace = useRecoilValue(placeState);
+  const selectedStockNum = useRecoilValue(stockState);
   const [count, setCount] = useState(1);
   const [isHeartChecked, setHeartChecked] = useState(1);
 
@@ -56,16 +58,6 @@ const DetailedItemPage = () => {
 
   const handleCloseCartModal = () => {
     setCartModalOpen(false);
-  };
-
-  const totalPrice = productItem.price * count;
-  const addComma = price => {
-    let returnString = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return returnString;
-  };
-  const formattedPrice = addComma(totalPrice);
-  const handleCloseModal = () => {
-    setShowModal(false);
   };
 
   const handleHeartButtonClick = () => {
@@ -138,6 +130,7 @@ const DetailedItemPage = () => {
     `${serverData[0].maincategory}`,
     `${serverData[0].subcategory}`,
   ];
+
   // -------------------찜목록 추가 기능 start ---------------------------
   const fetchData = () => {
     // console.log("상품 코드 제발 찜추가:", detailParam.code);
@@ -158,6 +151,25 @@ const DetailedItemPage = () => {
   const failFn = data => {
     alert("failFn : 데이터 호출에 실패하였습니다.");
   };
+
+  const totalPrice = serverData[0]?.price * count;
+  const addComma = price => {
+    let returnString = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return returnString;
+  };
+  const formattedPrice = addComma(totalPrice);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  // console.log("stock num : ", selectedStockNum);
+
+  const postCard = {
+    stock: selectedStockNum,
+    amount: count,
+    price: serverData[0].price,
+  };
+  // console.log("ㅍㅋ : ", postCard);
+
   // -------------------찜목록 추가 기능 end ---------------------------
 
   return (
@@ -199,8 +211,9 @@ const DetailedItemPage = () => {
             </ul>
             <ul>
               {serverData ? (
-                <li>{serverData[0].price}</li>
+                <li>{selectedPlace}</li>
               ) : (
+                // <div></div>
                 <li>판매처를 선택해주세요</li>
               )}
               {/* <li>화이트 와인</li> */}
@@ -235,7 +248,7 @@ const DetailedItemPage = () => {
             </P30>
           </TotalAmount>
           <div className="pay-button">
-            <GoCartModal />
+            <GoCartModal postcard={postCard} />
 
             <BigButton
               onClick={() => navigate(`/pay`)}
@@ -277,7 +290,7 @@ const DetailedItemPage = () => {
           {/* <ListLi items={serverData[0].subcategory} /> */}
         </UlStyle>
       </div>
-      <PB30>여기에 상세페이지 </PB30>
+      {/* <PB30>여기에 상세페이지 </PB30> */}
 
       {/* 리뷰 목록 */}
       <div id="리뷰">

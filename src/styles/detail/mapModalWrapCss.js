@@ -22,6 +22,8 @@ export const MapModalWrap = styled.div`
   background-color: ${Common.color.p100};
   padding: 20px;
   margin: 0 auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 `;
 
 export const CloseBt = styled.button`

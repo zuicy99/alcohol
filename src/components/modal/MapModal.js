@@ -1,13 +1,7 @@
-import styled from "@emotion/styled/macro";
-import React, { useState } from "react";
-import { Common } from "../../styles/CommonCss";
-import { Button, Flex, Form, Input, Rate } from "antd";
-import { BasicBtR } from "../../styles/basic/basicBt";
-import { HeartOutlined } from "@ant-design/icons";
-import { PB20 } from "../../styles/basic";
+import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import MapPlaceInfo from "./MapPlaceInfo";
 import { dummyData } from "../../mock/PlaceData";
+import { PB20 } from "../../styles/basic";
 import {
   CloseBt,
   MapModalWrap,
@@ -15,17 +9,68 @@ import {
   Place,
   RvModalStyle,
 } from "../../styles/detail/mapModalWrapCss";
-const { TextArea } = Input;
+import MapPlaceInfo from "./MapPlaceInfo";
+import { useQuery } from "react-query";
+import { getMarketPath } from "../../api/productApi";
+// const { TextArea } = Input;
 
-export const MapModal = ({ onClose }) => {
-  const onChange = e => {
-    console.log("Change:", e.target.value);
-  };
+export const MapModal = ({ onClose, code }) => {
+  console.log("code입니다. : ", code);
+
+  const { data: marketData } = useQuery({
+    queryFn: () => getMarketPath({ code }),
+  });
+  // const marketData = data;
+  console.log("받은 데이터 : ", marketData);
+
+  // const onChange = e => {
+  //   console.log("Change:", e.target.value);
+  // };
   const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const transMapAddress = marketData => {
+    console.log("load : ", marketData);
+    return marketData?.map(item => item.address);
+  };
+  const mapAddress = transMapAddress(marketData);
+  console.log("주소 슛 :", mapAddress);
 
   const handlePlaceClick = index => {
     setSelectedIndex(index);
   };
+
+  // @AREA 주소 변환
+
+  // 주소를 좌표로 바꾸는거
+  const getAddr = addr => {
+    return new Promise((resolve, reject) => {
+      const geocoder = new window.kakao.maps.services.Geocoder();
+
+      geocoder.addressSearch(`${addr}`, function (result, status) {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const coords = {
+            lat: result[0].y,
+            lng: result[0].x,
+          };
+          resolve(coords);
+        } else reject(status);
+      });
+    });
+  };
+  const [resultPath, setResultPath] = useState([]);
+  useEffect(() => {
+    if (mapAddress && !resultPath.length) {
+      // resultPath가 비어있을 때만 실행
+      Promise.all(mapAddress.map(addr => getAddr(addr)))
+        .then(coordsArray => {
+          console.log("변환된 좌표:", coordsArray);
+          setResultPath(coordsArray);
+        })
+        .catch(error => {
+          console.error("주소 변환 중 오류 발생:", error);
+        });
+    }
+  }, [mapAddress, resultPath]);
 
   return (
     <RvModalStyle>
@@ -44,29 +89,21 @@ export const MapModal = ({ onClose }) => {
             center={{ lat: 35.8683476, lng: 128.5940482 }}
             style={{ width: "500px", height: "100%" }}
           >
+            {resultPath?.map((item, index) => (
+              <MapMarker
+                key={index}
+                position={{ lat: `${item.lat}`, lng: `${item.lng}` }}
+              ></MapMarker>
+            ))}
+
             <MapMarker // 마커를 생성합니다
               position={{
                 // 마커가 표시될 위치입니다
                 lat: 35.8683476,
                 lng: 128.5940482,
               }}
-              image={{
-                src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커이미지의 주소입니다
-                size: {
-                  width: 44,
-                  height: 49,
-                }, // 마커이미지의 크기입니다
-                options: {
-                  offset: {
-                    x: 27,
-                    y: 69,
-                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-                },
-              }}
             />
-            <MapMarker
-              position={{ lat: 35.86843379427353, lng: 128.59317740895912 }}
-            ></MapMarker>
+
             <MapMarker
               position={{ lat: 35.86956707277221, lng: 128.59432657224625 }}
             ></MapMarker>
@@ -76,7 +113,7 @@ export const MapModal = ({ onClose }) => {
           </Map>
           <Place>
             <PB20>판매처 선택</PB20>
-            {dummyData.map((place, index) => (
+            {marketData?.map((place, index) => (
               <MapPlaceInfo
                 key={index}
                 place={place}

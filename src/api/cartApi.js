@@ -1,9 +1,9 @@
-import axios from "axios";
+import jwtAxios from "../util/jwtUtil";
 import { SERVER_URL } from "./config";
 
 export const getCart = async () => {
   try {
-    const response = await axios.get(`${SERVER_URL}/shoppingbasket`);
+    const response = await jwtAxios.get(`${SERVER_URL}/shoppingbasket`);
     if (response.status === 200) {
       return response.data;
     } else {
