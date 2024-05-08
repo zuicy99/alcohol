@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router";
 import { Common } from "../../styles/CommonCss";
@@ -22,30 +22,11 @@ const WishCard = ({ data }) => {
   const { moveToDetail } = useCustomMove();
   const navigate = useNavigate();
 
-  const handleDeleteWish = code => {
-    console.log("상품 코드:", code);
-    deleteWish({
-      code: {
-        code: code,
-      },
-      successFn: data => {
-        // getWishList(data);
-      },
-      failFn: data => {
-        alert("상품불러오기 실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 상품불러오기 시도");
-      },
-    });
-    // getWishList(data);
-  };
-
   const fetchData = code => {
     console.log("상품 코드2:", wishCode);
     deleteWish({
       code: {
-        code: code, // 클로저를 사용하여 data.code 값 전달
+        code: code,
       },
       successFn,
       failFn,
@@ -56,7 +37,7 @@ const WishCard = ({ data }) => {
   };
 
   const successFn = data => {
-    getWishList(data);
+    // setWishCode(data);
   };
   const failFn = data => {
     alert("failFn : 데이터 호출에 실패하였습니다.");

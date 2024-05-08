@@ -21,6 +21,7 @@ export const ModalWrap = styled.div`
   padding: 20px;
   margin: 0 auto;
 `;
+
 export const ModalContent = styled.div`
   position: relative;
   width: 100%;
@@ -91,5 +92,35 @@ export const ModalContent = styled.div`
       font-size: 13px;
       cursor: pointer;
     }
+  }
+`;
+
+// ---------------------리뷰삭제 모달------------------------------------
+
+export const ModalDeletWrap = styled.div`
+  position: relative;
+  min-width: 870px;
+  height: 310px;
+  background-color: ${Common.color.p100};
+  padding: 20px;
+  margin: 0 auto;
+`;
+
+export const SubmitBt = styled.div`
+  padding-top: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* border-bottom: 1px solid ${Common.color.p800}; */
+  /* background: ${Common.color.b900}; */
+  justify-content: center;
+  gap: 50px;
+  button {
+    width: 120px;
+    height: 40px;
+    background: ${Common.color.b900};
+    color: ${Common.color.p100};
+    font-size: 13px;
+    cursor: pointer;
   }
 `;
