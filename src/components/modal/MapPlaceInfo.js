@@ -7,41 +7,45 @@ import {
   PlaceWrap,
 } from "../../styles/detail/mapModalPlaceCss";
 import { placeState } from "../../atom/placeState";
+import { stockState } from "../../atom/stockState";
 
 const MapPlaceInfo = ({ place, onClose }) => {
   const [selectedPlaceName, setSelectedPlaceName] = useRecoilState(placeState);
+  const [selectedStockNum, setSelectedStockNum] = useRecoilState(stockState);
   const handleClick = () => {
-    setSelectedPlaceName(place.name);
+    setSelectedPlaceName(place.marketname);
+    setSelectedStockNum(place.stocknumber);
     onClose();
   };
+  console.log("ffff ff :", place);
   return (
     <div>
       <PlaceWrap
         onClick={handleClick}
-        isActive={selectedPlaceName === place.name}
+        isActive={selectedPlaceName === place.marketname}
       >
-        {place.name && <P16>{place.name}</P16>}
+        {place.marketname && <P16>{place.marketname}</P16>}
         <PlaceUl>
           <PlaceLi>
             <img
               src={process.env.PUBLIC_URL + "/images/address.svg"}
               alt="Address Icon"
             />
-            <P16>{place.address}</P16>
+            <P16>{place?.address}</P16>
           </PlaceLi>
           <PlaceLi>
             <img
               src={process.env.PUBLIC_URL + "/images/call.svg"}
               alt="Call Icon"
             />
-            <P16>{place.phoneNumber}</P16>
+            <P16>{place?.phonenumber}</P16>
           </PlaceLi>
           <PlaceLi>
             <img
               src={process.env.PUBLIC_URL + "/images/time.svg"}
               alt="Time Icon"
             />
-            <P16>{place.hours}</P16>
+            <P16>{place?.opentime}</P16>
           </PlaceLi>
         </PlaceUl>
       </PlaceWrap>

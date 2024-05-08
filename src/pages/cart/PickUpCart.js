@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
 import CountKey from "../../components/basic/CountKey";
 import { PCartData } from "../../mock/CartData";
-
 import { Common } from "../../styles/CommonCss";
 import { PB20 } from "../../styles/basic";
 import { TotalPayWrap, TotalTh } from "../../styles/cart/CartTableCss";
@@ -12,11 +11,12 @@ import { BigButton, SButton } from "../../styles/common/reviewProductCss";
 import { TableCustom } from "../../styles/common/tableCss";
 import { cartCountState } from "../../atom/CountState";
 
-const PickUpCart = () => {
+const PickUpCart = ({ pickupData }) => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useRecoilState(cartCountState);
   const [showModal, setShowModal] = useState(false);
   // const [count, setCount] = useState(1);
+  console.log("cart-component : ", pickupData);
   const handleCloseModal = () => {
     setShowModal(false);
   };
