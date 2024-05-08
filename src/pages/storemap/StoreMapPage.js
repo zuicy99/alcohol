@@ -83,7 +83,7 @@ const StoreMapPage = () => {
                 center={{ lat: 35.8683476, lng: 128.5940482 }}
                 style={{ width: "550px", height: "550px" }}
               >
-                {marketData.map((market, index) => (
+                {/* {marketData.map((market, index) => (
                   <MapMarker
                     key={index}
                     position={{
@@ -96,7 +96,7 @@ const StoreMapPage = () => {
                       options: { offset: { x: 27, y: 69 } },
                     }}
                   />
-                ))}
+                ))} */}
               </Map>
             </StoreWrap>
           </ItemContent>
