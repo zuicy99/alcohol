@@ -1,6 +1,6 @@
 import axios from "axios";
-import { SERVER_URL } from "./config";
 import jwtAxios from "../util/jwtUtil";
+import { SERVER_URL } from "./config";
 
 const prefix = `${SERVER_URL}/main`;
 
@@ -107,6 +107,29 @@ export const getDetail = async ({ code }) => {
       return response.data;
     } else {
       console.log("no");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getRecent = async () => {
+  try {
+    const response = await axios.get(`${SERVER_URL}/main/recnet`);
+    if (response.status === 200) {
+      console.log("결과값 : ", response.data);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getUserRecent = async () => {
+  try {
+    const response = await jwtAxios.get(`${SERVER_URL}/main/recent`);
+    if (response.status === 200) {
+      console.log("결과값 : ", response.data);
+      return response.data;
     }
   } catch (error) {
     console.log(error);

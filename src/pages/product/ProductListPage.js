@@ -3,18 +3,20 @@ import { useMutation, useQuery } from "react-query";
 import {
   SignAlcholSearch,
   getAlcholType,
+  getRecent,
+  getUserRecent,
   nonSignAlcholSearch,
 } from "../../api/productApi";
 import ProductCard from "../../components/product/ProductCard";
 import ProductSidebar from "../../components/product/ProductSidebar";
 import ProSearch from "../../components/product/ProSearch";
+import useCustomLogin from "../../hooks/useCustomLogin";
 import { useCustomQuery } from "../../hooks/useCustomQuery";
 import {
   GridContainer,
   ProListWrap,
   ProductWrap,
 } from "../../styles/product/proWrapCss";
-import useCustomLogin from "../../hooks/useCustomLogin";
 
 const ProductPage = () => {
   const { isLogin } = useCustomLogin();
@@ -56,6 +58,7 @@ const ProductPage = () => {
   // API host
 
   const [searchData, setSearchData] = useState(initState);
+
   const SearchMutation = useMutation({
     mutationFn: search => nonSignAlcholSearch({ search }),
     onSuccess: result => {
@@ -111,6 +114,27 @@ const ProductPage = () => {
     console.log("선택된 카테고리", select);
   };
 
+  // 최근 검색어
+
+  const { data: recentData, refetch } = useQuery({
+    queryKey: [],
+    queryFn: () => {
+      if (isLogin) {
+        getUserRecent();
+      }
+    },
+    enabled: false,
+  });
+
+  // const recentData = data;
+  // recentData => 일딴 회원기준으로 데이터는 나옴
+  console.log("검색어 결과 ", recentData);
+  const handleClickRecent = () => {
+    console.log("검색바 클릭");
+    // setRecentFlag(recnetFlag);
+    refetch();
+  };
+
   return (
     <ProductWrap>
       {/* Side-bar Component */}
@@ -128,7 +152,9 @@ const ProductPage = () => {
           // @COMMENT Select Props
           onSelectChange={e => handleClickSelect(e)}
           selectValue={select.category}
+          onRecentClick={handleClickRecent}
         />
+        <div></div>
 
         {/* Content Component (Card) */}
         <GridContainer>

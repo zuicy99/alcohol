@@ -15,6 +15,8 @@ const ProSearch = ({
   onSearchClick,
   onSelectChange,
   searchPlaceholder,
+  // 최근검색어
+  onRecentClick,
 }) => {
   return (
     <div>
@@ -28,6 +30,8 @@ const ProSearch = ({
               name={searchName}
               value={searchValue}
               onChange={onSearchChange}
+              // 테스뚜
+              onClick={onRecentClick}
             />
             <button className="search-bt" onClick={onSearchClick}>
               <img src={process.env.PUBLIC_URL + `/images/search.png`} />
