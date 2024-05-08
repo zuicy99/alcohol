@@ -2,8 +2,6 @@ import { ConfigProvider } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
-import CountKey from "../../components/basic/CountKey";
-import { PCartData } from "../../mock/CartData";
 import { Common } from "../../styles/CommonCss";
 import { PB20 } from "../../styles/basic";
 import { TotalPayWrap, TotalTh } from "../../styles/cart/CartTableCss";
@@ -24,14 +22,18 @@ const PickUpCart = ({ pickupData }) => {
     setShowModal(true);
   };
 
-  const calculatePaymentAmount = (price, count) => {
-    return (price * count).toLocaleString(); // 콤마를 추가하여 반환합니다.
+  const calculatePaymentAmount = (price, amount) => {
+    return (price * amount).toLocaleString(); // 콤마를 추가하여 반환합니다.
   };
 
-  const totalOrderAmount = PCartData.reduce((total, record) => {
-    const paymentAmount = record.price * cartCount[record.key];
-    return total + paymentAmount;
-  }, 0);
+  const totalOrderAmount = pickupData => {
+    let total = 0;
+    pickupData.forEach(item => {
+      total += item.price * item.amount;
+    });
+    return total;
+  };
+  console.log("토탈", totalOrderAmount);
 
   const columnsH = [
     {
@@ -47,14 +49,19 @@ const PickUpCart = ({ pickupData }) => {
     },
     {
       title: "상품정보",
-      dataIndex: "info",
+      dataIndex: "name",
+    },
+    {
+      title: "매장",
+      dataIndex: "marketname",
     },
     {
       title: "수량",
-      dataIndex: "count",
+      dataIndex: "amount",
       render: (text, record) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <CountKey id={record.key} count={record.count} />
+          {record.amount}
+          {/* <CountKey id={record.key} count={record.amount} /> */}
           {/* {console.log("record.key:", record.key)} */}
           {/* {console.log("record.count:", record.count)} */}
         </div>
@@ -65,7 +72,8 @@ const PickUpCart = ({ pickupData }) => {
       dataIndex: "price",
       render: (_, record) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          {calculatePaymentAmount(record.price, cartCount[record.key])} 원
+          {/* {calculatePaymentAmount(record.price, cartCount[record.key])} 원 */}
+          {record.price.toLocaleString()}원
         </div>
       ),
     },
@@ -78,31 +86,7 @@ const PickUpCart = ({ pickupData }) => {
       ),
     },
   ];
-  const columnsF = [
-    {
-      title: "총 주문금액",
-      dataIndex: "price",
-      render: () => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {totalOrderAmount.toLocaleString()} 원
-        </div>
-      ),
-    },
-    {
-      title: "총 배송비",
-      dataIndex: "sh",
-    },
-    {
-      title: "결제예정금액",
-      dataIndex: "total",
-      render: () => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {/* <Count name="productCnt" setCount={setCount} count={count} /> */}
-          {/* 수량 카운트 컴포넌트를 이동한 위치 */}
-        </div>
-      ),
-    },
-  ];
+
   return (
     <div>
       <ConfigProvider
@@ -121,7 +105,7 @@ const PickUpCart = ({ pickupData }) => {
         <TableCustom
           // rowSelection={rowSelection}
           columns={columnsH}
-          dataSource={PCartData}
+          dataSource={pickupData}
           pagination={false}
         />
         {/* {showModal && <RvModal onClose={handleCloseModal} />} */}
@@ -141,10 +125,11 @@ const PickUpCart = ({ pickupData }) => {
           <PB20>예상결제금액</PB20>
         </TotalTh>
         <TotalTh>
-          <PB20>{totalOrderAmount.toLocaleString()} 원</PB20>
+          <PB20>{totalOrderAmount(pickupData).toLocaleString()} 원</PB20>
+
           <PB20>0원</PB20>
           <PB20>=</PB20>
-          <PB20>{totalOrderAmount.toLocaleString()} 원</PB20>
+          <PB20>{totalOrderAmount(pickupData).toLocaleString()} 원</PB20>
         </TotalTh>
       </TotalPayWrap>
       <div

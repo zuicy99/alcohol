@@ -5,6 +5,7 @@ import {
   PlaceLi,
   PlaceUl,
   PlaceWrap,
+  Placehead,
 } from "../../styles/detail/mapModalPlaceCss";
 import { placeState } from "../../atom/placeState";
 import { stockState } from "../../atom/stockState";
@@ -24,13 +25,17 @@ const MapPlaceInfo = ({ place, onClose }) => {
         onClick={handleClick}
         isActive={selectedPlaceName === place.marketname}
       >
-        {place.marketname && <P16>{place.marketname}</P16>}
+        <Placehead>
+          {place.marketname && <P16>{place.marketname}</P16>}
+        </Placehead>
+
         <PlaceUl>
           <PlaceLi>
             <img
               src={process.env.PUBLIC_URL + "/images/address.svg"}
               alt="Address Icon"
             />
+
             <P16>{place?.address}</P16>
           </PlaceLi>
           <PlaceLi>
