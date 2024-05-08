@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { MyreviewData, reviewData } from "../../mock/CrtRvwData";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
-import RvModal from "../../components/mypage/RvModal";
+import RvModal, { RvDelete } from "../../components/mypage/RvModal";
 import { StarRev } from "../../styles/common/StarCss";
 import { getReviewList } from "../../api/reviewApi";
+import { BasicBtR } from "../../styles/basic/basicBt";
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
@@ -22,6 +23,17 @@ const initState = [
 const MyReview = () => {
   const [myReviewData, setmyReviewData] = useState(initState);
 
+  const [showModal, setShowModal] = useState(false);
+  const [modalKey, setModalKey] = useState();
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleShowModal = index => {
+    setShowModal(true);
+    setModalKey(index);
+    console.log("모달로 전달되는 코드 값:", index);
+  };
   useEffect(() => {
     getReviewList({
       successFn: data => {
@@ -36,6 +48,21 @@ const MyReview = () => {
     });
   }, []);
 
+  // 데이터 새로고치기 위해..만든 무언가..
+  const fetchData = () => {
+    getReviewList({
+      successFn: data => {
+        setmyReviewData(data);
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 시도");
+      },
+    });
+  };
+
   const columns = [
     {
       title: "이미지",
@@ -44,7 +71,7 @@ const MyReview = () => {
         <div>
           <img
             style={{ width: "80px", marginBottom: "10px" }}
-            src="/images/moon.jpg"
+            src={process.env.PUBLIC_URL + record.picture}
             alt="리뷰 작성"
           />
           <StarRev>
@@ -68,13 +95,8 @@ const MyReview = () => {
         </div>
       ),
     },
-    // {
-    //   title: "주문일자",
-    //   dataIndex: "date",
-    // },
-
     {
-      title: "리뷰작성",
+      title: "내용",
       dataIndex: "content",
       render: (text, record) => (
         <div
@@ -88,6 +110,13 @@ const MyReview = () => {
         >
           <p>{record.writing}</p>
         </div>
+      ),
+    },
+    {
+      title: "리뷰삭제",
+      button: <button>ddldldd</button>,
+      render: (text, record, index) => (
+        <BasicBtR onClick={() => handleShowModal(index)}>리뷰 삭제</BasicBtR>
       ),
     },
   ];
@@ -111,7 +140,13 @@ const MyReview = () => {
         dataSource={myReviewData}
         pagination={false}
       />
-      {/* {showModal && <RvModal onClose={handleCloseModal} iOrder={0} />} */}
+      {showModal && (
+        <RvDelete
+          onClose={handleCloseModal}
+          code={myReviewData[modalKey]}
+          refreshData={fetchData}
+        />
+      )}
     </ConfigProvider>
   );
 };

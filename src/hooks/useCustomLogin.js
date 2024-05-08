@@ -33,6 +33,7 @@ const useCustomLogin = () => {
     const result = await postLogin({ loginParam });
     saveAsCookie(result);
     moveToPath("/");
+    // navigate("/main");
 
     return result;
   };
@@ -47,7 +48,7 @@ const useCustomLogin = () => {
   const doLogout = () => {
     removeCookie("member");
     resetSignState();
-
+    moveToPath("/");
     // 로그아웃이 되면 버튼업데이트를 위해 새로고침
     window.location.reload();
   };

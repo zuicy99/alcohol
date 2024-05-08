@@ -16,6 +16,7 @@ const initState = [
     purchaseday: "2024-05-02",
     marketname: "포도대구동성로점",
     delivery: "PickUp",
+    picture: "",
   },
 ];
 const CreateReview = () => {
@@ -49,8 +50,8 @@ const CreateReview = () => {
     {
       title: "이미지",
       dataIndex: "name",
-      render: () => (
-        <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
+      render: (text, record) => (
+        <img style={{ width: "80px" }} src={record.picture} alt="리뷰 작성" />
       ),
     },
     {

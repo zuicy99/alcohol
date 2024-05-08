@@ -6,10 +6,16 @@ import { BasicBtR } from "../../styles/basic/basicBt";
 import { HeartOutlined } from "@ant-design/icons";
 import {
   ModalContent,
+  ModalDeletWrap,
   ModalWrap,
   RvModalStyle,
+  SubmitBt,
 } from "../../styles/common/revModalCss";
-import { postReviewcreate } from "../../api/reviewApi";
+import {
+  deleteReview,
+  getReviewcheck,
+  postReviewcreate,
+} from "../../api/reviewApi";
 const { TextArea } = Input;
 
 const initState = {
@@ -37,7 +43,7 @@ const RvModal = ({ onClose, code }) => {
   const fetchData = () => {
     postReviewcreate({
       reivewParam: {
-        alcohol: 0,
+        alcohol: code.code,
         writing: writingData,
         grade: gradeData,
         picture: "",
@@ -51,6 +57,7 @@ const RvModal = ({ onClose, code }) => {
   const successFn = data => {
     setPostData(data);
     onClose();
+    getReviewcheck(data);
   };
   const failFn = data => {
     setPostData(false);
@@ -72,7 +79,7 @@ const RvModal = ({ onClose, code }) => {
           </div>
           <div className="table">
             <img
-              src={process.env.PUBLIC_URL + "/images/moon.jpg"} // 수정된 부분
+              src={process.env.PUBLIC_URL + code.picture}
               style={{ width: "62px", height: "62px" }}
               //   alt="bag"
             />
@@ -132,3 +139,88 @@ const RvModal = ({ onClose, code }) => {
 };
 
 export default RvModal;
+
+export const RvDelete = ({ onClose, code, refreshData }) => {
+  // const picCode = code => {
+  //   const picture = code?.picture;
+  //   if (picture) {
+  //     const extractedNumbers = (picture.match(/\d+/g) || []).join("");
+  //     // 첫 번째 자리 숫자가 0이면 제거
+  //     const cleanedNumbers = extractedNumbers.replace(/^0+/, "");
+  //     return cleanedNumbers;
+  //   }
+  // };
+  // const extractedNumbers = (code.picture.match(/\d+/g) || []).join("");
+  const picCodePk = (code.picture.match(/\d+/g) || [])
+    .map(number => parseInt(number.replace(/^0+/, ""), 10)) // 첫 번째 자리 숫자가 0이면 제거
+    .join("");
+
+  const fetchData = picCodePk => {
+    deleteReview({
+      code: picCodePk,
+      successFn: () => {
+        onClose();
+        refreshData();
+      },
+      failFn,
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 상품불러오기 시도");
+      },
+    });
+  };
+
+  const successFn = data => {
+    onClose();
+  };
+  const failFn = data => {
+    alert("failFn : 데이터 호출에 실패하였습니다.");
+  };
+
+  return (
+    <>
+      <RvModalStyle>
+        <ModalDeletWrap>
+          {console.log("삭제모달 pk값", code.picture)}
+          {console.log("삭제모달 pk값2222", picCodePk)}
+          <ModalContent>
+            <div className="modal-title">
+              <p className="title">리뷰삭제</p>
+
+              <button onClick={onClose}>
+                <img src={process.env.PUBLIC_URL + "/images/close2.svg"}></img>
+              </button>
+            </div>
+            <div className="table">
+              <img
+                src={process.env.PUBLIC_URL + code.picture}
+                style={{ width: "62px", height: "62px" }}
+                //   alt="bag"
+              />
+              <ul className="hr">
+                <li>제품명</li>
+                <li>내용</li>
+              </ul>
+              <ul className="br">
+                <li>{code.name}</li>
+                <li> {code.writing}</li>
+              </ul>
+            </div>
+            <div className="grade">
+              <p>리뷰를 삭제하시겠습니까?</p>
+            </div>
+
+            <SubmitBt>
+              <BasicBtR
+                style={{ background: Common.color.f900 }}
+                onClick={() => fetchData(picCodePk)}
+              >
+                네
+              </BasicBtR>
+              <BasicBtR onClick={onClose}>아니요</BasicBtR>
+            </SubmitBt>
+          </ModalContent>
+        </ModalDeletWrap>
+      </RvModalStyle>
+    </>
+  );
+};
