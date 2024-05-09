@@ -2,12 +2,14 @@ import { ConfigProvider } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
+import { cartCountState } from "../../atom/CountState";
 import { Common } from "../../styles/CommonCss";
 import { PB20 } from "../../styles/basic";
 import { TotalPayWrap, TotalTh } from "../../styles/cart/CartTableCss";
 import { BigButton, SButton } from "../../styles/common/reviewProductCss";
 import { TableCustom } from "../../styles/common/tableCss";
-import { cartCountState } from "../../atom/CountState";
+import OptiPlaceholder from "../../components/image-opti/OptiPlaceholder";
+import OptiWireframe from "../../components/image-opti/OptiWireframe";
 
 const PickUpCart = ({ pickupData }) => {
   const navigate = useNavigate();
@@ -22,20 +24,30 @@ const PickUpCart = ({ pickupData }) => {
     setShowModal(true);
   };
 
+  const handleClickDelete = record => {
+    console.log("Click");
+    console.log(record.stock);
+    console.log(record.amount);
+    console.log(record.price);
+  };
+
   const calculatePaymentAmount = (price, amount) => {
     return (price * amount).toLocaleString(); // 콤마를 추가하여 반환합니다.
   };
 
   const totalOrderAmount = pickupData => {
     let total = 0;
+
     if (pickupData) {
       pickupData.forEach(item => {
         total += item.price * item.amount;
       });
     }
+
     return total;
   };
-  console.log("토탈", totalOrderAmount);
+  // console.log("토탈", totalOrderAmount);
+  // console.log("사진 : ", pickupData.picture);
 
   const columnsH = [
     {
@@ -45,8 +57,20 @@ const PickUpCart = ({ pickupData }) => {
     {
       title: "이미지",
       dataIndex: "pic",
-      render: () => (
-        <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
+      render: (text, record) => (
+        // <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
+        <OptiPlaceholder
+          style={{ width: "80px" }}
+          width={240}
+          height={240}
+          src={record?.picture}
+          alt="리뷰 작성"
+          placeholder={
+            <div>
+              <OptiWireframe width={80} height={80} />
+            </div>
+          }
+        />
       ),
     },
     {
@@ -83,7 +107,7 @@ const PickUpCart = ({ pickupData }) => {
       title: "삭제",
       render: (_, record) => (
         <div>
-          <SButton>삭제</SButton>
+          <SButton onClick={() => handleClickDelete(record)}>삭제</SButton>
         </div>
       ),
     },

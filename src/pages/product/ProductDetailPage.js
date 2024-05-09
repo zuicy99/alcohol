@@ -123,8 +123,8 @@ const DetailedItemPage = () => {
   );
 
   const taste = serverData[0].taste;
-  // console.log("fff : ", taste);
   const tasteArray = taste.split(", ");
+
   console.log("array : ", tasteArray);
   const categoryArray = [
     `${serverData[0].maincategory}`,

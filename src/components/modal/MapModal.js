@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { dummyData } from "../../mock/PlaceData";
+import { useQuery } from "react-query";
+import { getMarketPath } from "../../api/productApi";
 import { PB20 } from "../../styles/basic";
 import {
   CloseBt,
@@ -10,8 +11,6 @@ import {
   RvModalStyle,
 } from "../../styles/detail/mapModalWrapCss";
 import MapPlaceInfo from "./MapPlaceInfo";
-import { useQuery } from "react-query";
-import { getMarketPath } from "../../api/productApi";
 // const { TextArea } = Input;
 
 export const MapModal = ({ onClose, code }) => {

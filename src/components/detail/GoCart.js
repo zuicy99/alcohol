@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import MapModal from "../modal/MapModal";
-import { BigButton, PlaceBt } from "../../styles/common/reviewProductCss";
-import CartModal from "../modal/CartModal";
-import { Common } from "../../styles/CommonCss";
-import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
+import { useParams } from "react-router-dom";
 import { postAddCart } from "../../api/productApi";
+import { BigButton, PlaceBt } from "../../styles/common/reviewProductCss";
+import { Common } from "../../styles/CommonCss";
+import CartModal from "../modal/CartModal";
+import MapModal from "../modal/MapModal";
 
 export const GoMapModal = () => {
   const [isMapModalOpen, setMapModalOpen] = useState(false);
   const { code } = useParams();
-  console.log("ce : ", code);
+  // console.log("ce : ", code);
   const handleOpenMapModal = () => {
     setMapModalOpen(true);
   };
