@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Common } from "../../styles/CommonCss";
 import { Flex } from "antd";
 import {
@@ -13,6 +13,8 @@ import { LoggedInContent, LoggedOutContent } from "./UserDropContent";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
 import { activeSideState } from "../../atom/activeSideState";
+import { userState } from "../../atom/userState";
+import { getUser } from "../../api/mainApi";
 
 const UserDrop = () => {
   const [open, setOpen] = useState(false);
@@ -24,6 +26,23 @@ const UserDrop = () => {
     setActiveSide(sideId);
     navigate(`/mypage/${sideId}`);
   };
+
+  const [userData, setUserData] = useRecoilState(userState);
+
+  useEffect(() => {
+    getUser({
+      successFn: data => {
+        setUserData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
+    });
+  }, []);
+  console.log("유저데이터", userData);
   return (
     <DropdownWrapper
       onMouseEnter={() => setOpen(true)}
@@ -45,13 +64,14 @@ const UserDrop = () => {
                     fontWeight: "600",
                   }}
                 >
-                  000
+                  {userData[0].nickname}
                 </p>
                 <p>님</p>
               </div>
 
               <p>현재 배송지</p>
-              <p>대구광역시 중구 달성로123</p>
+              <p style={{ fontWeight: "bold" }}>{userData[0].address}</p>
+              <p style={{ fontWeight: "bold" }}>{userData[0].address2}</p>
             </div>
             <div className="line"></div>
             <ItemBack>

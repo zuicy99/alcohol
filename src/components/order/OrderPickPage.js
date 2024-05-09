@@ -15,6 +15,7 @@ const initState = [
     division: "",
     address: "",
     purchaseday: "",
+    picture: "",
   },
 ];
 
@@ -45,9 +46,9 @@ const OrderPickPage = () => {
   const columns = [
     {
       title: "이미지",
-      dataIndex: "name",
-      render: () => (
-        <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
+      dataIndex: "picture",
+      render: (text, record) => (
+        <img style={{ width: "80px" }} src={record.picture} alt="리뷰 작성" />
       ),
     },
     {
@@ -61,10 +62,6 @@ const OrderPickPage = () => {
     {
       title: "매장명",
       dataIndex: "marketname",
-    },
-    {
-      title: "주문번호",
-      dataIndex: "orderNumber",
     },
     {
       title: "주문방식",

@@ -28,9 +28,11 @@ const PickUpCart = ({ pickupData }) => {
 
   const totalOrderAmount = pickupData => {
     let total = 0;
-    pickupData.forEach(item => {
-      total += item.price * item.amount;
-    });
+    if (pickupData) {
+      pickupData.forEach(item => {
+        total += item.price * item.amount;
+      });
+    }
     return total;
   };
   console.log("토탈", totalOrderAmount);
