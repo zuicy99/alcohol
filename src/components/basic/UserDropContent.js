@@ -1,11 +1,31 @@
+import { useEffect } from "react";
 import { Common } from "../../styles/CommonCss";
 import {
   DropdownContent,
   DropdownItem,
   ItemBack,
 } from "../../styles/basic/userDropCss";
+import { getUser } from "../../api/mainApi";
+import { useRecoilState } from "recoil";
+import { userState } from "../../atom/userState";
 
 export const LoggedInContent = () => {
+  const [userData, setUserData] = useRecoilState(userState);
+
+  useEffect(() => {
+    getUser({
+      successFn: data => {
+        setUserData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("most 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 most 시도");
+      },
+    });
+  }, []);
+  console.log("유저데이터", userData);
   return (
     <>
       <DropdownContent>
@@ -20,7 +40,7 @@ export const LoggedInContent = () => {
             >
               000
             </p>
-            <p>님</p>
+            <p>{userData.address}님</p>
           </div>
           {/* <a className="profile-a">프로필 전환 &gt;</a> */}
           <p>현재 배송지</p>

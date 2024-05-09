@@ -4,6 +4,7 @@ import {
   getMostProduct,
   getNewProduct,
   getRandProduct,
+  getUser,
 } from "../../api/mainApi";
 import CardSet from "../../components/main/CardSet";
 import MainTitle from "../../components/main/MainTitle";
@@ -11,6 +12,10 @@ import { Common } from "../../styles/CommonCss";
 import { MainWrap } from "../../styles/main/mainCss";
 import { PickUpCard } from "../../styles/main/pickupCardCss";
 import BasicLayout from "../../layout/BasicLayout";
+import { useRecoilState } from "recoil";
+import { userState } from "../../atom/userState";
+import { useQuery } from "react-query";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = [
   {
@@ -34,6 +39,7 @@ const Main = () => {
   const [mostData, setMostData] = useState([]);
   const [newdata, setNewData] = useState([]);
   const [randdata, setRandData] = useState([]);
+  const { isLogin } = useCustomLogin();
 
   useEffect(() => {
     getRandProduct({
@@ -53,20 +59,6 @@ const Main = () => {
     getMostProduct({
       successFn: data => {
         setMostData(data); // 성공 시 데이터 설정
-      },
-      failFn: data => {
-        alert("most 실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 most 시도");
-      },
-    });
-  }, []);
-
-  useEffect(() => {
-    getNewProduct({
-      successFn: data => {
-        setNewData(data); // 성공 시 데이터 설정
       },
       failFn: data => {
         alert("most 실패");

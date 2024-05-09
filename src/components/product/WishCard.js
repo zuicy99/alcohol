@@ -16,7 +16,7 @@ const initState = [
     picture: "http://threeback.hellomh.site/images/01.jpg",
   },
 ];
-const WishCard = ({ data }) => {
+const WishCard = ({ data, refreshData }) => {
   // console.log("받은 데이터", data);
   const [wishCode, setWishCode] = useState(data.code);
   const { moveToDetail } = useCustomMove();
@@ -37,7 +37,7 @@ const WishCard = ({ data }) => {
   };
 
   const successFn = data => {
-    // setWishCode(data);
+    refreshData();
   };
   const failFn = data => {
     alert("failFn : 데이터 호출에 실패하였습니다.");

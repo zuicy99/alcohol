@@ -8,6 +8,15 @@ import OrderShipPage from "../../components/order/OrderShipPage";
 import { PB20 } from "../../styles/basic";
 import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
 
+export const InfoWrap = styled.div`
+  width: 100%;
+  position: relative;
+  hr {
+    background-color: ${Common.color.b900};
+    height: 3px;
+    /* margin-bottom: 20px; */
+  }
+`;
 const OrderPage = () => {
   const [activeNavBt, setActiveNavBt] = useState(1);
   const handleBtClick = cartId => {
@@ -15,15 +24,6 @@ const OrderPage = () => {
     console.log("선택된 카트버튼", cartId);
   };
 
-  const InfoWrap = styled.div`
-    width: 100%;
-    position: relative;
-    hr {
-      background-color: ${Common.color.b900};
-      height: 3px;
-      /* margin-bottom: 20px; */
-    }
-  `;
   return (
     <InfoWrap>
       <MarginB10 />
