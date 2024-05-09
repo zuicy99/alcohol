@@ -3,10 +3,14 @@ import { GridContainer } from "../../styles/product/proWrapCss";
 import ProductCard from "../../components/product/ProductCard";
 import { getWishList } from "../../api/wishListApi";
 import WishCard from "../../components/product/WishCard";
+import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
+import ReviewBt from "../../components/mypage/ReviewBt";
+import { InfoWrap } from "../order/OrderPage";
+import { PB20 } from "../../styles/basic";
 
 const WishListPage = () => {
   const [wishListData, setWishListData] = useState([]);
-
+  const [activeNavBt, setActiveNavBt] = useState(1);
   useEffect(() => {
     getWishList({
       successFn: data => {
@@ -20,13 +24,41 @@ const WishListPage = () => {
       },
     });
   }, []);
+
+  const fetchData = () => {
+    getWishList({
+      successFn: data => {
+        setWishListData(data); // 성공 시 데이터 설정
+      },
+      failFn: data => {
+        alert("상품불러오기 실패");
+      },
+      errorFn: data => {
+        alert("서버상태 불안정 다음에 상품불러오기 시도");
+      },
+    });
+  };
   return (
     <div>
-      <GridContainer>
-        {wishListData.map(product => (
-          <WishCard key={product.code} data={product} />
-        ))}
-      </GridContainer>
+      <InfoWrap>
+        <MarginB10 />
+        <PB20>위시리스트</PB20>
+        <MarginB20 />
+        <div>
+          <ReviewBt btName="위시리스트" reBtId={1} active={activeNavBt === 1} />
+        </div>
+        <hr />
+        <MarginB20 />
+        <GridContainer>
+          {wishListData.map(product => (
+            <WishCard
+              key={product.code}
+              data={product}
+              refreshData={fetchData}
+            />
+          ))}
+        </GridContainer>
+      </InfoWrap>
     </div>
   );
 };
