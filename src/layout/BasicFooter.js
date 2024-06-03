@@ -1,56 +1,7 @@
-import styled from "@emotion/styled/macro";
 import React from "react";
-import { Common } from "../styles/CommonCss";
+import { FooterWrap } from "../styles/basic/HeaderWrapCss";
 
 const BasicFooter = () => {
-  const FooterWrap = styled.div`
-    position: relative;
-    display: flex;
-    /* height: 233px; */
-    background-color: ${Common.color.b900};
-    padding: 5rem;
-    justify-content: space-between;
-    h1 {
-      color: ${Common.color.p000};
-    }
-    .footer-inner {
-      width: 130rem;
-      margin: 0 auto;
-      height: 35rem;
-    }
-    .company-nav {
-      display: flex;
-      margin: 3rem 0;
-      a {
-        color: ${Common.color.p000};
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-      li {
-        display: flex;
-      }
-      .l {
-        margin: 0 1rem;
-        color: ${Common.color.p000};
-        font-size: 1.3rem;
-        cursor: default;
-      }
-    }
-    .left-p {
-      font-size: 1.3rem;
-      color: ${Common.color.p100};
-    }
-    .right-info {
-      display: flex;
-      margin-right: 5rem;
-      align-items: center;
-      p {
-        color: ${Common.color.p100};
-        margin: 1rem 0;
-        font-size: 1.3rem;
-      }
-    }
-  `;
   return (
     <FooterWrap>
       <div className="footer-inner">

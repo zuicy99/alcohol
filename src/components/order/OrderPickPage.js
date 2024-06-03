@@ -1,6 +1,7 @@
 import { ConfigProvider } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getPickUp } from "../../api/orderApi";
+import useApiLoader from "../../hooks/useApiLoader";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
 import RvModal from "../mypage/RvModal";
@@ -22,6 +23,8 @@ const initState = [
 const OrderPickPage = () => {
   const [orderData, setOrderData] = useState(initState);
   const [showModal, setShowModal] = useState(false);
+  const { useProductLoader } = useApiLoader();
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -29,19 +32,7 @@ const OrderPickPage = () => {
     setShowModal(true);
   };
 
-  useEffect(() => {
-    getPickUp({
-      successFn: data => {
-        setOrderData(data);
-      },
-      failFn: data => {
-        alert("픽업목록 불러오기 실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 시도");
-      },
-    });
-  }, []);
+  useProductLoader(getPickUp, setOrderData);
 
   const columns = [
     {

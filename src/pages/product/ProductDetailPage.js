@@ -1,32 +1,27 @@
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import Count from "../../components/basic/Count";
-import { P16, P20, P30, PB20 } from "../../styles/basic";
+import { P16, P20, P30 } from "../../styles/basic";
 import { Common } from "../../styles/CommonCss";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { UlStyle } from "../../components/detail/DetailInfo";
 import { GoCartModal, GoMapModal } from "../../components/detail/GoCart";
-import ListLi from "../../components/detail/ListLi";
-import ReviewProduct from "../../components/detail/ReviewProduct";
 import { ProductItemData } from "../../mock/ProductitemData";
 
 import { useQuery } from "react-query";
 import { getDetail } from "../../api/productApi";
 import { postWish } from "../../api/wishListApi";
 import { placeState } from "../../atom/placeState";
+import { stockState } from "../../atom/stockState";
 import {
   BigButton,
   HeartButton,
   ItemContent,
-  ItemLine,
   ItemWrap,
-  MarginB40,
   TotalAmount,
 } from "../../styles/common/reviewProductCss";
 import { StarRev } from "../../styles/common/StarCss";
-import { stockState } from "../../atom/stockState";
 
 export const items1 = ["1", "2", "3"];
 export const items2 = ["a", "b", "c"];
@@ -61,9 +56,10 @@ const DetailedItemPage = () => {
   };
 
   const handleHeartButtonClick = () => {
-    const newValue = !isHeartChecked ? 1 : 0;
+    const newValue = !isHeartChecked ? 0 : 1;
     setHeartChecked(!isHeartChecked);
-    console.log("하트클리이이이잉익", newValue);
+    // console.log("하트클리이이이잉익", newValue);
+    alert("찜목록 추가");
   };
 
   const AA = styled.div`
@@ -134,6 +130,7 @@ const DetailedItemPage = () => {
   // -------------------찜목록 추가 기능 start ---------------------------
   const fetchData = () => {
     // console.log("상품 코드 제발 찜추가:", detailParam.code);
+
     postWish({
       code: {
         code: detailParam.code,
@@ -146,7 +143,7 @@ const DetailedItemPage = () => {
     });
   };
   const successFn = data => {
-    // getWishList(data);
+    alert("찜목록 추가");
   };
   const failFn = data => {
     alert("failFn : 데이터 호출에 실패하였습니다.");
@@ -163,14 +160,41 @@ const DetailedItemPage = () => {
   };
   // console.log("stock num : ", selectedStockNum);
 
-  const postCard = {
-    stock: selectedStockNum,
-    amount: count,
-    price: serverData[0].price,
+  // {
+  //   "alcoholcode": 1,
+  //   "marketname": "포도대구동성로점",
+  //   "amount": 1,
+  //   "delivery": "Delivery"
+  // }
+
+  // {
+  //   "alcoholcode": 1,
+  //   "marketname": "배럴앤드리프",
+  //   "amount": 1,
+  //   "delivery": "Delivery"
+  // }
+
+  const [delivery, setDelivery] = useState("PickUp");
+  const handleChangeDelivery = e => {
+    setDelivery(e.target.value);
   };
-  // console.log("ㅍㅋ : ", postCard);
 
   // -------------------찜목록 추가 기능 end ---------------------------
+
+  const postCard = {
+    alcoholcode: detailParam?.code,
+    marketname: selectedPlace,
+    amount: count,
+    delivery: delivery,
+    // stock: selectedStockNum,
+    // amount: count,
+    // price: serverData[0].price,
+  };
+
+  // ------------------------ console.log ------------------------------------
+  console.log("코드냐 ? :", detailParam);
+  console.log("딜러버리냐 ? :", delivery);
+  // -------------------------------------------------------------------------
 
   return (
     <ItemWrap>
@@ -179,12 +203,18 @@ const DetailedItemPage = () => {
         <div className="information">
           <AA>
             <h1>{serverData[0]?.name}</h1>
-            <HeartButton checked={isHeartChecked} onClick={fetchData}>
+            <HeartButton
+              checked={isHeartChecked}
+              onClick={() => {
+                fetchData();
+                handleHeartButtonClick();
+              }}
+            >
               <img
                 src={
                   isHeartChecked
-                    ? process.env.PUBLIC_URL + "/images/heartOn.svg"
-                    : process.env.PUBLIC_URL + "/images/heartOff.svg"
+                    ? process.env.PUBLIC_URL + "/images/heartOff.svg"
+                    : process.env.PUBLIC_URL + "/images/heartOn.svg"
                 }
                 alt="heart"
                 className="heart-icon"
@@ -194,15 +224,15 @@ const DetailedItemPage = () => {
           </AA>
 
           <P16 style={{ color: `${Common.color.p600}` }}>
-            상품소개 : {productItem.introduction}
+            {productItem.introduction}
           </P16>
           <div className="starRev">
             <StarRev>{starImages}</StarRev>
-            <a href="#리뷰">?리뷰더보기</a>
+            <a href="#리뷰">리뷰더보기</a>
           </div>
           <h1>{serverData[0].price}원</h1>
           <div className="line" />
-          {/* 맵모달 판매처 선택 버튼 */}
+
           <GoMapModal />
           <div className="info">
             <ul>
@@ -213,10 +243,9 @@ const DetailedItemPage = () => {
               {serverData ? (
                 <li>{selectedPlace}</li>
               ) : (
-                // <div></div>
                 <li>판매처를 선택해주세요</li>
               )}
-              {/* <li>화이트 와인</li> */}
+
               <li>
                 <select
                   style={{
@@ -227,16 +256,20 @@ const DetailedItemPage = () => {
                     fontSize: "16px",
                     // borderRadius: "5px",
                   }}
+                  onChange={handleChangeDelivery}
+                  value={delivery}
                 >
-                  <option>픽업</option>
-                  <option>배송</option>
+                  <option value="PickUp">픽업</option>
+                  <option value="Delivery">배송</option>
                 </select>
               </li>
             </ul>
           </div>
           {/* <Count /> */}
           <div className="count">
-            <p className="product-name">[픽업]{serverData[0].name}</p>
+            <p className="product-name">
+              [{delivery}]{serverData[0].name}
+            </p>
             <Count name="productCnt" setCount={setCount} count={count} />
             <p>{serverData[0].price}원</p>
           </div>
@@ -263,62 +296,6 @@ const DetailedItemPage = () => {
           </div>
         </div>
       </ItemContent>
-      <ItemLine />
-
-      {/* 상품 info */}
-      <div>
-        <PB20>Tasting Note</PB20>
-        <UlStyle>
-          <ListLi items={tasteArray} />
-          {/* <ListLi items={items2} /> */}
-        </UlStyle>
-      </div>
-      <ItemLine />
-
-      <div>
-        <PB20>Information</PB20>
-        <UlStyle>
-          <ListLi items={items1} />
-          <ListLi items={items2} />
-        </UlStyle>
-      </div>
-      <ItemLine />
-      <div>
-        <PB20>Category</PB20>
-        <UlStyle>
-          <ListLi items={categoryArray} />
-          {/* <ListLi items={serverData[0].subcategory} /> */}
-        </UlStyle>
-      </div>
-      {/* <PB30>여기에 상세페이지 </PB30> */}
-
-      {/* 리뷰 목록 */}
-      <div id="리뷰">
-        <MarginB40 />
-        <MarginB40 />
-        <PB20>리뷰()</PB20>
-        <ItemLine
-          style={{ background: `${Common.color.p600}`, height: "2px" }}
-        />
-        <ReviewProduct
-          userNm="나는고라니1"
-          starCount={4}
-          review="아주좋아요"
-          date="2020 - 20 - 20"
-        />
-        <ReviewProduct
-          userNm="나는고라니2"
-          starCount={5}
-          review="아주좋아요"
-          date="2020 - 20 - 20"
-        />
-        <ReviewProduct
-          userNm="나는고라니3"
-          starCount={3}
-          review="아주좋아요"
-          date="2020 - 20 - 20"
-        />
-      </div>
     </ItemWrap>
   );
 };

@@ -80,6 +80,12 @@ export const BigButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 `;
+export const MediumButton = styled.button`
+  width: 200px;
+  height: 49px;
+  font-weight: bold;
+  cursor: pointer;
+`;
 export const SButton = styled.button`
   width: 80px;
   height: 30px;

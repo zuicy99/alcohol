@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import ReviewBt from "../../components/mypage/ReviewBt";
 import { useNavigate } from "react-router-dom";
 import CreateReview from "./CreateReview";
-
 import { Common } from "../../styles/CommonCss";
 import MyReview from "./MyReview";
 import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
@@ -23,7 +22,6 @@ const ReviewPage = () => {
     hr {
       background-color: ${Common.color.b900};
       height: 3px;
-      /* margin-bottom: 20px; */
     }
   `;
   return (

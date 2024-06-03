@@ -4,6 +4,7 @@ import { CardContainer, CardFlex } from "../../styles/main/cardStlye";
 import { Common } from "../../styles/CommonCss";
 
 import { useNavigate } from "react-router";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = [
   {
@@ -15,6 +16,7 @@ const initState = [
   },
 ];
 const CardSet = ({ data }) => {
+  const { moveToMainDetail } = useCustomMove();
   const navigate = useNavigate();
   const newData = data ? data.slice(0, 3) : [];
   // const [newData, setNewData] = useState(initState);
@@ -23,26 +25,26 @@ const CardSet = ({ data }) => {
     display: flex;
     justify-content: space-around;
   `;
-
+  console.log("메인에 데이터", data);
   return (
-    <CardsWrapper>
+    <CardsWrapper onClick={() => moveToMainDetail(data[0]?.code)}>
       {newData.map((product, index) => {
         const picSrc = product.picture;
         const pic = picSrc.split("/").pop();
         return (
           <CardContainer key={index}>
-            <a
+            {/* <a
               onClick={() => {
                 navigate(`/item`);
                 window.scrollTo(0, 0); // 페이지 상단으로 스크롤 이동
               }}
-            >
-              <img
-                className="card-img"
-                src={`/images/alcohol/${pic}`}
-                alt={product.picture}
-              />
-            </a>
+            > */}
+            <img
+              className="card-img"
+              src={`/images/alcohol/${pic}`}
+              alt={product.picture}
+            />
+            {/* </a> */}
 
             <CardFlex>
               <div className="tagform">

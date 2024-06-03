@@ -1,12 +1,12 @@
-import { ConfigProvider, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import { MyreviewData, reviewData } from "../../mock/CrtRvwData";
-import { Common } from "../../styles/CommonCss";
-import { TableCustom } from "../../styles/common/tableCss";
-import RvModal, { RvDelete } from "../../components/mypage/RvModal";
-import { StarRev } from "../../styles/common/StarCss";
+import { ConfigProvider } from "antd";
+import React, { useState } from "react";
 import { getReviewList } from "../../api/reviewApi";
+import { RvDelete } from "../../components/mypage/RvModal";
+import useApiLoader from "../../hooks/useApiLoader";
+import { Common } from "../../styles/CommonCss";
 import { BasicBtR } from "../../styles/basic/basicBt";
+import { StarRev } from "../../styles/common/StarCss";
+import { TableCustom } from "../../styles/common/tableCss";
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
@@ -17,7 +17,7 @@ const initState = [
     name: "더 페이머스 그라우스 700ml",
     writing: "져라ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
     grade: 4,
-    picture: "",
+    picture: "/images/alcohol/01.jpg",
   },
 ];
 const MyReview = () => {
@@ -25,6 +25,8 @@ const MyReview = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [modalKey, setModalKey] = useState();
+  const { useProductLoader } = useApiLoader();
+  useProductLoader(getReviewList, setmyReviewData);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -34,19 +36,6 @@ const MyReview = () => {
     setModalKey(index);
     console.log("모달로 전달되는 코드 값:", index);
   };
-  useEffect(() => {
-    getReviewList({
-      successFn: data => {
-        setmyReviewData(data);
-      },
-      failFn: data => {
-        alert("most 실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 시도");
-      },
-    });
-  }, []);
 
   // 데이터 새로고치기 위해..만든 무언가..
   const fetchData = () => {

@@ -1,14 +1,12 @@
 import { ConfigProvider } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getReviewcheck } from "../../api/reviewApi";
 import RvModal from "../../components/mypage/RvModal";
+import useApiLoader from "../../hooks/useApiLoader";
 import { Common } from "../../styles/CommonCss";
 import { BasicBtR } from "../../styles/basic/basicBt";
 import { TableCustom } from "../../styles/common/tableCss";
 
-// const onChange = (pagination, filters, sorter, extra) => {
-//   console.log("params", pagination, filters, sorter, extra);
-// };
 const initState = [
   {
     code: 3,
@@ -23,6 +21,7 @@ const CreateReview = () => {
   const [showModal, setShowModal] = useState(false);
   const [reviewListData, setReviewListData] = useState(initState);
   const [modalKey, setModalKey] = useState();
+  const { useProductLoader } = useApiLoader();
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -32,19 +31,7 @@ const CreateReview = () => {
     console.log("모달로 전달되는 코드 값:", code);
   };
 
-  useEffect(() => {
-    getReviewcheck({
-      successFn: data => {
-        setReviewListData(data);
-      },
-      failFn: data => {
-        alert("실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 시도");
-      },
-    });
-  }, []);
+  useProductLoader(getReviewcheck, setReviewListData);
 
   const columns = [
     {
@@ -60,7 +47,6 @@ const CreateReview = () => {
       render: (text, record) => (
         <div>
           <p>{record.name}</p>
-          {/* <p>12121212-1212121</p> */}
         </div>
       ),
     },

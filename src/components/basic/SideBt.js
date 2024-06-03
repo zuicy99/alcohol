@@ -13,11 +13,14 @@ const SideBt = ({ sidenNm, sideId, active, onClick }) => {
     margin-top: 20px;
     cursor: pointer;
   `;
+  // console.log("사이드 :", sidenNm);
   return (
     <div>
-      <SideBtStyled active={active} onClick={onClick}>
-        {sidenNm}
-      </SideBtStyled>
+      {sidenNm !== typeof undefined ? (
+        <SideBtStyled active={active} onClick={onClick}>
+          {sidenNm}
+        </SideBtStyled>
+      ) : null}
     </div>
   );
 };

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { deleteWish } from "../../api/wishListApi";
+import useCustomMove from "../../hooks/useCustomMove";
 import { Common } from "../../styles/CommonCss";
 import { CardFlex } from "../../styles/main/cardStlye";
 import { ProCardContainer } from "../../styles/product/proCardCss";
 import OptiPlaceholder from "../image-opti/OptiPlaceholder";
 import OptiWireframe from "../image-opti/OptiWireframe";
-import useCustomMove from "../../hooks/useCustomMove";
-import { deleteWish, getWishList } from "../../api/wishListApi";
 
 const initState = [
   {
@@ -17,7 +16,6 @@ const initState = [
   },
 ];
 const WishCard = ({ data, refreshData }) => {
-  // console.log("받은 데이터", data);
   const [wishCode, setWishCode] = useState(data.code);
   const { moveToDetail } = useCustomMove();
   const navigate = useNavigate();
@@ -44,7 +42,6 @@ const WishCard = ({ data, refreshData }) => {
   };
 
   return (
-    // <ProCardContainer onClick={() => moveToDetail(data?.code)}>
     <ProCardContainer>
       <OptiPlaceholder
         alt=""
@@ -70,10 +67,6 @@ const WishCard = ({ data, refreshData }) => {
           </p>
         </div>
       </CardFlex>
-
-      {/* <p className="productNm" style={{ color: Common.color.p900 }}>
-        {data?.name}
-      </p> */}
     </ProCardContainer>
   );
 };

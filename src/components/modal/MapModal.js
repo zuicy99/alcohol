@@ -26,13 +26,13 @@ export const MapModal = ({ onClose, code }) => {
   //   console.log("Change:", e.target.value);
   // };
   const [selectedIndex, setSelectedIndex] = useState(null);
+  console.log("인덱스 : ", selectedIndex);
 
   const transMapAddress = marketData => {
     console.log("load : ", marketData);
     return marketData?.map(item => item.address);
   };
   const mapAddress = transMapAddress(marketData);
-  console.log("주소 슛 :", mapAddress);
 
   const handlePlaceClick = index => {
     setSelectedIndex(index);

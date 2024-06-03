@@ -1,12 +1,11 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Loading from "../components/common/Loading";
 import mypageRouter from "./mypageRouter";
 import paymentRouter from "./paymentRouter";
-import signRouter from "./signRouter";
-import productRouter from "./productRouter";
-import testRouter from "./testRouter";
 import pickProductRouter from "./pickProductRouter";
-import Loading from "../components/common/Loading";
+import productRouter from "./productRouter";
+import signRouter from "./signRouter";
 
 // Main-Page
 const MainPage = lazy(() => import("../pages/main/Main"));
@@ -26,9 +25,6 @@ const MyPage = lazy(() => import("../pages/mypage/MyPage"));
 const StoreMapPage = lazy(() => import("../pages/storemap/StoreMapPage"));
 // NotFound-Page
 const NotFoundPage = lazy(() => import("../pages/storemap/StoreMapPage"));
-
-// Product-test
-const TestPage = lazy(() => import("../pages/product_test/ProductTest"));
 
 const router = createBrowserRouter([
   {
@@ -107,15 +103,7 @@ const router = createBrowserRouter([
     ),
   },
   // Product-test-router
-  {
-    path: "/test/",
-    element: (
-      <Suspense fallback={<div>Loading</div>}>
-        <TestPage />
-      </Suspense>
-    ),
-    children: testRouter(),
-  },
+
   {
     path: "*",
     element: (

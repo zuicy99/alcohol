@@ -1,7 +1,7 @@
 import { ConfigProvider } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getDelivery } from "../../api/orderApi";
-import { OrderSTableData } from "../../mock/OrderTableData";
+import useApiLoader from "../../hooks/useApiLoader";
 import { Common } from "../../styles/CommonCss";
 import { TableCustom } from "../../styles/common/tableCss";
 
@@ -21,6 +21,8 @@ const initState = [
 const OrderShipPage = () => {
   const [orderData, setOrderData] = useState(initState);
   const [showModal, setShowModal] = useState(false);
+  const { useProductLoader } = useApiLoader();
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -28,19 +30,8 @@ const OrderShipPage = () => {
     setShowModal(true);
   };
 
-  useEffect(() => {
-    getDelivery({
-      successFn: data => {
-        setOrderData(data);
-      },
-      failFn: data => {
-        alert("픽업목록 불러오기 실패");
-      },
-      errorFn: data => {
-        alert("서버상태 불안정 다음에 시도");
-      },
-    });
-  }, []);
+  useProductLoader(getDelivery, setOrderData);
+
   const columns = [
     {
       title: "이미지",

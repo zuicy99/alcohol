@@ -10,7 +10,7 @@ import MapModal from "../modal/MapModal";
 export const GoMapModal = () => {
   const [isMapModalOpen, setMapModalOpen] = useState(false);
   const { code } = useParams();
-  // console.log("ce : ", code);
+
   const handleOpenMapModal = () => {
     setMapModalOpen(true);
   };
@@ -19,7 +19,6 @@ export const GoMapModal = () => {
     setMapModalOpen(false);
   };
 
-  // console.log("ff :", code);
   return (
     <div>
       {isMapModalOpen && <MapModal onClose={handleCloseMapModal} code={code} />}

@@ -1,9 +1,12 @@
-import styled from "@emotion/styled/macro";
+import { Form, Input, Rate } from "antd";
 import React, { useState } from "react";
+import {
+  deleteReview,
+  getReviewcheck,
+  postReviewcreate,
+} from "../../api/reviewApi";
 import { Common } from "../../styles/CommonCss";
-import { Button, Flex, Form, Input, Rate } from "antd";
 import { BasicBtR } from "../../styles/basic/basicBt";
-import { HeartOutlined } from "@ant-design/icons";
 import {
   ModalContent,
   ModalDeletWrap,
@@ -11,11 +14,6 @@ import {
   RvModalStyle,
   SubmitBt,
 } from "../../styles/common/revModalCss";
-import {
-  deleteReview,
-  getReviewcheck,
-  postReviewcreate,
-} from "../../api/reviewApi";
 const { TextArea } = Input;
 
 const initState = {
@@ -43,7 +41,7 @@ const RvModal = ({ onClose, code }) => {
   const fetchData = () => {
     postReviewcreate({
       reivewParam: {
-        alcohol: code.code,
+        code: code.code,
         writing: writingData,
         grade: gradeData,
         picture: "",
@@ -109,7 +107,6 @@ const RvModal = ({ onClose, code }) => {
           <div className="input">
             <Form.Item style={{ width: "100%" }} name="contents">
               <TextArea
-                // value={formData.contents}
                 style={{
                   fontSize: "16px",
                   boxShadow: "none",
@@ -125,7 +122,6 @@ const RvModal = ({ onClose, code }) => {
                 spellCheck={false}
                 value={writingData}
                 onChange={handleWritingChange}
-                // onChange={e => handleContentsChange("contents", e.target.value)}
               />
             </Form.Item>
           </div>
@@ -141,16 +137,6 @@ const RvModal = ({ onClose, code }) => {
 export default RvModal;
 
 export const RvDelete = ({ onClose, code, refreshData }) => {
-  // const picCode = code => {
-  //   const picture = code?.picture;
-  //   if (picture) {
-  //     const extractedNumbers = (picture.match(/\d+/g) || []).join("");
-  //     // 첫 번째 자리 숫자가 0이면 제거
-  //     const cleanedNumbers = extractedNumbers.replace(/^0+/, "");
-  //     return cleanedNumbers;
-  //   }
-  // };
-  // const extractedNumbers = (code.picture.match(/\d+/g) || []).join("");
   const picCodePk = (code.picture.match(/\d+/g) || [])
     .map(number => parseInt(number.replace(/^0+/, ""), 10)) // 첫 번째 자리 숫자가 0이면 제거
     .join("");
@@ -180,8 +166,6 @@ export const RvDelete = ({ onClose, code, refreshData }) => {
     <>
       <RvModalStyle>
         <ModalDeletWrap>
-          {console.log("삭제모달 pk값", code.picture)}
-          {console.log("삭제모달 pk값2222", picCodePk)}
           <ModalContent>
             <div className="modal-title">
               <p className="title">리뷰삭제</p>

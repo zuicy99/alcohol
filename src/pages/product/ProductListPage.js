@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import {
   SignAlcholSearch,
   getAlcholType,
-  getRecent,
   getUserRecent,
   nonSignAlcholSearch,
 } from "../../api/productApi";
@@ -36,13 +35,10 @@ const ProductPage = () => {
   const mainCategory = `${params.type}`;
   const subCategory = `${params.sub}`;
 
-  // const [productData, setProductData] = useState(initState);
   const { data: productData } = useQuery({
     queryKey: ["product/list", params],
     queryFn: () => getAlcholType(mainCategory, subCategory),
   });
-
-  // console.log("서치쿼리 : ", searchCategory);
 
   // @AREA @COMMENT Side-bar
 
@@ -57,28 +53,30 @@ const ProductPage = () => {
   // @AREA Search(검색) 관련
   // API host
 
+  console.log("Result : ", productData);
   const [searchData, setSearchData] = useState(initState);
 
-  const SearchMutation = useMutation({
-    mutationFn: search => nonSignAlcholSearch({ search }),
-    onSuccess: result => {
-      console.log("axios result :", result);
-      MoveToSearch(alcoholSearch.searchcontents);
-      setSearchData(result);
-    },
-    onError: () => {},
-  });
+  // const SearchMutation = useMutation({
+  //   mutationFn: search => nonSignAlcholSearch({ search }),
+  //   onSuccess: result => {
+  //     console.log("axios result :", result);
+  //     MoveToSearch(alcoholSearch.searchcontents);
+  //     setSearchData(result);
+  //   },
 
-  // 회원용 서치
-  const UserSearchMutation = useMutation({
-    mutationFn: search => SignAlcholSearch({ search }),
-    onSuccess: result => {
-      console.log("jwtAxios result :", result);
-      MoveToSearch(alcoholSearch.searchcontents);
-      setSearchData(result);
-    },
-    onError: () => {},
-  });
+  //   onError: () => {},
+  // });
+
+  // // 회원용 서치
+  // const UserSearchMutation = useMutation({
+  //   mutationFn: search => SignAlcholSearch({ search }),
+  //   onSuccess: result => {
+  //     console.log("jwtAxios result :", result);
+  //     MoveToSearch(alcoholSearch.searchcontents);
+  //     setSearchData(result);
+  //   },
+  //   onError: () => {},
+  // });
 
   const [alcoholSearch, setAlcoholSearch] = useState(searchInitState);
   const handleChangeSearch = e => {
@@ -87,34 +85,60 @@ const ProductPage = () => {
       searchcontents: e.target.value,
     }));
   };
+  console.log("ww", alcoholSearch);
   // const handleClickSearch = () => {
   //   SearchMutation.mutate(alcoholSearch);
   // };
 
   // 토큰있냐 없냐..에 따라 실행..?
+  const [searchD, setSearchD] = useState();
+  const [searchFlag, setSearchFlag] = useState(false);
   const handleClickSearch = () => {
-    if (isLogin) {
-      UserSearchMutation.mutate(alcoholSearch);
-    } else {
-      SearchMutation.mutate(alcoholSearch);
-    }
+    // if (isLogin) {
+    //   UserSearchMutation.mutate(alcoholSearch);
+    // } else {
+    //   SearchMutation.mutate(alcoholSearch);
+    // }
+    setSearchFlag(true);
+    MoveToSearch(alcoholSearch.searchcontents);
   };
+
+  const { data: searchDataTest } = useQuery({
+    queryFn: () => {
+      if (isLogin) {
+        console.log("들어가기전 : ", alcoholSearch);
+        // console.log("ss:", searchDataTest);
+        SignAlcholSearch({ alcoholSearch });
+
+        // setSearchD(searchDataTest);
+      } else {
+        console.log("들어가기전 : ", alcoholSearch);
+        // console.log("ss:", searchDataTest);
+        nonSignAlcholSearch({ alcoholSearch });
+
+        // setSearchD(searchDataTest);
+      }
+    },
+    enabled: searchFlag,
+  });
 
   // @AREA  Select(Sort) 관련
-  const selectInitState = {
-    category: "",
-  };
-  const [select, setSelect] = useState(selectInitState);
-  const handleClickSelect = e => {
-    setSelect(prevValue => ({
-      ...prevValue,
-      // category는 API가 없어서 임의로 넣은 변수
-      category: e.target.value,
-    }));
-    console.log("선택된 카테고리", select);
-  };
+  // const selectInitState = {
+  //   category: "",
+  // };
+  // const [select, setSelect] = useState(selectInitState);
+  // const handleClickSelect = e => {
+  //   setSelect(prevValue => ({
+  //     ...prevValue,
+  //     // category는 API가 없어서 임의로 넣은 변수
+  //     category: e.target.value,
+  //   }));
+  //   console.log("선택된 카테고리", select);
+  // };
 
   // 최근 검색어
+
+  console.log("result search : ", searchDataTest);
 
   const { data: recentData, refetch } = useQuery({
     queryKey: [],
@@ -150,8 +174,8 @@ const ProductPage = () => {
           searchPlaceholder="검색할 주류를 입력해주세요."
           onSearchClick={handleClickSearch}
           // @COMMENT Select Props
-          onSelectChange={e => handleClickSelect(e)}
-          selectValue={select.category}
+          // onSelectChange={e => handleClickSelect(e)}
+          // selectValue={select.category}
           onRecentClick={handleClickRecent}
         />
         <div></div>
@@ -163,7 +187,7 @@ const ProductPage = () => {
           ))}
 
           {/* Search - Component */}
-          {searchData?.map((product, index) => (
+          {searchDataTest?.map((product, index) => (
             <ProductCard key={index} data={product} />
           ))}
         </GridContainer>

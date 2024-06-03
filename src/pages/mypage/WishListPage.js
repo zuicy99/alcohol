@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { GridContainer } from "../../styles/product/proWrapCss";
-import ProductCard from "../../components/product/ProductCard";
 import { getWishList } from "../../api/wishListApi";
-import WishCard from "../../components/product/WishCard";
-import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
 import ReviewBt from "../../components/mypage/ReviewBt";
-import { InfoWrap } from "../order/OrderPage";
+import WishCard from "../../components/product/WishCard";
 import { PB20 } from "../../styles/basic";
+import { MarginB10, MarginB20 } from "../../styles/common/reviewProductCss";
+import { GridContainer } from "../../styles/product/proWrapCss";
+import { InfoWrap } from "../order/OrderPage";
 
 const WishListPage = () => {
   const [wishListData, setWishListData] = useState([]);

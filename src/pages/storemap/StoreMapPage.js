@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { KakaoMapContext, Map, MapMarker } from "react-kakao-maps-sdk";
+import React, { useMemo, useState } from "react";
+import { Map } from "react-kakao-maps-sdk";
+import { useQuery } from "react-query";
+import { getMarketAddress, getPathByAddress } from "../../api/marketMapApi";
 import StoreMapInfo from "../../components/storeMap/StoreMapInfo";
-import { dummyData } from "../../mock/PlaceData";
+import BasicLayout from "../../layout/BasicLayout";
 import { PB16 } from "../../styles/basic";
 import {
   ItemContent,
@@ -9,56 +11,75 @@ import {
   MarginB20,
 } from "../../styles/common/reviewProductCss";
 import { MarketWrap, MyLocation, StoreWrap } from "../../styles/StoreMapCss";
-import BasicLayout from "../../layout/BasicLayout";
-import { getMarketAddress } from "../../api/marketMapApi";
-import styled from "@emotion/styled/macro";
-
-const initState = [
-  {
-    marketcode: 1,
-    marketname: "포도대구동성로점",
-    address: "대구광역시 중구 공평동 57-3번지 101호",
-    phonenumber: "01011111111",
-    delivery: "PickUp",
-    opentime: "10:00:00",
-    closetime: "22:00:00",
-  },
-];
 
 const StoreMapPage = () => {
-  const [marketData, setMarketData] = useState([]);
-
+  // const [marketData, setMarketData] = useState([]);
   // var map = new kakao.maps.Map();
-  const getCoordsFromAddress = async address => {
-    const geocoder = new window.kakao.maps.services.Geocoder();
-    return new Promise((resolve, reject) => {
-      geocoder.addressSearch(address, (result, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = {
-            lat: result[0].y,
-            lng: result[0].x,
-          };
-          resolve(coords);
-        } else {
-          reject(status);
-        }
-      });
-    });
-  };
+  // const getCoordsFromAddress = async address => {
+  //   const geocoder = new window.kakao.maps.services.Geocoder();
+  //   return new Promise((resolve, reject) => {
+  //     geocoder.addressSearch(address, (result, status) => {
+  //       if (status === window.kakao.maps.services.Status.OK) {
+  //         const coords = {
+  //           lat: result[0].y,
+  //           lng: result[0].x,
+  //         };
+  //         resolve(coords);
+  //       } else {
+  //         reject(status);
+  //       }
+  //     });
+  //   });
+  // };
 
-  useEffect(() => {
-    getMarketAddress({
-      successFn: data => {
-        setMarketData(data);
-      },
-      failFn: data => {
-        alert("마켓정보 불러오기 실패");
-      },
-      errorFn: data => {
-        alert("서버 불안정");
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   getMarketAddress({
+  //     successFn: data => {
+  //       setMarketData(data);
+  //     },
+  //     failFn: data => {
+  //       alert("마켓정보 불러오기 실패");
+  //     },
+  //     errorFn: data => {
+  //       alert("서버 불안정");
+  //     },
+  //   });
+  // }, []);
+
+  // @AREA 현재 위치(좌표값)
+  const [location, setLocation] = useState();
+  useMemo(() => {
+    const success = position => {
+      setLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    };
+    const error = () => {
+      setLocation({
+        latitude: 37.483034,
+        longitude: 126.902435,
+      });
+    };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+  }, [navigator.geolocation.getCurrentPosition]);
+
+  console.log("현재 위치는 : ", location);
+
+  // @COMMENT 좌표를 주소로 변환하는 기능
+
+  const { data: myAddressArray } = useQuery({
+    queryFn: () => getPathByAddress({ location }),
+  });
+  // const myAddress =
+
+  // @COMMENT 가게 위치를 변환하는 기능
+  const { data: marketData } = useQuery({
+    queryFn: () => getMarketAddress(),
+  });
+  console.log("데이터 :", marketData);
 
   return (
     <div>
@@ -73,7 +94,7 @@ const StoreMapPage = () => {
                 </MyLocation>
                 <MarginB20 />
                 <MarketWrap>
-                  {marketData.map((market, index) => (
+                  {marketData?.map((market, index) => (
                     <StoreMapInfo key={index} market={market} />
                   ))}
                 </MarketWrap>
@@ -83,7 +104,7 @@ const StoreMapPage = () => {
                 center={{ lat: 35.8683476, lng: 128.5940482 }}
                 style={{ width: "550px", height: "550px" }}
               >
-                {/* {marketData.map((market, index) => (
+                {/* {marketData?.map((market, index) => (
                   <MapMarker
                     key={index}
                     position={{

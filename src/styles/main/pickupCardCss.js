@@ -14,6 +14,7 @@ export const PickUpCard = styled.div`
     height: 290px;
     background-color: ${Common.color.p000};
     border-radius: 20px;
+    cursor: pointer;
   }
   .pickCard {
     padding: 50px;

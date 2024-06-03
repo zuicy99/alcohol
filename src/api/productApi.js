@@ -58,15 +58,15 @@ export const getAlcholType = async (mainCategory, subCategory) => {
   }
 };
 
-export const nonSignAlcholSearch = async ({ search }) => {
-  console.log("axios-data", search);
+export const nonSignAlcholSearch = async ({ alcoholSearch }) => {
+  console.log("axios-data", alcoholSearch);
   try {
     const response = await axios.post(
       `${SERVER_URL}/main/anony/contents`,
-      search,
+      alcoholSearch,
     );
     if (response.status === 200) {
-      // console.log("result", response.data);
+      console.log("result", response.data);
       const result = response.data;
       return result;
     } else {

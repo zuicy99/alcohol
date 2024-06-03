@@ -6,13 +6,14 @@ export const ProSearchForm = styled.div`
     position: relative;
     display: flex;
     width: 100%;
-    height: 50px;
-    border: 1px solid ${Common.color.f900};
-    border-radius: 10px;
+    height: 5rem;
+    border: 0.1rem solid ${Common.color.f900};
+    border-radius: 1rem;
     align-items: center;
-    margin-bottom: 80px;
+    margin-bottom: 8rem;
+    /* justify-content: space-between; */
     .line {
-      width: 1px;
+      width: 0.1rem;
       height: 100%;
       background: ${Common.color.f900};
       /* margin-right: 20px; */
@@ -33,12 +34,15 @@ export const ProSearchForm = styled.div`
   .search-info {
     position: relative;
     display: flex;
-    width: 85%;
+    /* width: 85%; */
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 3rem;
     input {
       border: none;
       width: 92%;
       font-size: 16px;
-      margin-left: 30px;
+      /* margin-left: 30px;  */
     }
   }
 

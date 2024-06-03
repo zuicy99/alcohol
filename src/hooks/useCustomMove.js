@@ -24,7 +24,18 @@ export const useCustomMove = () => {
       navigate("/sign/in");
     }
   };
-  return { moveToLogin, moveToMain, moveToDetail };
+
+  const moveToMainDetail = code => {
+    if (isLogin) {
+      navigate({ pathname: `product/detail/${code}` });
+      window.scrollTo(0, 0);
+    } else {
+      alert("회원만 접근이 가능합니다. 로그인 페이지로 이동합니다.");
+      navigate("/sign/in");
+      window.scrollTo(0, 0);
+    }
+  };
+  return { moveToLogin, moveToMain, moveToDetail, moveToMainDetail };
 };
 
 export default useCustomMove;

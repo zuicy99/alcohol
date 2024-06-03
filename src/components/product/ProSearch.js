@@ -30,27 +30,16 @@ const ProSearch = ({
               name={searchName}
               value={searchValue}
               onChange={onSearchChange}
-              // 테스뚜
               onClick={onRecentClick}
             />
-            <button className="search-bt" onClick={onSearchClick}>
+            <button
+              className="search-bt"
+              onClick={onSearchClick}
+              style={{ float: "right" }}
+            >
               <img src={process.env.PUBLIC_URL + `/images/search.png`} />
             </button>
           </div>
-
-          <div className="line"></div>
-          <select
-            // value={selecteOption}
-            // onChange={onChangeOption}
-            // style={{
-            //   margin: "0 auto",
-            // }}
-            onChange={onSelectChange}
-          >
-            <option value={0}>인기순</option>
-            <option value={1}>높은 가격순</option>
-            <option value={2}>낮은 가격순</option>
-          </select>
         </div>
       </ProSearchForm>
     </div>

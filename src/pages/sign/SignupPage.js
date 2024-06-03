@@ -63,7 +63,7 @@ const SignupPage = () => {
   const successFn = data => {
     // console.log("successFn : ", data);
     setMemberInfo(data);
-    navigate(`/login`);
+    navigate(`/sign/in`);
   };
 
   const failFn = data => {
@@ -72,13 +72,13 @@ const SignupPage = () => {
   };
 
   const errorFn = data => {
-    // console.log("errorFn : ", data);
+    console.log("errorFn : ", data);
+    console.error;
     alert("서버상태 불안정 다음에 회원가입 시도");
     setMemberInfo(data);
   };
 
   useEffect(() => {
-    // address 상태가 변경될 때마다 initialValues 업데이트
     setMemberInfo(prevState => ({
       ...prevState,
       address: address,
@@ -231,8 +231,8 @@ const SignupPage = () => {
                   name="phone"
                   rules={[
                     {
-                      required: true,
-                      message: "전화번호를 입력 해주세요",
+                      pattern: /^\d{11}$/,
+                      message: "전화번호는 11자리 숫자로 입력해주세요.",
                     },
                     {
                       required: true,
@@ -250,7 +250,7 @@ const SignupPage = () => {
                 >
                   <Input
                     // defaultValue="010"
-                    style={{ width: 520, height: 60, fontSize: "20px" }}
+                    style={areaStyle}
                     placeholder="전화번호"
                     onChange={e => setPhone(e.target.value)}
                   />
@@ -300,9 +300,9 @@ const SignupPage = () => {
                   },
                   {
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/,
+                      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[a-z\d@$!%*?&]{6,16}$/,
                     message:
-                      "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용해야 합니다.",
+                      "비밀번호는 8~16자 영문 소문자, 숫자, 특수문자를 사용해야 합니다.",
                   },
                 ]}
               >

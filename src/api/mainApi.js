@@ -67,3 +67,24 @@ export const getUser = async ({ successFn, failFn, errorFn }) => {
     errorFn(error);
   }
 };
+
+export const getMainSearch = async ({
+  category,
+  successFn,
+  failFn,
+  errorFn,
+}) => {
+  try {
+    const url = `${SERVER_URL}/search/category?category=${category}`;
+    const res = await axios.get(url);
+
+    const status = res.status.toString();
+    if (status.charAt(0) === "2") {
+      successFn(res.data);
+    } else {
+      failFn("메인 모스트 데이터 불러오기 실패");
+    }
+  } catch (error) {
+    errorFn(error);
+  }
+};

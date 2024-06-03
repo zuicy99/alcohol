@@ -1,130 +1,107 @@
-import styled from "@emotion/styled/macro";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DropNav from "../components/basic/DropNav";
 import NavDropdown from "../components/basic/DropNavNew";
 import UserDrop from "../components/basic/UserDrop";
 import useCustomLogin from "../hooks/useCustomLogin";
 import useCustomMove from "../hooks/useCustomMove";
 import { Common } from "../styles/CommonCss";
+import { NotSigninModal } from "../components/modal/BasicModal";
+import { HeaderWrap } from "../styles/basic/HeaderWrapCss";
 
 const BasicHeader = () => {
   const { moveToLogin } = useCustomMove();
-
   const { doLogout, loginState, isLogin } = useCustomLogin();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
-  const HeaderWrap = styled.div`
-    width: 100%;
-    position: relative;
-    height: 23rem;
-    background-color: ${Common.color.b900};
-    padding: 5rem;
-    .header-inner {
-      width: 130rem;
-      margin: 0 auto;
-    }
-    .topNav {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4rem;
-    }
-    .left-logo {
-      display: flex;
-      /* align-items: center; */
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-      h1 {
-        align-items: center;
-        color: ${Common.color.p000};
-      }
+  const goSignin = _path => {
+    if (!isLogin) {
+      setShowModal(true);
+      return;
     }
-    .right-top-nav {
-      display: flex;
-      p {
-        margin: 0 0.4rem;
-        color: ${Common.color.p000};
-        font-size: 1.3rem;
-      }
-    }
-    .rigth-bottom-nav {
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      /* margin-top: 5px; */
-      img {
-        /* margin-left: 18px; */
-        margin: 2rem 0 0 1.8rem;
-      }
-    }
-  `;
+    navigate(_path);
+  };
+
   return (
-    <HeaderWrap>
-      <div className="header-inner">
-        <div className="topNav">
-          <div className="left-logo">
-            <Link to="/">
-              <div>
-                <h1>ALCOHOL</h1>
-                <h1>FREE</h1>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <div className="right-top-nav">
-              {/* {console.log("아", loginState, isLogin)} */}
-              {isLogin ? (
-                <Link onClick={doLogout}>
-                  <p>로그아웃</p>
+    <>
+      {showModal && <NotSigninModal onClose={handleCloseModal} />}
+      <HeaderWrap>
+        <div className="header-inner">
+          <div className="topNav">
+            <div className="left-logo">
+              <Link to="/">
+                <img
+                  src={process.env.PUBLIC_URL + `/images/logo.svg`}
+                  style={{ width: "15rem" }}
+                />
+              </Link>
+            </div>
+            <div>
+              <div className="right-top-nav">
+                {isLogin ? (
+                  <Link onClick={doLogout}>
+                    <p>로그아웃</p>
+                  </Link>
+                ) : (
+                  <>
+                    <Link to="/sign/in">
+                      <p>로그인</p>
+                    </Link>
+                    <p>|</p>
+                    <Link to="/sign/up">
+                      <p>회원가입</p>
+                    </Link>
+                  </>
+                )}
+                <p style={{ color: Common.color.f900 }}>|</p>
+
+                <Link onClick={() => goSignin("/page1")}>
+                  <p>고객센터</p>
                 </Link>
-              ) : (
-                <>
-                  <Link to="/sign/in">
-                    <p>로그인</p>
-                  </Link>
-                  <p>|</p>
-                  <Link to="/sign/up">
-                    <p>회원가입</p>
-                  </Link>
-                </>
-              )}
+              </div>
+              <div className="rigth-bottom-nav">
+                <Link to="/storeMap">
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/map.png"}
+                    style={{ width: "28px", height: "auto" }}
+                    alt="map"
+                  />
+                </Link>
 
-              <p style={{ color: Common.color.f900 }}>|</p>
-              <Link to="/">
-                <p>고객센터</p>
-              </Link>
-            </div>
-            <div className="rigth-bottom-nav">
-              <Link to="/storeMap">
-                <img
-                  src={process.env.PUBLIC_URL + "/images/map.png"} // 수정된 부분
-                  style={{ width: "28px", height: "auto" }}
-                  alt="map"
-                />
-              </Link>
-              <Link to="/cart">
-                <img
-                  src={process.env.PUBLIC_URL + "/images/bag.png"} // 수정된 부분
-                  style={{ width: "26px", height: "auto" }}
-                  alt="bag"
-                />
-              </Link>
-              <Link to="/">
-                <img
-                  src={process.env.PUBLIC_URL + "/images/heart.png"} // 수정된 부분
-                  style={{ width: "26px", height: "auto" }}
-                  alt="heart"
-                />
-              </Link>
+                {/* 해당 카트페이지 오류 수정시 goSignin 넣어주세요  */}
+                <Link to="/cart">
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/bag.png"}
+                    style={{ width: "26px", height: "auto" }}
+                    alt="bag"
+                  />
+                </Link>
+                <Link onClick={() => goSignin("mypage/wish")}>
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/heart.png"}
+                    style={{ width: "26px", height: "auto" }}
+                    alt="heart"
+                  />
+                </Link>
 
-              <UserDrop />
+                <UserDrop />
+              </div>
             </div>
           </div>
-        </div>
 
-        <DropNav />
-        <NavDropdown />
-      </div>
-    </HeaderWrap>
+          <DropNav />
+          <NavDropdown />
+        </div>
+      </HeaderWrap>
+    </>
   );
 };
 

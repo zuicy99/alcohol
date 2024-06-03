@@ -65,7 +65,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      {console.log("로그인인포", loginParam)}
       <LoginWrap>
         <LoginTitle>
           <p className="logo">ALCHOHOL HOLIC</p>
