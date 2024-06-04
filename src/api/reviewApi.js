@@ -73,11 +73,11 @@ export const postReviewcreate = async ({
   }
 };
 
-export const deleteReview = async ({ code, successFn, failFn, errorFn }) => {
+export const deleteReview = async ({ id, successFn, failFn, errorFn }) => {
   try {
     // const url = `${prefix}?code=${code.code}`;
     const url = `${prefix}`;
-    const res = await jwtAxios.delete(url, { data: { code: code } });
+    const res = await jwtAxios.delete(url, id);
 
     const status = res.status.toString();
     if (status.charAt(0) === "2") {

@@ -17,6 +17,7 @@ import {
 const { TextArea } = Input;
 
 const initState = {
+  id: 0,
   alcohol: 0,
   writing: "",
   grade: 0,
@@ -41,7 +42,7 @@ const RvModal = ({ onClose, code }) => {
   const fetchData = () => {
     postReviewcreate({
       reivewParam: {
-        code: code.code,
+        id: code.id,
         writing: writingData,
         grade: gradeData,
         picture: "",
@@ -137,13 +138,10 @@ const RvModal = ({ onClose, code }) => {
 export default RvModal;
 
 export const RvDelete = ({ onClose, code, refreshData }) => {
-  const picCodePk = (code.picture.match(/\d+/g) || [])
-    .map(number => parseInt(number.replace(/^0+/, ""), 10)) // 첫 번째 자리 숫자가 0이면 제거
-    .join("");
-
-  const fetchData = picCodePk => {
+  console.log("리릴", code.id);
+  const fetchData = code => {
     deleteReview({
-      code: picCodePk,
+      id: code.id,
       successFn: () => {
         onClose();
         refreshData();
@@ -196,7 +194,7 @@ export const RvDelete = ({ onClose, code, refreshData }) => {
             <SubmitBt>
               <BasicBtR
                 style={{ background: Common.color.f900 }}
-                onClick={() => fetchData(picCodePk)}
+                onClick={() => fetchData(code)}
               >
                 네
               </BasicBtR>

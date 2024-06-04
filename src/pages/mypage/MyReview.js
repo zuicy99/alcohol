@@ -14,30 +14,34 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 const initState = [
   {
+    id: 1, // id 필드 추가
     name: "더 페이머스 그라우스 700ml",
     writing: "져라ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
     grade: 4,
     picture: "/images/alcohol/01.jpg",
   },
 ];
+
 const MyReview = () => {
   const [myReviewData, setmyReviewData] = useState(initState);
-
   const [showModal, setShowModal] = useState(false);
-  const [modalKey, setModalKey] = useState();
+  const [selectedReview, setSelectedReview] = useState(null);
+
   const { useProductLoader } = useApiLoader();
   useProductLoader(getReviewList, setmyReviewData);
 
   const handleCloseModal = () => {
     setShowModal(false);
-  };
-  const handleShowModal = index => {
-    setShowModal(true);
-    setModalKey(index);
-    console.log("모달로 전달되는 코드 값:", index);
+    setSelectedReview(null);
   };
 
-  // 데이터 새로고치기 위해..만든 무언가..
+  const handleShowModal = id => {
+    const review = myReviewData.find(item => item.id === id);
+    setSelectedReview(review);
+    setShowModal(true);
+    console.log("모달로 전달되는 코드 값:", id);
+  };
+
   const fetchData = () => {
     getReviewList({
       successFn: data => {
@@ -103,12 +107,14 @@ const MyReview = () => {
     },
     {
       title: "리뷰삭제",
-      button: <button>ddldldd</button>,
-      render: (text, record, index) => (
-        <BasicBtR onClick={() => handleShowModal(index)}>리뷰 삭제</BasicBtR>
+      render: (text, record) => (
+        <BasicBtR onClick={() => handleShowModal(record.id)}>
+          리뷰 삭제
+        </BasicBtR>
       ),
     },
   ];
+
   return (
     <ConfigProvider
       theme={{
@@ -124,15 +130,14 @@ const MyReview = () => {
       }}
     >
       <TableCustom
-        // rowSelection={rowSelection}
         columns={columns}
         dataSource={myReviewData}
         pagination={false}
       />
-      {showModal && (
+      {showModal && selectedReview && (
         <RvDelete
           onClose={handleCloseModal}
-          code={myReviewData[modalKey]}
+          code={selectedReview}
           refreshData={fetchData}
         />
       )}
