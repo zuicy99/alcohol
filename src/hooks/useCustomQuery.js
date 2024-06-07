@@ -21,6 +21,8 @@ export const useCustomQuery = () => {
   const sub = urlSearchParams.get("subtype") || "";
   const search = urlSearchParams.get("search") || "";
 
+  const basket = urlSearchParams.get("basket") || "";
+
   const defaultQueryString = createSearchParams({
     type,
     // search,
@@ -40,6 +42,7 @@ export const useCustomQuery = () => {
     }
     navigate({ pathname: "../list", search: queryStr });
   };
+
   const MoveToSearch = Searchparam => {
     let queryStr = "";
     console.log("parameter : ", Searchparam);
@@ -54,5 +57,18 @@ export const useCustomQuery = () => {
     navigate({ pathname: "../list", search: queryStr });
   };
 
-  return { type, sub, MoveToType, MoveToSearch, search };
+  const MoveToBasket = basketParam => {
+    let queryStr = "";
+    if (basketParam) {
+      const basketString = getType(basketParam, basket);
+      queryStr = createSearchParams({
+        basket: basketString,
+      }).toString();
+    } else {
+      queryStr = defaultQueryString;
+    }
+    navigate({ pathname: "../cart", basket: queryStr });
+  };
+
+  return { type, sub, MoveToType, MoveToSearch, search, basket };
 };

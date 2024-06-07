@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { postAddCart } from "../../api/productApi";
 import { BigButton, PlaceBt } from "../../styles/common/reviewProductCss";
 import { Common } from "../../styles/CommonCss";
@@ -29,6 +29,7 @@ export const GoMapModal = () => {
 
 //
 export const GoCartModal = ({ postcard }) => {
+  const navigate = useNavigate();
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   // 장바구니 넣기
   const addCartMutation = useMutation({
@@ -44,6 +45,7 @@ export const GoCartModal = ({ postcard }) => {
 
   const handleCloseCartModal = () => {
     setCartModalOpen(false);
+    navigate("/cart?basket=pickup");
   };
 
   return (
@@ -52,6 +54,7 @@ export const GoCartModal = ({ postcard }) => {
       <BigButton
         onClick={handleOpenCartModal}
         style={{
+          width: "500px",
           background: `${Common.color.p000}`,
           border: `1px solid ${Common.color.p300}`,
         }}

@@ -283,7 +283,7 @@ const DetailedItemPage = () => {
           <div className="pay-button">
             <GoCartModal postcard={postCard} />
 
-            <BigButton
+            {/* <BigButton
               onClick={() => navigate(`/pay`)}
               style={{
                 background: `${Common.color.f900}`,
@@ -292,7 +292,7 @@ const DetailedItemPage = () => {
               }}
             >
               바로 구매하기
-            </BigButton>
+            </BigButton> */}
           </div>
         </div>
       </ItemContent>

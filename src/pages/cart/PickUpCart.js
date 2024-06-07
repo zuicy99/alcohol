@@ -1,15 +1,17 @@
 import { ConfigProvider } from "antd";
 import React, { useState } from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
+import { deleteAllCart, deleteCart } from "../../api/cartApi";
 import { cartCountState } from "../../atom/CountState";
+import OptiPlaceholder from "../../components/image-opti/OptiPlaceholder";
+import OptiWireframe from "../../components/image-opti/OptiWireframe";
 import { Common } from "../../styles/CommonCss";
 import { PB20 } from "../../styles/basic";
 import { TotalPayWrap, TotalTh } from "../../styles/cart/CartTableCss";
 import { BigButton, SButton } from "../../styles/common/reviewProductCss";
 import { TableCustom } from "../../styles/common/tableCss";
-import OptiPlaceholder from "../../components/image-opti/OptiPlaceholder";
-import OptiWireframe from "../../components/image-opti/OptiWireframe";
 
 const PickUpCart = ({ pickupData }) => {
   const navigate = useNavigate();
@@ -24,11 +26,33 @@ const PickUpCart = ({ pickupData }) => {
     setShowModal(true);
   };
 
+  const deleteMutate = useMutation({
+    mutationFn: deleteId => deleteCart({ deleteId }),
+    onSuccess: () => {
+      alert("장바구니를 제거하었습니다.");
+    },
+  });
+  const deleteAllMutate = useMutation({
+    mutationFn: () => deleteAllCart(),
+    onSuccess: () => {
+      alert("장바구니를 모두 제거하었습니다.");
+    },
+  });
+
   const handleClickDelete = record => {
-    console.log("Click");
-    console.log(record.stock);
-    console.log(record.amount);
-    console.log(record.price);
+    // console.log("Click");
+    // console.log("id : ", record.id);
+    // console.log("amount : ", record.amount);
+    const deleteId = record.id;
+
+    deleteMutate.mutate(deleteId);
+    // console.log(record.stock);
+    // console.log(record.amount);
+    // console.log(record.price);
+  };
+
+  const handleClickDeleteAll = () => {
+    deleteAllMutate.mutate();
   };
 
   const calculatePaymentAmount = (price, amount) => {
@@ -46,9 +70,6 @@ const PickUpCart = ({ pickupData }) => {
 
     return total;
   };
-  // console.log("토탈", totalOrderAmount);
-  // console.log("사진 : ", pickupData.picture);
-
   const columnsH = [
     {
       title: "",
@@ -61,8 +82,8 @@ const PickUpCart = ({ pickupData }) => {
         // <img style={{ width: "80px" }} src="/images/moon.jpg" alt="리뷰 작성" />
         <OptiPlaceholder
           style={{ width: "80px" }}
-          width={240}
-          height={240}
+          width={80}
+          height={80}
           src={record?.picture}
           alt="리뷰 작성"
           placeholder={
@@ -87,9 +108,6 @@ const PickUpCart = ({ pickupData }) => {
       render: (text, record) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
           {record.amount}
-          {/* <CountKey id={record.key} count={record.amount} /> */}
-          {/* {console.log("record.key:", record.key)} */}
-          {/* {console.log("record.count:", record.count)} */}
         </div>
       ),
     },
@@ -98,7 +116,6 @@ const PickUpCart = ({ pickupData }) => {
       dataIndex: "price",
       render: (_, record) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          {/* {calculatePaymentAmount(record.price, cartCount[record.key])} 원 */}
           {record.price.toLocaleString()}원
         </div>
       ),
@@ -171,12 +188,13 @@ const PickUpCart = ({ pickupData }) => {
             background: `${Common.color.b900}`,
             color: ` ${Common.color.p000}`,
             border: "none",
+            borderRadius: "0.5rem",
             fontSize: "16px",
             fontWeight: "normal",
           }}
-          onClick={() => navigate(`/paycom`)}
+          onClick={() => handleClickDeleteAll()}
         >
-          주문하기
+          장바구니 모두 빼기
         </BigButton>
       </div>
     </div>

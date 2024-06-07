@@ -15,7 +15,14 @@ const ProductSidebar = type => {
   const naviage = useNavigate();
   const [status, setStatus] = useState([]);
 
+  const [activeSide, setActiveSide] = useState(1);
+
+  useEffect(() => {
+    setActiveSide(1);
+  }, [typeProps]);
+
   const handleClickAll = typeProps => {
+    setActiveSide(1);
     switch (typeProps) {
       case "위스키":
         naviage("/product/list?type=위스키");
@@ -34,6 +41,7 @@ const ProductSidebar = type => {
     }
   };
   const handleClickSelectOne = typeProps => {
+    setActiveSide(2);
     switch (typeProps) {
       case "위스키":
         naviage("/product/list?type=위스키&subtype=싱글몰트");
@@ -50,6 +58,7 @@ const ProductSidebar = type => {
   };
 
   const handleClickSelectTwo = typeProps => {
+    setActiveSide(3);
     switch (typeProps) {
       case "위스키":
         naviage("/product/list?type=위스키&subtype=블렌디드");
@@ -66,6 +75,7 @@ const ProductSidebar = type => {
   };
 
   const handleClickSelectThree = typeProps => {
+    setActiveSide(4);
     switch (typeProps) {
       case "위스키":
         naviage("/product/list?type=위스키&subtype=버번");
@@ -82,6 +92,7 @@ const ProductSidebar = type => {
   };
 
   const handleClickSelectFour = typeProps => {
+    setActiveSide(5);
     switch (typeProps) {
       case "와인":
         naviage("/product/list?type=와인&subtype=로제와인");
@@ -131,14 +142,14 @@ const ProductSidebar = type => {
         <SideBt
           sidenNm={`${status?.[1]}`}
           sideId={1}
-          // active={activeSide === 1} // 고유 숫자와 비교
+          active={activeSide === 1} // 고유 숫자와 비교
           onClick={() => handleClickAll(typeProps)}
         />
         {status?.[1] ? (
           <SideBt
             sidenNm={`${status?.[2]}`}
             sideId={2}
-            // active={activeSide === 2}
+            active={activeSide === 2}
             onClick={() => handleClickSelectOne(typeProps)}
           />
         ) : (
@@ -148,7 +159,7 @@ const ProductSidebar = type => {
           <SideBt
             sidenNm={`${status?.[3]}`}
             sideId={3}
-            // active={activeSide === 3}
+            active={activeSide === 3}
             onClick={() => handleClickSelectTwo(typeProps)}
           />
         ) : (
@@ -158,7 +169,7 @@ const ProductSidebar = type => {
           <SideBt
             sidenNm={`${status?.[4]}`}
             sideId={4}
-            // active={activeSide === 4}
+            active={activeSide === 4}
             onClick={() => handleClickSelectThree(typeProps)}
           />
         ) : (
@@ -168,7 +179,7 @@ const ProductSidebar = type => {
           <SideBt
             sidenNm={`${status?.[5]}`}
             sideId={5}
-            // active={activeSide === 4}
+            active={activeSide === 5}
             onClick={() => handleClickSelectFour(typeProps)}
           />
         ) : (
