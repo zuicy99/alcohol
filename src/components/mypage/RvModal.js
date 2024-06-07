@@ -138,26 +138,22 @@ const RvModal = ({ onClose, code }) => {
 export default RvModal;
 
 export const RvDelete = ({ onClose, code, refreshData }) => {
-  console.log("리릴", code.id);
   const fetchData = code => {
+    console.log("리릴", code.id); // 여기에 로그 추가
+
     deleteReview({
       id: code.id,
       successFn: () => {
         onClose();
         refreshData();
       },
-      failFn,
+      failFn: error => {
+        alert("메인 모스트 데이터 불러오기 실패");
+      },
       errorFn: data => {
         alert("서버상태 불안정 다음에 상품불러오기 시도");
       },
     });
-  };
-
-  const successFn = data => {
-    onClose();
-  };
-  const failFn = data => {
-    alert("failFn : 데이터 호출에 실패하였습니다.");
   };
 
   return (
@@ -167,16 +163,18 @@ export const RvDelete = ({ onClose, code, refreshData }) => {
           <ModalContent>
             <div className="modal-title">
               <p className="title">리뷰삭제</p>
-
               <button onClick={onClose}>
-                <img src={process.env.PUBLIC_URL + "/images/close2.svg"}></img>
+                <img
+                  src={process.env.PUBLIC_URL + "/images/close2.svg"}
+                  alt="close button"
+                />
               </button>
             </div>
             <div className="table">
               <img
                 src={process.env.PUBLIC_URL + code.picture}
                 style={{ width: "62px", height: "62px" }}
-                //   alt="bag"
+                alt="product"
               />
               <ul className="hr">
                 <li>제품명</li>
@@ -184,13 +182,12 @@ export const RvDelete = ({ onClose, code, refreshData }) => {
               </ul>
               <ul className="br">
                 <li>{code.name}</li>
-                <li> {code.writing}</li>
+                <li>{code.writing}</li>
               </ul>
             </div>
             <div className="grade">
               <p>리뷰를 삭제하시겠습니까?</p>
             </div>
-
             <SubmitBt>
               <BasicBtR
                 style={{ background: Common.color.f900 }}
