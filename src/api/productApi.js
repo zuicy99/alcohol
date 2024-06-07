@@ -67,21 +67,23 @@ export const nonSignAlcholSearch = async ({ alcoholSearch }) => {
     );
     if (response.status === 200) {
       console.log("result", response.data);
-      const result = response.data;
-      return result;
+      return response.data;
     } else {
       console.log("no");
     }
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
-// export const SignAlcholSearch = async () => {};
 
-export const SignAlcholSearch = async ({ search }) => {
-  console.log("axios-data", search);
+export const SignAlcholSearch = async ({ alcoholSearch }) => {
+  console.log("axios-data", alcoholSearch);
   try {
-    const response = await jwtAxios.post(`${SERVER_URL}/main/contents`, search);
+    const response = await jwtAxios.post(
+      `${SERVER_URL}/main/contents`,
+      alcoholSearch,
+    );
     if (response.status === 200) {
       // console.log("result", response.data);
       const result = response.data;

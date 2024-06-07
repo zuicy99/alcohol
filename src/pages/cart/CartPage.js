@@ -1,22 +1,34 @@
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { getCart } from "../../api/cartApi";
 import ReviewBt from "../../components/mypage/ReviewBt";
+import { useCustomQuery } from "../../hooks/useCustomQuery";
+import BasicLayout from "../../layout/BasicLayout";
 import { PB20 } from "../../styles/basic";
 import { MyWrap } from "../../styles/basic/sideWrap";
 import { MarginB20 } from "../../styles/common/reviewProductCss";
 import { Common } from "../../styles/CommonCss";
 import PickUpCart from "./PickUpCart";
 import ShippingCart from "./ShippingCart";
-import { useQuery } from "react-query";
-import { getCart } from "../../api/cartApi";
-import BasicLayout from "../../layout/BasicLayout";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const [activeNavBt, setActiveNavBt] = useState(1);
+  const { basket } = useCustomQuery();
+  const params = { basket };
   const handleBtClick = cartId => {
+    if (cartId === 1) {
+      // basket = "";
+      navigate("/cart?basket=pickup");
+    } else {
+      navigate("/cart?basket=delivery");
+    }
     setActiveNavBt(cartId);
     console.log("선택된 카트버튼", cartId);
   };
+  console.log("param : ", params);
 
   const InfoWrap = styled.div`
     width: 100%;
@@ -30,11 +42,14 @@ const CartPage = () => {
   // Get API
 
   const { data: pickupData } = useQuery({
-    queryKey: [],
-    queryFn: () => getCart(),
+    queryKey: ["cart", params],
+    queryFn: () => getCart({ params }),
   });
   // const serverData = data;
+  console.log("*-------------------------- *");
   console.log("cart-data : ", pickupData);
+  console.log("activeNavBt : ", activeNavBt);
+  console.log("*-------------------------- *");
 
   return (
     <BasicLayout>
@@ -63,7 +78,7 @@ const CartPage = () => {
             {activeNavBt === 1 ? (
               <PickUpCart pickupData={pickupData} />
             ) : (
-              <ShippingCart />
+              <ShippingCart pickupData={pickupData} />
             )}
           </div>
         </InfoWrap>

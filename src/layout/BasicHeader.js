@@ -77,7 +77,7 @@ const BasicHeader = () => {
                 </Link>
 
                 {/* 해당 카트페이지 오류 수정시 goSignin 넣어주세요  */}
-                <Link to="/cart">
+                <Link to="/cart?basket=pickup">
                   <img
                     src={process.env.PUBLIC_URL + "/images/bag.png"}
                     style={{ width: "26px", height: "auto" }}

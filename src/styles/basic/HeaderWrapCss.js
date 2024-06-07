@@ -26,8 +26,10 @@ export const HeaderWrap = styled.div`
       color: ${Common.color.p000};
     }
   }
+
   .right-top-nav {
     display: flex;
+    justify-content: flex-end;
     p {
       margin: 0 0.4rem;
       color: ${Common.color.p000};
@@ -80,8 +82,30 @@ export const FooterWrap = styled.div`
     }
   }
   .left-p {
+    display: flex;
     font-size: 1.3rem;
     color: ${Common.color.p100};
+    gap: 2rem;
+    .footer-writer {
+      font-size: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      .d-link {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      img {
+        width: 3rem;
+        height: 3rem;
+      }
+      .notion {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
   }
   .right-info {
     display: flex;
@@ -90,7 +114,22 @@ export const FooterWrap = styled.div`
     p {
       color: ${Common.color.p100};
       margin: 1rem 0;
-      font-size: 1.3rem;
+      font-size: 1.6rem;
     }
+  }
+  .footer-maker {
+    flex-direction: column;
+    display: flex;
+    gap: 2rem;
+    color: ${Common.color.p100};
+    /* margin: 1rem 0; */
+    font-size: 1.4rem;
+  }
+
+  .footer-info-wrap {
+    margin-top: 3rem;
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
   }
 `;
