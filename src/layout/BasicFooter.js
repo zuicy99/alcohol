@@ -43,7 +43,10 @@ const BasicFooter = () => {
               <p>
                 <strong>Alchohol-holic Github Link</strong>
               </p>
-              <a href="https://github.com/zuicy99/alcohol-holic" target="blank">
+              <a
+                href="https://github.com/zuicy99/alcoholholic-main"
+                target="blank"
+              >
                 <img
                   src={process.env.PUBLIC_URL + "/images/footer/github.png"}
                   alt=""
@@ -77,13 +80,16 @@ const BasicFooter = () => {
                   <strong>김주영</strong> (zuicy99)
                 </p>
                 <div className="d-link">
-                  <a href="https://github.com/hakjaeson" target="blank">
+                  <a href="https://github.com/zuicy99" target="blank">
                     <img
                       src={process.env.PUBLIC_URL + "/images/footer/github.png"}
                       alt=""
                     />
                   </a>
-                  <a href="https://github.com/hakjaeson" target="blank">
+                  <a
+                    href="https://www.notion.so/81f22e541fe24ae5ae7bb07392ad662c"
+                    target="blank"
+                  >
                     <img
                       src={process.env.PUBLIC_URL + "/images/footer/notion.png"}
                       alt=""

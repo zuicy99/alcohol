@@ -77,7 +77,7 @@ export const deleteReview = async ({ id, successFn, failFn, errorFn }) => {
   try {
     // const url = `${prefix}?code=${code.code}`;
     const url = `${prefix}`;
-    const res = await jwtAxios.delete(url, id);
+    const res = await jwtAxios.delete(url, { data: { id } });
 
     const status = res.status.toString();
     if (status.charAt(0) === "2") {
